@@ -5,26 +5,33 @@ import Api from './../components/Api';
 
 class Login extends React.Component{
 
-    state = {
-        misena_email : '',
-        password: '',
-        erroEmail: '',
-        erroPass: '',
-        emailMsj: '',
-        passMsj:'',
-        sowSpinner: false
-    };
+    constructor(props){
+        super(props);
+        if(sessionStorage.getItem('token')!== null){
+            window.location.href="/admin";
+        }
+        this.state = {
+            misena_email : '',
+            password: '',
+            erroEmail: '',
+            erroPass: '',
+            emailMsj: '',
+            passMsj:'',
+            sowSpinner: false
+        };
+    }
+
 
     setEmail =  (email)=> this.setState({misena_email: email});  
     setPassword =  (pass)=> this.setState({password: pass});  
 
-    login = ()=>{
+    login = async ()=>{
         if(this.state.misena_email!== ''){
             const email = this.state.misena_email;
             if(email.indexOf('@')>0){
                 if(this.state.password!== ''){
                     this.setState({sowSpinner: true});
-                    this.perdirDatos(); 
+                    await this.perdirDatos(); 
                     this.setState({sowSpinner: false});
                 }else{
                     this.addErrorPass('Debes ingresar una contraseña')
@@ -68,7 +75,22 @@ class Login extends React.Component{
 
         let datos = await Api('users/login','POST','',formlario);
 
-        console.log(datos);
+        if(datos.token){
+            sessionStorage.setItem('token',datos.token);
+            window.location.href="/admin";
+        }else{
+            switch(datos.status){
+                case 404:
+                    this.addErrorEmail(datos.message);
+                    break;
+                case 401:
+                    this.addErrorPass(datos.message);
+                    break;
+                default:
+                    console.log(datos);
+                    break;
+            }
+        }
     }
      
 
@@ -84,8 +106,11 @@ class Login extends React.Component{
                                 <input type="email" 
                                     className={`form-control ${this.state.erroEmail}`} 
                                     name="misena_email" placeholder="correo@misena.edu.co" 
-                                    onChange={(e)=>this.setEmail(e.target.value)}
-                                    onKeyPress={()=>this.removeErrorEmail()}/>
+                                    onChange={(e)=>{
+                                        this.setEmail(e.target.value);
+                                        this.removeErrorEmail();
+                                    }}
+                                />
                                 <span className="text-danger">{this.state.emailMsj}</span>
                             </div>
                             <div className="form-group">
@@ -94,8 +119,10 @@ class Login extends React.Component{
                                     className={`form-control ${this.state.erroPass}`} 
                                     name="password" 
                                     placeholder="Contraseña" 
-                                    onChange={(e)=>this.setPassword(e.target.value)}
-                                    onKeyPress={()=>this.removeErrorPass()}
+                                    onChange={(e)=>{
+                                        this.setPassword(e.target.value);
+                                        this.removeErrorPass();
+                                    }}
                                     />
                                 <span className="text-danger">{this.state.passMsj}</span>
                             </div>
