@@ -1,12 +1,11 @@
 const API = 'https://app-sgh.herokuapp.com/api/';
 
 const peticion = async (route,metodo,token,datos) =>{
-    let peticion;
-
-    if(metodo!== 'GET'){
-         let Myheaders;
-        
-        if(token !==""){
+    try {
+        let peticion;
+        let Myheaders;
+            
+        if(token ===""){
             Myheaders = {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -18,18 +17,26 @@ const peticion = async (route,metodo,token,datos) =>{
                 'Authorization': token
             };
         }
-
-        peticion = await fetch(API+route,{
-            method: metodo,
-            headers:Myheaders,
-            body :JSON.stringify(datos)
-        });
-
-    }else{
-        peticion = await fetch(API+route);
+    
+        if(metodo === 'GET' || datos=== ''){
+            peticion = await fetch(API+route,{
+                method: metodo,
+                headers: Myheaders
+            });
+            
+        }else{
+                peticion = await fetch(API+route,{
+                    method: metodo,
+                    headers:Myheaders,
+                    body :JSON.stringify(datos)
+                });
+        }
+    
+        return await peticion.json();
+        
+    } catch (erro) {
+        return {error: erro}
     }
-
-    return await peticion.json();
     
 }
 

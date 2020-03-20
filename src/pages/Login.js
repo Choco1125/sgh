@@ -97,7 +97,7 @@ class Login extends React.Component{
     render(){
         return(
             <div className="container">
-                <div className=" row justify-content-center align-items-center" style={{height: '100vh'}}>
+                <div className=" row justify-content-center align-items-center" style={{height: '90vh'}}>
                     <div className="card col-10 col-md-8 col-lg-4">
                         <img src={Logo} className="card-img-top img-fluid mt-3" alt="logo" style={{height: "90px", width: "150px",margin:"auto"}}/>
                         <div className="card-body">

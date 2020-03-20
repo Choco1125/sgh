@@ -13,7 +13,7 @@ const Nabvar = ({active})=>(
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
                 <li className={`nav-item ${(active==="home")?'active':''}`}>
-                    <a className="nav-link" href="/admin">inicio</a>
+                    <a className="nav-link" href="/admin">Inicio</a>
                 </li>
                 <li className={`nav-item ${(active==="competencias")?'active':''}`}>
                     <a className="nav-link" href="/admin/competencias">Competencias</a>
@@ -21,7 +21,7 @@ const Nabvar = ({active})=>(
                 <li className={`nav-item `}>
                     <a className="nav-link" href="/" onClick={()=>{
                         sessionStorage.removeItem('token');
-                    }}>salir</a>
+                    }}>Salir</a>
                 </li>
             </ul>
         </div>

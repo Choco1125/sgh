@@ -1,13 +1,20 @@
 import React from 'react';
 import $ from 'jquery';
-import 'datatables.net-bs4/css/dataTables.bootstrap4.css';
-import 'datatables.net-bs4/js/dataTables.bootstrap4';
+
 
 class Tabla extends React.Component{
 
-    componentDidMount(){
-     this.renderTbl();
+    constructor(props){
+        super(props);      
     }
+
+    async componentDidMount(){
+        
+      this.props.pedirDatos();
+
+        this.renderTbl();
+    }
+    
 
     renderTbl(){
         $('#tbl').DataTable({
@@ -29,25 +36,36 @@ class Tabla extends React.Component{
         });
     }
     render(){
-        let data = [1,2,4,5,6,7,8,9,10];
+        const competencias = this.props.compencias;
+        
         return(
-            <table className="table table-sm co-12" id="tbl">
+            <table className="table table-sm" id="tbl">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th  className="d-none d-md-block">Código</th>
+                        <th >Descripción</th>
+                        <th >Resúmen</th>
+                        <th className="d-none d-md-block">Horas</th>
+                        <th ></th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        data.map(elemnto=>(
-                            <tr key={elemnto}>
-                                <th scope="row">{elemnto}</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                       
+                        competencias.map(({id,code,description,summary,hours},i)=>(
+                            <tr key={id}>
+                                <td className="d-none d-md-block">{code}</td>
+                                <td>{description}</td>
+                                <td>{summary}</td>
+                                <td className="d-none d-md-block">{hours}</td>
+                                <td>
+                                    <button className="btn btn-outline-success btn-sm mt-1">
+                                        <i className="fas fa-edit"></i>
+                                    </button>
+                                    <button className="btn btn-outline-danger btn-sm mt-1">
+                                        <i className="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
                             </tr>
                         ))
                     }
