@@ -2,4 +2,5 @@ div.alert{
     position: absolute;
     right: 10px;
     bottom: 0;
+    z-index: 5;
 }
