@@ -120,7 +120,7 @@ class Competencias extends React.Component {
                                         <th>Descripción</th>
                                         <th>Resúmen</th>
                                         <th className="hiden">Horas</th>
-                                        <th ></th>
+                                        <th >Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -131,14 +131,14 @@ class Competencias extends React.Component {
                                                 <td>{description}</td>
                                                 <td>{summary}</td>
                                                 <td className="hiden">{hours}</td>
-                                                <td>
-                                                    <button className="btn btn-outline-success btn-sm" data-target="#editar" data-toggle="modal" onClick={() => this.setEdit(i)}>
+                                                <td className="">
+                                                    <span className="d-md-inline btn btn-outline-success btn-sm mt-1 col-6 col-md-6" data-target="#editar" data-toggle="modal" onClick={() => this.setEdit(i)}>
                                                         <i className="fas fa-edit"></i>
-                                                    </button>
+                                                    </span>
                                                     <span> </span>
-                                                    <button className="btn btn-outline-danger btn-sm" data-target="#eliminar" data-toggle="modal" onClick={() => this.setState({ idDelete: id })}>
+                                                    <span className="d-md-inline btn btn-outline-danger btn-sm mt-1 col-6 col-md-6" data-target="#eliminar" data-toggle="modal" onClick={() => this.setState({ idDelete: id })}>
                                                         <i className="fas fa-trash-alt"></i>
-                                                    </button>
+                                                    </span>
                                                 </td>
                                             </tr>
                                         ))

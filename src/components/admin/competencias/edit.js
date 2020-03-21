@@ -1,16 +1,21 @@
 import React from 'react';
 import Api from './../../Api';
 import $ from 'jquery';
+import Spinner from './../../spinner';
 
 class Edit extends React.Component {
   
-
-  
+    constructor(props){
+        super(props);
+        this.state={
+            showSpinner: false
+        }
+    }
 
     save = async id => {
 
-        console.table(this.props);
-       
+        this.setState({showSpinner: true});
+
         if (this.props.description !== '') {
             if (this.props.summary !== '') {
                 let datos = {
@@ -34,6 +39,7 @@ class Edit extends React.Component {
         } else {
             this.addErrorDescripcion('Debes añadir una descripción.');
         }
+        this.setState({showSpinner: false});
     }
 
     render() {       
@@ -92,7 +98,7 @@ class Edit extends React.Component {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="button" className="btn btn-outline-success" onClick={() => this.save(this.props.id)}>Crear <i className="fas fa-save"></i></button>
+                            <button type="button" className="btn btn-outline-success" onClick={() => this.save(this.props.id)}>Actualizar <i className="fas fa-save"></i> <Spinner show={this.state.showSpinner} /></button>
                         </div>
                     </div>
                 </div>

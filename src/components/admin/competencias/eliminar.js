@@ -1,11 +1,22 @@
 import React from 'react';
 import Api from './../../Api';
 import $ from 'jquery';
+import Spinner from '../../spinner';
 
 
 class Eliminar extends React.Component {
     
+    constructor(props){
+        super(props);
+        this.state= {
+            showSpinner: false
+        }
+    }
+
     delete = async ()=>{
+
+        this.setState({showSpinner: true});
+
         let token = sessionStorage.getItem('token');
    
 
@@ -19,6 +30,8 @@ class Eliminar extends React.Component {
         }else{
             console.error(res);
         }
+        this.setState({showSpinner: false});
+
     }
 
     render() {
@@ -37,7 +50,7 @@ class Eliminar extends React.Component {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" className="btn btn-outline-danger" onClick={()=>this.delete()}>Sí, eliminar</button>
+                            <button type="button" className="btn btn-outline-danger" onClick={()=>this.delete()}>Sí, eliminar <Spinner show={this.state.showSpinner}/> </button>
                         </div>
                     </div>
                 </div>

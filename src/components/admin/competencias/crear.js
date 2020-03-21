@@ -1,6 +1,7 @@
 import React from 'react';
 import Api from './../../Api';
 import $ from 'jquery';
+import Spinner from '../../spinner';
 
 class Crear extends React.Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class Crear extends React.Component {
             msjDes: '',
             erroResu: '',
             msjResu: '',
+            showSpinner: false
         };
     }
     componentDidMount(){
@@ -48,6 +50,7 @@ class Crear extends React.Component {
     }
 
     save = async () => {
+        this.setState({showSpinner: true});
         if (this.state.description !== '') {
             if (this.state.summary !== '') {
                 let datos = {
@@ -62,6 +65,10 @@ class Crear extends React.Component {
                     $('#tbl').DataTable().destroy();
                     await this.props.pedirDatos();
                     $('#crear').modal('hide');
+                    document.getElementsByName('code')[0].value="";
+                    document.getElementsByName('description')[0].value="";
+                    document.getElementsByName('summary')[0].value="";
+                    document.getElementsByName('hours')[0].value="";
                 } else {
                     console.log(res);
                 }
@@ -71,6 +78,7 @@ class Crear extends React.Component {
         } else {
             this.addErrorDescripcion('Debes añadir una descripción.');
         }
+        this.setState({showSpinner: false});
     }
 
     render() {
@@ -126,7 +134,7 @@ class Crear extends React.Component {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="button" className="btn btn-outline-success" onClick={() => this.save()}>Crear <i className="fas fa-save"></i></button>
+                            <button type="button" className="btn btn-outline-success" onClick={() => this.save()}>Crear <i className="fas fa-save"></i> <Spinner show={this.state.showSpinner}/></button>
                         </div>
                     </div>
                 </div>
