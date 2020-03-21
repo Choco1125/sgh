@@ -27,8 +27,11 @@ class Eliminar extends React.Component {
             $('#tbl').DataTable().destroy();
             await this.props.pedirDatos();
             $('#eliminar').modal('hide');
+            this.props.alert('success','Competencia eliminada');
         }else{
             console.error(res);
+            this.props.alert('danger','Competencia eliminada');
+
         }
         this.setState({showSpinner: false});
 

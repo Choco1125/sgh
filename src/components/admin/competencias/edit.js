@@ -30,8 +30,10 @@ class Edit extends React.Component {
                     $('#tbl').DataTable().destroy();
                     await this.props.pedirDatos();
                     $('#editar').modal('hide');
+                    this.props.alert('success','Competencia actualizada');
                 } else {
                     console.log(res);
+                    this.props.alert('danger',res);
                 }
             } else {
                 this.addErrorResumen('Debes añadir un resúmen');
@@ -56,7 +58,7 @@ class Edit extends React.Component {
                         <div className="modal-body">
                             <span className="font-weight-lighter">Los campos con <i className="text-danger">*</i> son obligatorios</span>
                             <div className="form-group mt-1">
-                                <label htmlFor="code">Código</label> <button style={{fontSize: '10px' }} className="btn btn-sm" data-toggle="tooltip" data-placement="right" title="Corresponde al código de la competencia que se encuentra en el programa de formación"><i className="fas fa-question"></i></button>
+                                <label htmlFor="code">Código</label> <button  className="btn btn-sm" data-toggle="tooltip" data-placement="right" title="Corresponde al código de la competencia que se encuentra en el programa de formación"><i className="fas fa-question-circle"></i></button>
                                 <input name="code" type="text" className="form-control" placeholder="Código de la competencia"
                                     onChange={
                                         (e) => this.props.setCode(e.target.value)
@@ -76,7 +78,7 @@ class Edit extends React.Component {
                                 <span className="text-danger">{this.props.msjDes}</span>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="summary">Resúmen <span className="text-danger">*</span></label>
+                                <label htmlFor="summary">Resu   men <span className="text-danger">*</span></label>
                                 <input name="summary" type="text" className={`form-control ${this.props.erroResu}`} placeholder="Descripción de la competencia"
                                     onChange={(e) => {
                                         this.props.setSummary(e.target.value);

@@ -65,12 +65,16 @@ class Crear extends React.Component {
                     $('#tbl').DataTable().destroy();
                     await this.props.pedirDatos();
                     $('#crear').modal('hide');
+                    this.props.alert('success','Competencia creada');
                     document.getElementsByName('code')[0].value="";
                     document.getElementsByName('description')[0].value="";
                     document.getElementsByName('summary')[0].value="";
                     document.getElementsByName('hours')[0].value="";
+
                 } else {
                     console.log(res);
+                    this.props.alert('danger',res);
+
                 }
             } else {
                 this.addErrorResumen('Debes añadir un resúmen');
@@ -96,7 +100,7 @@ class Crear extends React.Component {
                         <div className="modal-body">
                             <span className="font-weight-lighter">Los campos con <i className="text-danger">*</i> son obligatorios</span>
                             <div className="form-group mt-1">
-                                <label htmlFor="code">Código</label> <button style={{fontSize: '10px' }} className="btn btn-sm" data-toggle="tooltip" data-placement="right" title="Corresponde al código de la competencia que se encuentra en el programa de formación"><i className="fas fa-question"></i></button>
+                                <label htmlFor="code">Código</label> <button  className="btn btn-sm" data-toggle="tooltip" data-placement="right" title="Corresponde al código de la competencia que se encuentra en el programa de formación"><i className="fas fa-question-circle"></i></button>
                                 <input name="code" type="text" className="form-control" placeholder="Código de la competencia"
                                     onChange={
                                         (e) => this.setCode(e.target.value)
@@ -114,7 +118,7 @@ class Crear extends React.Component {
                                 <span className="text-danger">{this.state.msjDes}</span>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="summary">Resúmen <span className="text-danger">*</span></label>
+                                <label htmlFor="summary">Resumen <span className="text-danger">*</span></label>
                                 <input name="summary" type="text" className={`form-control ${this.state.erroResu}`} placeholder="Descripción de la competencia"
                                     onChange={(e) => {
                                         this.setSummary(e.target.value);

@@ -8,6 +8,7 @@ import $ from 'jquery';
 import 'datatables.net-bs4/css/dataTables.bootstrap4.css';
 import 'datatables.net-bs4/js/dataTables.bootstrap4.js';
 import './../css/Competencias.css';
+import Alert from '../../components/Alert';
 
 
 class Competencias extends React.Component {
@@ -28,6 +29,10 @@ class Competencias extends React.Component {
             msjDes: '',
             erroResu: '',
             msjResu: '',
+
+            showAlert: false,
+            alertMsj: '',
+            alertTipo: ''
         }
     }
 
@@ -101,7 +106,16 @@ class Competencias extends React.Component {
         description: this.state.compencias[pos].description,
         summary: this.state.compencias[pos].summary,
         hours: this.state.compencias[pos].hours
-     });
+    });
+
+    handleAlert = (tipo, mensaje)=>{
+        this.setState({
+            showAlert: true,
+            alertTipo: tipo,
+            alertMsj: mensaje
+        });
+        setTimeout(()=>this.setState({showAlert: false}),4000);
+    }
 
     render() {
         return (
@@ -162,10 +176,12 @@ class Competencias extends React.Component {
                         addErrorResumen={this.addErrorResumen}
                         removeErrorResumen={this.removeErrorResumen}
                         pedirDatos={this.pedirDatos}
+                        alert={this.handleAlert}
                     />
                         
-                    <Crear pedirDatos={this.pedirDatos} />
-                    <Eliminar id={this.state.idDelete} pedirDatos={this.pedirDatos} />
+                    <Crear pedirDatos={this.pedirDatos} alert={this.handleAlert} />
+                    <Eliminar id={this.state.idDelete} pedirDatos={this.pedirDatos} alert={this.handleAlert} />
+                    <Alert show={this.state.showAlert} msj={this.state.alertMsj} tipo={this.state.alertTipo}/>
                 </div>
             </div>
         );
