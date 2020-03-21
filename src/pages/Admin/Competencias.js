@@ -114,7 +114,7 @@ class Competencias extends React.Component {
             alertTipo: tipo,
             alertMsj: mensaje
         });
-        setTimeout(()=>this.setState({showAlert: false}),4000);
+        setTimeout(()=>this.setState({showAlert: false}),2000);
     }
 
     render() {
@@ -181,8 +181,8 @@ class Competencias extends React.Component {
                         
                     <Crear pedirDatos={this.pedirDatos} alert={this.handleAlert} />
                     <Eliminar id={this.state.idDelete} pedirDatos={this.pedirDatos} alert={this.handleAlert} />
-                    <Alert show={this.state.showAlert} msj={this.state.alertMsj} tipo={this.state.alertTipo}/>
                 </div>
+                <Alert show={this.state.showAlert} msj={this.state.alertMsj} tipo={this.state.alertTipo}/>
             </div>
         );
     }

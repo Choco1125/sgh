@@ -30,8 +30,8 @@ class Eliminar extends React.Component {
             this.props.alert('success','Competencia eliminada');
         }else{
             $('#eliminar').modal('hide');
-            console.error(res.parent);
-            if(res.parent.errno){
+            console.error(res.parent.errno);
+            if(res.parent.errno===1451){
                 this.props.alert('danger','La competencia no se puede eliminar porquese encuentra asociada aun resultado de aprendizaje');
             }
 
