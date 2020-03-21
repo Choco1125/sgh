@@ -66,10 +66,10 @@ class Crear extends React.Component {
                     await this.props.pedirDatos();
                     $('#crear').modal('hide');
                     this.props.alert('success','Competencia creada');
-                    document.getElementsByName('code')[0].value="";
-                    document.getElementsByName('description')[0].value="";
-                    document.getElementsByName('summary')[0].value="";
-                    document.getElementsByName('hours')[0].value="";
+                    document.getElementsByName('code')[1].value="";
+                    document.getElementsByName('description')[2].value="";
+                    document.getElementsByName('summary')[1].value="";
+                    document.getElementsByName('hours')[1].value="";
 
                 } else {
                     console.log(res);
