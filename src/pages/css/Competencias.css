@@ -1,5 +1,12 @@
 @media (max-width: 576px) {
     .hiden{
-        display: none;
+        display: none !important;
     }
-  }
+}
+
+@media (max-width: 768px) {
+    .hiden{
+        display: block;
+    }
+}
+

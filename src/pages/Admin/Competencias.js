@@ -145,12 +145,12 @@ class Competencias extends React.Component {
                                                 <td>{description}</td>
                                                 <td>{summary}</td>
                                                 <td className="hiden">{hours}</td>
-                                                <td className="">
-                                                    <span className="d-md-inline btn btn-outline-success btn-sm mt-1 col-6 col-md-6" data-target="#editar" data-toggle="modal" onClick={() => this.setEdit(i)}>
+                                                <td className="align-items-center">
+                                                    <span className="d-md-inline btn btn-outline-success btn-sm mt-1 col-6 col-md-6 btn-middle" data-target="#editar" data-toggle="modal" onClick={() => this.setEdit(i)}>
                                                         <i className="fas fa-edit"></i>
                                                     </span>
                                                     <span> </span>
-                                                    <span className="d-md-inline btn btn-outline-danger btn-sm mt-1 col-6 col-md-6" data-target="#eliminar" data-toggle="modal" onClick={() => this.setState({ idDelete: id })}>
+                                                    <span className="d-md-inline btn btn-outline-danger btn-sm mt-1 col-6 col-md-6 btn-middle" data-target="#eliminar" data-toggle="modal" onClick={() => this.setState({ idDelete: id })}>
                                                         <i className="fas fa-trash-alt"></i>
                                                     </span>
                                                 </td>
