@@ -1,12 +1,23 @@
-@media (max-width: 576px) {
-    .hiden{
-        display: none !important;
-    }
-}
 
 @media (max-width: 768px) {
     .hiden{
+        display: none !important;
+    }
+   
+    table tbody tr td.reducir{
+        font-size: 14px;
+        max-width: 10px !important;
+        padding: 0;
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hiden{
         display: block;
+    }
+    table tbody tr td.reducir{
+        min-width: 10px !important;
     }
 }
 

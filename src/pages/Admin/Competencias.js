@@ -1,5 +1,6 @@
 import React from 'react';
 import Nabvar from '../../components/admin/Navbar';
+import Ver from '../../components/admin/competencias/ver';
 import Crear from '../../components/admin/competencias/crear';
 import Eliminar from './../../components/admin/competencias/eliminar';
 import Edit from './../../components/admin/competencias/edit';
@@ -7,7 +8,7 @@ import Api from './../../components/Api';
 import $ from 'jquery';
 import 'datatables.net-bs4/css/dataTables.bootstrap4.css';
 import 'datatables.net-bs4/js/dataTables.bootstrap4.js';
-import './../css/Competencias.css';
+import './../css/Competencias.css?v3';
 import Alert from '../../components/Alert';
 
 
@@ -95,7 +96,11 @@ class Competencias extends React.Component {
         if (datos === "jwt expired") {
             sessionStorage.removeItem('token');
             window.location.href = "/";
-        } else {
+        }else if (datos === "jwt malformed") {
+            sessionStorage.removeItem('token');
+            window.location.href = "/";
+        }        
+        else {
             this.setState({ compencias: datos });
         }
     }
@@ -107,6 +112,15 @@ class Competencias extends React.Component {
         summary: this.state.compencias[pos].summary,
         hours: this.state.compencias[pos].hours
     });
+
+    setView = pos => this.setState({ 
+        id: this.state.compencias[pos].id,
+        code: this.state.compencias[pos].code,
+        description: this.state.compencias[pos].description,
+        summary: this.state.compencias[pos].summary,
+        hours: this.state.compencias[pos].hours
+    });
+
 
     handleAlert = (tipo, mensaje)=>{
         this.setState({
@@ -131,8 +145,8 @@ class Competencias extends React.Component {
                                 <thead>
                                     <tr>
                                         <th className="hiden">Código</th>
-                                        <th>Descripción</th>
-                                        <th>Resúmen</th>
+                                        <th className="reducir">Descripción</th>
+                                        <th className="reducir">Resúmen</th>
                                         <th className="hiden">Horas</th>
                                         <th >Opciones</th>
                                     </tr>
@@ -142,8 +156,8 @@ class Competencias extends React.Component {
                                         this.state.compencias.map(({ id, code, description, summary, hours }, i) => (
                                             <tr key={id} id={i}>
                                                 <td className="hiden">{code}</td>
-                                                <td>{description}</td>
-                                                <td>{summary}</td>
+                                                <td className="reducir">{description}</td>
+                                                <td className="reducir">{summary}</td>
                                                 <td className="hiden">{hours}</td>
                                                 <td className="align-items-center">
                                                     <span className="d-md-inline btn btn-outline-success btn-sm mt-1 col-6 col-md-6 btn-middle" data-target="#editar" data-toggle="modal" onClick={() => this.setEdit(i)}>
@@ -152,6 +166,10 @@ class Competencias extends React.Component {
                                                     <span> </span>
                                                     <span className="d-md-inline btn btn-outline-danger btn-sm mt-1 col-6 col-md-6 btn-middle" data-target="#eliminar" data-toggle="modal" onClick={() => this.setState({ idDelete: id })}>
                                                         <i className="fas fa-trash-alt"></i>
+                                                    </span>
+                                                    <span> </span>
+                                                    <span className="d-md-none d-sm-inline btn btn-outline-primary btn-sm mt-1 col-6 col-md-6 btn-middle" data-target="#ver" data-toggle="modal" onClick={() => this.setView(i)}>
+                                                        <i className="fas fa-eye"></i>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -178,7 +196,13 @@ class Competencias extends React.Component {
                         pedirDatos={this.pedirDatos}
                         alert={this.handleAlert}
                     />
-                        
+                    <Ver
+                        id={this.state.id} 
+                        code={this.state.code} 
+                        description={this.state.description} 
+                        summary={this.state.summary} 
+                        hours={this.state.hours} 
+                    /> 
                     <Crear pedirDatos={this.pedirDatos} alert={this.handleAlert} />
                     <Eliminar id={this.state.idDelete} pedirDatos={this.pedirDatos} alert={this.handleAlert} />
                 </div>

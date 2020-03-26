@@ -54,9 +54,9 @@ class Crear extends React.Component {
         if (this.state.description !== '') {
             if (this.state.summary !== '') {
                 let datos = {
-                    code: this.state.code,
-                    description: this.state.description,
-                    summary: this.state.summary,
+                    code: this.state.code.toLocaleLowerCase(),
+                    description: this.state.description.toLocaleLowerCase(),
+                    summary: this.state.summary.toLocaleLowerCase(),
                     hours: this.state.hours
                 }
 
@@ -105,6 +105,7 @@ class Crear extends React.Component {
                                     onChange={
                                         (e) => this.setCode(e.target.value)
                                     }
+                                    maxLength="20"
                                 />
                             </div>
                             <div className="form-group">
@@ -114,6 +115,7 @@ class Crear extends React.Component {
                                         this.setDescription(e.target.value);
                                         this.removeErrorDescripcion();
                                     }}
+                                    maxLength="255"
                                 />
                                 <span className="text-danger">{this.state.msjDes}</span>
                             </div>
@@ -124,6 +126,7 @@ class Crear extends React.Component {
                                         this.setSummary(e.target.value);
                                         this.removeErrorResumen();
                                     }}
+                                    maxLength="255"
                                 />
                                 <span className="text-danger">{this.state.msjResu}</span>
                             </div>
