@@ -8,7 +8,7 @@ import Api from './../../components/Api';
 import $ from 'jquery';
 import 'datatables.net-bs4/css/dataTables.bootstrap4.css';
 import 'datatables.net-bs4/js/dataTables.bootstrap4.js';
-import './../css/Competencias.css?v3';
+import './../css/Competencias.css';
 import Alert from '../../components/Alert';
 
 
