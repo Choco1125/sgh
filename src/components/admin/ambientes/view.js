@@ -11,15 +11,15 @@ const View = ({datos}) => (
                     </button>
                 </div>
                 <div className="modal-body">
-                    <div className="form-group" id="name">
+                    <div className="form-group">
                         <h5>Nombre</h5>
                         <p>{datos.name}</p>
                     </div>
-                    <div className="form-group" id="state">
+                    <div className="form-group">
                         <h5>Estado</h5>
                         <p>{datos.state}</p>
                     </div>
-                    <div className="form-group" id="usability">
+                    <div className="form-group">
                         <h5>Usabilidad</h5>
                         <p>{datos.usability}</p>
                     </div>

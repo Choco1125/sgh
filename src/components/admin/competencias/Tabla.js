@@ -4,10 +4,6 @@ import $ from 'jquery';
 
 class Tabla extends React.Component{
 
-    constructor(props){
-        super(props);      
-    }
-
     async componentDidMount(){
         
       this.props.pedirDatos();

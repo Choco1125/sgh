@@ -30,6 +30,7 @@ class Crear extends React.Component {
     }
 
     agregarError(elemento, msj) {
+        console.log(elemento)
         elemento.children[1].classList.add('is-invalid');
         elemento.children[2].innerHTML = msj;
         elemento.children[1].focus();
@@ -43,6 +44,7 @@ class Crear extends React.Component {
     async save() {
         this.setState({ showSpinner: true });
         try {
+            console.log(this.state.datos.name !== '');
             if (this.state.datos.name !== "") {
 
                 if (this.state.datos.usability !== "") {

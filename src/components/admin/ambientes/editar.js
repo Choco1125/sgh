@@ -64,11 +64,11 @@ class Editar extends React.Component {
                     }
 
                 } else {
-                    this.agregarError(document.getElementById('usability'), 'Debes llenar este campo');
+                    this.agregarError(document.getElementById('usability_editar'), 'Debes llenar este campo');
                 }
 
             } else {
-                this.agregarError(document.getElementById('name'), 'Debes llenar este campo');
+                this.agregarError(document.getElementById('name_editar'), 'Debes llenar este campo');
             }
 
 
@@ -91,12 +91,12 @@ class Editar extends React.Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <div className="form-group" id="name">
+                            <div className="form-group" id="name_editar">
                                 <label htmlFor="name">Nombre</label>
                                 <input type="text" className="form-control" placeholder="Ambiente SENA" name="name" value={this.props.datos.name} onChange={(e) => this.props.handleChange(e)} />
                                 <span className="text-danger"></span>
                             </div>
-                            <div className="form-group" id="state">
+                            <div className="form-group" id="state_editar">
                                 <label htmlFor="state">Estado</label>
                                 <select className="custom-select" name="state" value={this.props.datos.state} onChange={(e) => this.props.handleChange(e)} >
                                     <option value="Activo">Activo</option>
@@ -104,7 +104,7 @@ class Editar extends React.Component {
                                 </select>
                                 <span className="text-danger"></span>
                             </div>
-                            <div className="form-group" id="usability">
+                            <div className="form-group" id="usability_editar">
                                 <label htmlFor="usability">Usabilidad</label>
                                 <input type="text" className="form-control" placeholder="Usabilidad del ambiente" name="usability" value={this.props.datos.usability} onChange={(e) => this.props.handleChange(e)} />
                                 <span className="text-danger"></span>

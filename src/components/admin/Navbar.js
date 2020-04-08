@@ -21,6 +21,9 @@ const Nabvar = ({active})=>(
                 <li className={`nav-item ${(active==="ambientes")?'active':''}`}>
                     <a className="nav-link" href="/admin/ambientes">Ambientes</a>
                 </li>
+                <li className={`nav-item ${(active==="contratos")?'active':''}`}>
+                    <a className="nav-link" href="/admin/contraros">Contratos</a>
+                </li>
                 <li className={`nav-item `}>
                     <a className="nav-link" href="/" onClick={()=>{
                         sessionStorage.removeItem('token');
