@@ -22,7 +22,7 @@ const Nabvar = ({active})=>(
                     <a className="nav-link" href="/admin/ambientes">Ambientes</a>
                 </li>
                 <li className={`nav-item ${(active==="contratos")?'active':''}`}>
-                    <a className="nav-link" href="/admin/contraros">Contratos</a>
+                    <a className="nav-link" href="/admin/contratos">Tipos de contratos</a>
                 </li>
                 <li className={`nav-item `}>
                     <a className="nav-link" href="/" onClick={()=>{

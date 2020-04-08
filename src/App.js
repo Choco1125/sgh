@@ -14,7 +14,7 @@ const App = ()=>(
       <Route path="/admin" exact component={Administrador}/>
       <Route path="/admin/competencias" exact component={Competencias}/>
       <Route path="/admin/ambientes" exact component={Ambientes}/>
-      <Route path="/admin/contraros" exact component={Contratos}/>
+      <Route path="/admin/contratos" exact component={Contratos}/>
     </Switch>
   </BrowserRouter>
 );

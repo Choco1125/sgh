@@ -2,25 +2,17 @@ import React from 'react';
 
 import Spinner from './../../spinner';
 import Api from './../../Api';
-import 'select2/dist/js/select2';
-import 'select2/dist/css/select2.css';
-import '@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.css'
 import $ from 'jquery';
 
-class Crear extends React.Component{
+class Crear extends React.Component {
 
-    constructor(porps){
+    constructor(porps) {
         super(porps);
 
         this.state = {
             showSpinner: false,
-            instructores: [],
-            datos:{
-                name: '',
-                description: '',
-                userId: '',
-                start_date: '',
-                end_date: ''
+            datos: {
+                name: ''
             }
         }
     }
@@ -31,20 +23,6 @@ class Crear extends React.Component{
                 ...this.state.datos,
                 [e.target.name]: e.target.value.toLowerCase().charAt(0).toUpperCase() + e.target.value.slice(1)
             }
-        });
-    }
-
-    async getInstructores(){
-        let datos = await Api('userSchedules', 'GET', sessionStorage.getItem('token'), '');
-        this.setState({instructores: datos});
-    }
-
-
-    async componentDidMount(){
-        await this.getInstructores();
-        $('.custom-select').select2({
-            theme: 'bootstrap4',
-            language: 'es'
         });
     }
 
@@ -59,76 +37,55 @@ class Crear extends React.Component{
         });
     }
 
-    async save(){
-        if(this.state.datos.name !== ''){
-            console.log('Gei'); 
-        }else{
-            this.agregarError(document.getElementById('name'),'Debes ingresar un nombre');
+    async save() {
+        this.setState({showSpinner:true});
+        if (this.state.datos.name !== '') {
+            try {
+                let datos = await Api('contractTypes','POST',sessionStorage.getItem('token'),this.state.datos);
+                if(datos === 'Nuevo tipo de contrato creado'){
+                    await this.props.update();
+                    $('#crear').modal('hide');
+                    this.props.alerta(datos,'success');
+                }else if(datos === 'Tipo de contrato ya existente'){
+                    this.agregarError(document.getElementById('name'), datos);
+                }else{
+                    console.log(datos);
+                }
+            } catch (error) {
+                console.error(error);
+                this.props.alerta(error,'danger');
+            }
+        } else {
+            this.agregarError(document.getElementById('name'), 'Debes ingresar un nombre');
         }
+        this.setState({showSpinner:false});
+
     }
-    
-    render(){
-        return(
+
+    render() {
+        return (
             <div className="modal fade" id="crear" data-backdrop="static" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="crearLabel">Crear contrato</h5>
+                            <h5 className="modal-title" id="crearLabel">Crear tipo contrato</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
-                            <span className="font-weight-lighter">Los campos con <i className="text-danger">*</i> son obligatorios</span>
-                            
-                            <div className="form-group mt-1" id="name">
-                                <label htmlFor="name">Nombre <span className="text-danger">*</span></label>
+                            <div className="form-group" id="name">
+                                <label htmlFor="name">Nombre</label>
                                 <input name="name" type="text" className="form-control" placeholder="Nombre del contrato"
-                                    value = {this.state.datos.name} 
-                                    onChange = {(e)=> this.handleChange(e)}
-                                />
-                                <span className="text-danger"></span>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="description">Descripción</label>
-                                <input name="description" type="text" className="form-control" placeholder="Descripción del contrato"
-                                    value = {this.state.datos.description} 
-                                    onChange = {(e)=> this.handleChange(e)}
-                                />
-                                <span className="text-danger"></span>
-                            </div>
-                            <div className="form-group mt-1" id="userId">
-                                <label htmlFor="userId">Instructor <span className="text-danger">*</span></label>
-                                <select name="userId" className="custom-select"
-                                    value = {this.state.datos.userId} 
-                                    onChange = {(e)=> this.handleChange(e)}
-                                >
-                                    {
-                                        this.state.instructores.map(instructor => <option key={instructor.id} value={instructor.id}>{instructor.username} - {instructor.document}</option>)
-                                    }
-                                </select>
-                                <span className="text-danger"></span>
-                            </div>
-                            <div className="form-group mt-1" id="start_date">
-                                <label htmlFor="start_date">Fecha inicio <span className="text-danger">*</span></label>
-                                <input name="start_date" type="date" className="form-control" placeholder="Nombre del contrato"
-                                    value = {this.state.datos.start_date} 
-                                    onChange = {(e)=> this.handleChange(e)}
-                                />
-                                <span className="text-danger"></span>
-                            </div>
-                            <div className="form-group mt-1" id="end_date">
-                                <label htmlFor="end_date">Fecha fin <span className="text-danger">*</span></label>
-                                <input name="end_date" type="date" className="form-control" placeholder="Nombre del contrato"
-                                    value = {this.state.datos.end_date} 
-                                    onChange = {(e)=> this.handleChange(e)}
+                                    value={this.state.datos.name}
+                                    onChange={(e) => this.handleChange(e)}
                                 />
                                 <span className="text-danger"></span>
                             </div>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="button" className="btn btn-outline-success" onClick={()=>this.save()}>Crear <i className="fas fa-save"></i> <Spinner show={this.state.showSpinner}/></button>
+                            <button type="button" className="btn btn-outline-success" onClick={() => this.save()}>Crear <i className="fas fa-save"></i> <Spinner show={this.state.showSpinner} /></button>
                         </div>
                     </div>
                 </div>
