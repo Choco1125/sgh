@@ -4,6 +4,7 @@ import 'datatables.net-bs4/js/dataTables.bootstrap4.js';
 import './tabla.css'
 import Editar from './editar';
 import Eliminar from './eliminar';
+import Ver from './ver';
 
 
 class Tabla extends React.Component {
@@ -17,6 +18,13 @@ class Tabla extends React.Component {
                 code: '',
                 name: '',
                 formationTypeId: '',
+                isRegisterQualified: false,
+                isRegisterQualifiedDate: ''
+            },
+            ver: {
+                code: '',
+                name: '',
+                formationType: '',
                 isRegisterQualified: false,
                 isRegisterQualifiedDate: ''
             },
@@ -70,7 +78,7 @@ class Tabla extends React.Component {
                                         <td className="pequena hiden">{(programa.isRegisterQualified) ? <span>Sí</span> : <span className="text-danger">No</span>}</td>
                                         <td className="pequena hiden">{fecha[0]}</td>
                                         <td className="align-items-center">
-                                            <span className="d-md-inline btn btn-outline-success btn-sm mt-1 col-6 col-md-6 btn-middle"
+                                            <span className="d-lg-inline btn btn-outline-success btn-sm mt-1 col-6 col-md-12 btn-middle"
                                                 data-target="#editar"
                                                 data-toggle="modal"
                                                 onClick={() => this.setState({
@@ -87,7 +95,7 @@ class Tabla extends React.Component {
                                                 <i className="fas fa-edit"></i>
                                             </span>
                                             <span> </span>
-                                            <span className="d-md-inline btn btn-outline-danger btn-sm mt-1 col-6 col-md-6 btn-middle" 
+                                            <span className="d-lg-inline btn btn-outline-danger btn-sm mt-1 col-6 col-md-12 btn-middle" 
                                                 data-target="#eliminar" 
                                                 data-toggle="modal"
                                                 onClick = {()=>this.setState({
@@ -99,7 +107,19 @@ class Tabla extends React.Component {
                                                 <i className="fas fa-trash-alt"></i>
                                             </span>
                                             <span> </span>
-                                            <span className="d-md-none d-sm-inline btn btn-outline-primary btn-sm mt-1 col-6 col-md-6 btn-middle" data-target="#ver" data-toggle="modal">
+                                            <span className="d-lg-none d-md-inline-block btn btn-outline-primary btn-sm mt-1 col-6 col-md-12 btn-middle" 
+                                                data-target="#ver" 
+                                                data-toggle="modal"
+                                                onClick={()=>this.setState({
+                                                    ver:{
+                                                        code: programa.code,
+                                                        name: programa.name,
+                                                        formationType: programa.formationType.name,
+                                                        isRegisterQualified: programa.isRegisterQualified,
+                                                        isRegisterQualifiedDate: fecha[0]
+                                                    }
+                                                })}
+                                            >
                                                 <i className="fas fa-eye"></i>
                                             </span>
                                         </td>
@@ -112,6 +132,7 @@ class Tabla extends React.Component {
                 </table>
                 <Editar datos={this.state.datos} handleChange={this.handleChange} changeQualifiqued={this.changeQualifiqued} alerta={this.props.alerta} update={this.props.update}/>
                 <Eliminar id={this.state.eliminar.id} update={this.props.update} alerta={this.props.alerta}/>
+                <Ver datos={this.state.ver}/>
             </div>
         );
     }

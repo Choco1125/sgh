@@ -1,12 +1,10 @@
 import React from 'react';
-
-import Spinner from './../../spinner';
-import Api from './../../Api';
 import $ from 'jquery';
+import Api from './../../Api';
+import Spinner from './../../spinner';
 
-
-class Eliminar extends React.Component {
-
+class Eliminar extends React.Component{
+    
     constructor(props){
         super(props);
 
@@ -17,8 +15,9 @@ class Eliminar extends React.Component {
 
     async delete(id){
         this.setState({showSpinner: true});
-        let res = await Api(`formationPrograms/${id}`,'DELETE',sessionStorage.getItem('token'),'');
-        if(res === "Programa de formacion eliminado"){
+        let res = await Api(`formationProgramTypes/${id}`,'DELETE',sessionStorage.getItem('token'),'');
+        console.log(res)
+        if(res === "Tipo de programa de formacion eliminado"){
             await this.props.update();
             this.props.alerta(res, 'success');
         }else{
@@ -30,8 +29,8 @@ class Eliminar extends React.Component {
         this.setState({showSpinner: false});
     }
 
-    render() {
-        return (
+    render(){
+        return(
             <div className="modal fade" id="eliminar" role="dialog" aria-labelledby="eliminarLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
@@ -42,7 +41,7 @@ class Eliminar extends React.Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            ¿Deseas eliminar el programa de formación?
+                            ¿Deseas eliminar el tipo de programa de formación?
                     </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
