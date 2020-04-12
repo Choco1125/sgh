@@ -8,6 +8,7 @@ import Alert from './../../components/Alert';
 import Contrato from '../../components/admin/contratos/contrato';
 import Editar from '../../components/admin/contratos/editar';
 import Delete from '../../components/admin/contratos/delete';
+import Loader from './../../components/Loader';
 
 
 class Contratos extends React.Component {
@@ -31,7 +32,8 @@ class Contratos extends React.Component {
             },
             delete:{
                 id:0
-            }
+            },
+            loader: true
         }
     }
 
@@ -126,28 +128,35 @@ class Contratos extends React.Component {
 
     async componentDidMount(){
         await this.getContratos();
+        this.setState({
+            loader: false
+        });
     }
 
     render() {
-        return (
-            <div>
-                <Nabvar active="contratos" />
-                <div className="container">
-                    <div className="row justify-content-end mt-3">
-                        <button className="btn btn-primary border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
+        if(this.state.loader){
+            return <Loader/>
+        }else{
+            return (
+                <div>
+                    <Nabvar active="contratos" />
+                    <div className="container">
+                        <div className="row justify-content-end mt-3">
+                            <button className="btn btn-primary border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
+                        </div>
+                        <div className="row mt-2 justify-content-center">
+                            {
+                                this.state.contratos.map((contrato,i) => <Contrato key={i} nombre={contrato.name} id={contrato.id} edit={this.setEdit} delet={this.setDelete}/> )
+                            }
+                        </div>  
                     </div>
-                    <div className="row mt-2 justify-content-center">
-                        {
-                            this.state.contratos.map((contrato,i) => <Contrato key={i} nombre={contrato.name} id={contrato.id} edit={this.setEdit} delet={this.setDelete}/> )
-                        }
-                    </div>  
+                    <Crear alerta={this.handleAlert} update ={this.getContratos}/>
+                    <Editar handleChange= {this.handleChange} save={this.update} datos={this.state.edit} showSpinner={this.state.spinner.show}/>
+                    <Alert show={this.state.alert.show} msj={this.state.alert.msj} tipo={this.state.alert.tipo}/>
+                    <Delete id={this.state.delete.id} update={this.getContratos} alerta={this.handleAlert}/>
                 </div>
-                <Crear alerta={this.handleAlert} update ={this.getContratos}/>
-                <Editar handleChange= {this.handleChange} save={this.update} datos={this.state.edit} showSpinner={this.state.spinner.show}/>
-                <Alert show={this.state.alert.show} msj={this.state.alert.msj} tipo={this.state.alert.tipo}/>
-                <Delete id={this.state.delete.id} update={this.getContratos} alerta={this.handleAlert}/>
-            </div>
-        )
+            )
+        }
     }
 
 }

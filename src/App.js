@@ -9,7 +9,6 @@ import Contratos from './pages/Admin/Contratos';
 import Programas from './pages/Admin/Programas';
 import TiposProgramas from './pages/Admin/TipoProgramas'
 
-
 const App = ()=>(
   <BrowserRouter>
     <Switch>

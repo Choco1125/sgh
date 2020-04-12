@@ -10,6 +10,8 @@ import Tabla from '../../components/admin/programas/tabla';
 import 'datatables.net-bs4/css/dataTables.bootstrap4.css';
 import 'datatables.net-bs4/js/dataTables.bootstrap4.js';
 
+import Loader from './../../components/Loader';
+
 class Programas extends React.Component {
     
     constructor(props){
@@ -20,7 +22,8 @@ class Programas extends React.Component {
                 tipo: '',
                 msj: ''
             },
-            programas: []
+            programas: [],
+            loader: true
         }
     }
 
@@ -48,6 +51,9 @@ class Programas extends React.Component {
             }        
             else {
                 $('#tbl').DataTable().destroy();
+                this.setState({
+                    loader: false
+                });
                 this.setState({
                     programas: datos
                 });
@@ -77,24 +83,29 @@ class Programas extends React.Component {
     async componentDidMount(){
         $('[data-toggle="tooltip"]').tooltip();
         await this.getPrograms();
+        
     }
 
     render() {
-        return (
-            <div>
-                <Navbar active="programas" />
-                <div className="container">
-                    <div className="row justify-content-end mt-3">
-                        <button className="btn btn-primary border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
+        if(this.state.loader){
+            return <Loader/>
+        }else{
+            return (
+                <div>
+                    <Navbar active="programas" />
+                    <div className="container">
+                        <div className="row justify-content-end mt-3">
+                            <button className="btn btn-primary border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
+                        </div>
+                        <div className="mt-2 mb-3">
+                            <Tabla datos={this.state.programas} alerta={this.handleAlerta} update={this.getPrograms}/>
+                        </div>
                     </div>
-                    <div className="mt-2 mb-3">
-                        <Tabla datos={this.state.programas} alerta={this.handleAlerta} update={this.getPrograms}/>
-                    </div>
+                    <Crear alerta={this.handleAlerta} update={this.getPrograms}/>
+                    <Alert show={this.state.alert.show} msj={this.state.alert.msj} tipo={this.state.alert.tipo} update={this.getPrograms}/>
                 </div>
-                <Crear alerta={this.handleAlerta} update={this.getPrograms}/>
-                <Alert show={this.state.alert.show} msj={this.state.alert.msj} tipo={this.state.alert.tipo} update={this.getPrograms}/>
-            </div>
-        );
+            );
+        }
     }
 }
 

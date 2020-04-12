@@ -7,6 +7,8 @@ import Tabla from "./../../components/admin/ambientes/tabla";
 import Crear from "./../../components/admin/ambientes/crear";
 import Alert from '../../components/Alert';
 
+import Loader from './../../components/Loader';
+
 class Ambientes extends React.Component{
 
     constructor(props){
@@ -20,7 +22,8 @@ class Ambientes extends React.Component{
                 show: false,
                 tipo: '',
                 msj: ''
-            }
+            },
+            loader: true
         }
     }
         
@@ -36,7 +39,9 @@ class Ambientes extends React.Component{
         }        
         else {
             $('#tbl').DataTable().destroy();
-            this.setState({ambientes: datos});
+            this.setState({ambientes: datos})
+            
+            
         }
     }
 
@@ -54,26 +59,50 @@ class Ambientes extends React.Component{
 
     async componentDidMount(){
         await this.pedirDatos();
+        this.setState({
+            loader: false
+        });
+        $('#tbl').DataTable({
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "",
+                "infoEmpty": "",
+                "infoFiltered": "",
+                "sSearch": "Buscar:",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "sProcessing": "",
+            }
+        });
     }
 
     render(){
-        return(
-            <div>
-                <Nabvar active="ambientes"/>
-                <div className="container">
-                    <div className="row justify-content-end mt-3">
-                        <button className="btn btn-primary border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
-                    </div>
-                    <div className="row mt-2">
-                        <div className="table-responsive">
-                            <Tabla datos={this.state.ambientes} update={this.pedirDatos} alerta={this.hadleAlert}/>
+        if(this.state.loader){
+            return <Loader/>
+        }else{
+            return(
+                <div>
+                    <Nabvar active="ambientes"/>
+                    <div className="container">
+                        <div className="row justify-content-end mt-3">
+                            <button className="btn btn-primary border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
+                        </div>
+                        <div className="row mt-2">
+                            <div className="table-responsive">
+                                <Tabla datos={this.state.ambientes} update={this.pedirDatos} alerta={this.hadleAlert}/>
+                            </div>
                         </div>
                     </div>
+                    <Crear update={this.pedirDatos} alerta={this.hadleAlert}/>
+                    <Alert show={this.state.alerta.show} tipo={this.state.alerta.tipo} msj={this.state.alerta.msj}/>
                 </div>
-                <Crear update={this.pedirDatos} alerta={this.hadleAlert}/>
-                <Alert show={this.state.alerta.show} tipo={this.state.alerta.tipo} msj={this.state.alerta.msj}/>
-            </div>
-        );
+            );
+        }
     }
 }
 

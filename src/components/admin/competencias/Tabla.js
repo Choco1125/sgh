@@ -8,29 +8,9 @@ class Tabla extends React.Component{
         
       this.props.pedirDatos();
 
-        this.renderTbl();
+        
     }
     
-
-    renderTbl(){
-        $('#tbl').DataTable({
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ registros",
-                "zeroRecords": "No se encontraron resultados",
-                "info": "",
-                "infoEmpty": "",
-                "infoFiltered": "",
-                "sSearch": "Buscar:",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "Siguiente",
-                    "sPrevious": "Anterior"
-                },
-                "sProcessing": "",
-            }
-        });
-    }
     render(){
         const competencias = this.props.compencias;
         

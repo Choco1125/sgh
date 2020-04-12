@@ -4,6 +4,9 @@ import Api from './../../components/Api';
 import Tabla from './../../components/admin/tipoProgramas/tabla';
 import Crear from '../../components/admin/tipoProgramas/crear';
 import Alerta from './../../components/Alert';
+import Loader from './../../components/Loader';
+
+
 
 class TipoProgramas extends React.Component {
 
@@ -16,7 +19,8 @@ class TipoProgramas extends React.Component {
                 show: false,
                 msj: '',
                 tipo: ''
-            }
+            },
+            loader: true
         }
     }
 
@@ -27,6 +31,7 @@ class TipoProgramas extends React.Component {
             window.location.href = "/";
         }else{
             this.setState({
+                loader: false,
                 tipoProgramas: datos
             });
         }
@@ -52,27 +57,31 @@ class TipoProgramas extends React.Component {
     }
 
     render() {
-        return (
-            <div>
-                <Navbar active="programas" />
-                <div className="container">
-                    <div className="row justify-content-end mt-3">
-                        <button className="btn btn-primary border mr-3" 
-                            data-target="#crear" data-toggle="modal">
-                            Crear <i className="fas fa-plus"></i>
-                        </button>
+        if(this.state.loader){
+            return <Loader/>
+        }else{
+            return (
+                <div>
+                    <Navbar active="programas" />
+                    <div className="container">
+                        <div className="row justify-content-end mt-3">
+                            <button className="btn btn-primary border mr-3" 
+                                data-target="#crear" data-toggle="modal">
+                                Crear <i className="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div className="mt-2">
+                            <Tabla datos = {this.state.tipoProgramas} 
+                                update = {this.getDatos}
+                                alerta = {this.handleAlerta}
+                            />
+                        </div>
                     </div>
-                    <div className="mt-2">
-                        <Tabla datos = {this.state.tipoProgramas} 
-                            update = {this.getDatos}
-                            alerta = {this.handleAlerta}
-                        />
-                    </div>
+                    <Crear alerta = {this.handleAlerta} update = {this.getDatos}/>
+                    <Alerta show={this.state.alert.show} msj={this.state.alert.msj} tipo={this.state.alert.tipo}/>
                 </div>
-                <Crear alerta = {this.handleAlerta} update = {this.getDatos}/>
-                <Alerta show={this.state.alert.show} msj={this.state.alert.msj} tipo={this.state.alert.tipo}/>
-            </div>
-        );
+            );
+        }
     }
 }
 
