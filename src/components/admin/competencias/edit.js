@@ -78,7 +78,7 @@ class Edit extends React.Component {
                                 <span className="text-danger">{this.props.msjDes}</span>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="summary">Resu   men <span className="text-danger">*</span></label>
+                                <label htmlFor="summary">Resumen <span className="text-danger">*</span></label>
                                 <input name="summary" type="text" className={`form-control ${this.props.erroResu}`} placeholder="Descripción de la competencia"
                                     onChange={(e) => {
                                         this.props.setSummary(e.target.value);

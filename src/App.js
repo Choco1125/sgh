@@ -2,12 +2,16 @@ import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import Login from './pages/Login';
+
+//Admin
 import Administrador from './pages/Admin/Administrador';
 import Competencias from './pages/Admin/Competencias';
 import Ambientes from './pages/Admin/Ambientes';
 import Contratos from './pages/Admin/Contratos';
 import Programas from './pages/Admin/Programas';
-import TiposProgramas from './pages/Admin/TipoProgramas'
+import TiposProgramas from './pages/Admin/TipoProgramas';
+import Grupos from './pages/Admin/Grupos';
+import Resultados from "./pages/Admin/Resultados";
 
 const App = ()=>(
   <BrowserRouter>
@@ -19,6 +23,8 @@ const App = ()=>(
       <Route path="/admin/contratos" exact component={Contratos}/>
       <Route path="/admin/programas" exact component={Programas}/>
       <Route path="/admin/tipo-programas" exact component={TiposProgramas}/>
+      <Route path="/admin/grupos" exact component={Grupos}/>
+      <Route path="/admin/resultados" exact component={Resultados}/>
     </Switch>
   </BrowserRouter>
 );
