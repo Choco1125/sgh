@@ -31,6 +31,13 @@ class Crear extends React.Component {
     }
 
     handleChange(e) {
+
+        if(e.target.name === 'trimesterEvaluate'){
+            if(e.target.value.length > 1){
+                e.target.value = e.target.value[0]
+            }
+        }
+
         this.setState({
             datos: {
                 ...this.state.datos,
@@ -48,24 +55,16 @@ class Crear extends React.Component {
         });
     }
 
-    changeAsciated(e){
-        let dtos = e.target.value.split(',');
-            
-        let toSave = '';
+    asociatedValid(){
+        let valores = this.state.datos.associatedTrimesters.split(',');
 
-        dtos.map(trimestre => {
-            if(parseInt(trimestre)>0){
-               toSave += `${trimestre},`;
+        for(let i = 0; i < valores.length; i++){
+            let valor = parseInt(valores[i]);
+            if(isNaN(valor)){
+                return false;
             }
-            return null
-        });
-        this.setState({
-          datos:{
-            ...this.state.datos,
-            associatedTrimesters: toSave
-          }  
-        });
-
+        }
+        return true;
     }
    
 
@@ -86,30 +85,35 @@ class Crear extends React.Component {
                         if(this.state.datos.associatedTrimesters !== ''){
                             if(this.state.datos.competenceId.value !== ''){
 
-                                let datos ={
-                                    summary: this.state.datos.summary,
-                                    description:this.state.datos.description,
-                                    hours:this.state.datos.hours,
-                                    projectPhase:this.state.datos.projectPhase,
-                                    competenceId: this.state.datos.competenceId.value,
-                                    associatedTrimesters:this.state.datos.associatedTrimesters,
-                                    trimesterEvaluate:this.state.datos.trimesterEvaluate
-                                }
+                                if(this.asociatedValid()){
+                                    let datos ={
+                                        summary: this.state.datos.summary,
+                                        description:this.state.datos.description,
+                                        hours:this.state.datos.hours,
+                                        projectPhase:this.state.datos.projectPhase,
+                                        competenceId: this.state.datos.competenceId.value,
+                                        associatedTrimesters:this.state.datos.associatedTrimesters,
+                                        trimesterEvaluate:this.state.datos.trimesterEvaluate
+                                    }
+    
+                                    let res = await Api('learningResults','POST',sessionStorage.getItem('token'),datos);
+    
+                                    switch (res) {
+                                        case 'Nuevo resultado de aprendizaje creado':
+                                            await this.props.update();
+                                            $('#crear').modal('hide');
+                                            this.props.alerta(res,'success');
+                                            break;
+                                    
+                                        default:
+                                            console.log(res)
+                                            break;
+                                    }
+                                    console.log(res);
+                                }else{
+                                    agregarError(document.getElementById('associatedTrimesters'),'Debes ingresar únicamente números');
 
-                                let res = await Api('learningResults','POST',sessionStorage.getItem('token'),datos);
-
-                                switch (res) {
-                                    case 'Nuevo resultado de aprendizaje creado':
-                                        await this.props.update();
-                                        $('#crear').modal('hide');
-                                        this.props.alerta(res,'success');
-                                        break;
-                                
-                                    default:
-                                        console.log(res)
-                                        break;
-                                }
-                                console.log(res);
+                                }                                
                             }else{
                                 agregarError(document.getElementById('competenceId'),'Debes llenar este campo');
                             }
@@ -221,11 +225,13 @@ class Crear extends React.Component {
                                     Trimestre evaluado
                                     <span className="text-danger">*</span>
                                 </label>
-                                <input name="trimesterEvaluate" type="text" 
+                                <input name="trimesterEvaluate" type="number" 
                                     className="form-control" 
                                     placeholder="Trimestre evaludado"
                                     value = {this.state.datos.trimesterEvaluate}
                                     onChange = {e => this.handleChange(e)}
+                                    maxLength = "1"
+                                    min="1"
                                 />
                                 <span className="text-danger"></span>
                             </div>
@@ -242,7 +248,7 @@ class Crear extends React.Component {
                                     className="form-control" 
                                     placeholder="Trimestre evaludado"
                                     value = {this.state.datos.associatedTrimesters}
-                                    onChange = {e => this.changeAsciated(e)}
+                                    onChange = {e => this.handleChange(e)}
                                 />
                                 <span className="text-danger"></span>
                             </div>  
