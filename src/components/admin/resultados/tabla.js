@@ -1,5 +1,6 @@
 import React from 'react';
 import Eliminar from './eliminar';
+import Editar from './editar';
 
 
 class Tabla extends React.Component {
@@ -10,8 +11,50 @@ class Tabla extends React.Component {
         this.state = {
             delete:{
                 id: ''
+            },
+            datos:{
+                id: "",
+                summary: "",
+                description:"",
+                hours:"",
+                projectPhase:"",
+                competenceId:{
+                    value: '',
+                    label: ''
+                },
+                associatedTrimesters:"",
+                trimesterEvaluate:""
             }
         }
+    }
+
+    handleChange = (e) => {
+
+        if(e.target.name === 'trimesterEvaluate'){
+            if(e.target.value.length > 1){
+                e.target.value = e.target.value[0]
+            }
+        }
+
+        this.setState({
+            datos: {
+                ...this.state.datos,
+                [e.target.name]: e.target.value.toLowerCase().charAt(0).toUpperCase() + e.target.value.slice(1)
+            }
+        });
+    }
+
+    handleChange2 = (e) => {
+        this.setState({
+            datos: {
+                ...this.state.datos,
+                competenceId: e
+            }
+        });
+    }
+
+    getCompetence(id){
+        console.log(id);
     }
 
     render() {
@@ -42,7 +85,21 @@ class Tabla extends React.Component {
                                             <span className="d-lg-inline btn btn-outline-success btn-sm mt-1 col-6 col-md-12 btn-middle"
                                                 data-target="#editar"
                                                 data-toggle="modal"
-                                               
+                                                onClick = {() => this.setState({
+                                                    datos:{
+                                                        id:resultado.id,
+                                                        summary: resultado.summary,
+                                                        description:resultado.description,
+                                                        hours:resultado.hours,
+                                                        projectPhase:resultado.projectPhase,
+                                                        competenceId:{
+                                                            value: resultado.competence.id,
+                                                            label: resultado.competence.description
+                                                        },
+                                                        associatedTrimesters:resultado.associatedTrimesters,
+                                                        trimesterEvaluate:resultado.trimesterEvaluate
+                                                    }
+                                                })}
                                             >
                                                 <i className="fas fa-edit"></i>
                                             </span>
@@ -78,7 +135,15 @@ class Tabla extends React.Component {
                     id = {this.state.delete.id}
                     alerta = {this.props.alerta}
                     update = {this.props.update}
-                />
+                    />
+                <Editar 
+                    datos = {this.state.datos}
+                    alerta = {this.props.alerta}
+                    update = {this.props.update}
+                    competencias = {this.props.competencias}
+                    handleChange = {this.handleChange}
+                    handleChange2 = {this.handleChange2}
+                />        
             </div>
         );
     }

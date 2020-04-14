@@ -120,7 +120,8 @@ class Resultados extends React.Component{
                         <Tabla 
                             datos = {this.state.resultados}
                             update = {this.getResultados}
-                            alerta = {this.handleAlert}    
+                            alerta = {this.handleAlert}
+                            competencias = {this.state.competencias}    
                         />
                     </div>
                 </div>
