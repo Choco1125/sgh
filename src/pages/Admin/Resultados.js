@@ -5,6 +5,7 @@ import Navbar from './../../components/admin/Navbar';
 import Api from './../../components/Api';
 import $ from 'jquery';
 import Tabla from './../../components/admin/resultados/tabla';
+import Crear from '../../components/admin/resultados/crear';
 
 
 class Resultados extends React.Component{
@@ -19,8 +20,23 @@ class Resultados extends React.Component{
                 msj: '',
                 type: ''
             },
-            resultados: []
+            resultados: [],
+            competencias: []
         }
+    }
+
+    async getCompetencias(){
+        let datos = await Api('competences','GET',sessionStorage.getItem('token'),'');
+        const options = [];
+
+        datos.map(competencia => options.push({
+            value: competencia.id,
+            label: competencia.description
+        }));
+
+        this.setState({
+            competencias: options
+        });
     }
 
     getResultados = async () => {
@@ -34,7 +50,7 @@ class Resultados extends React.Component{
                 window.location.href = "/";
             }        
             else {
-                console.log(datos);
+                // console.log(datos);
                 $('#tbl').DataTable().destroy();
                 this.setState({
                     loader: false,
@@ -58,13 +74,31 @@ class Resultados extends React.Component{
                     }
                 });
             }
+            await this.getCompetencias();
         }catch(err){
             console.log(err);
         }
     }
 
     async componentDidMount(){
+        
         await this.getResultados();
+    }
+
+    handleAlert = (msj, tipo) => {
+        this.setState({
+            alert:{
+                show: true,
+                msj: msj,
+                tipo: tipo
+            }
+        }); 
+
+        setTimeout(()=> this.setState({
+            alert:{
+                show: false
+            }
+        }),2000)
     }
 
     render(){
@@ -76,13 +110,30 @@ class Resultados extends React.Component{
                 <Navbar active="competencias" />
                 <div className="container">
                     <div className="row justify-content-end mt-3">
-                        <button className="btn btn-primary border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
+                        <button className="btn btn-primary border mr-3" data-target="#crear" 
+                            data-toggle="modal">
+                                Crear 
+                                <i className="fas fa-plus"></i>
+                        </button>
                     </div>
                     <div className="mt-2 mb-3">
-                        <Tabla datos = {this.state.resultados}/>
+                        <Tabla 
+                            datos = {this.state.resultados}
+                            update = {this.getResultados}
+                            alerta = {this.handleAlert}    
+                        />
                     </div>
                 </div>
-                <Alert show={this.state.alert.show} msj={this.state.alert.msj} tipo={this.state.alert.tipo} update={this.getPrograms}/>
+                <Crear 
+                    competencias ={this.state.competencias}
+                    update = {this.getResultados}
+                    alerta = {this.handleAlert}
+                />
+                <Alert 
+                    show = {this.state.alert.show} 
+                    msj = {this.state.alert.msj} 
+                    tipo = {this.state.alert.tipo} 
+                    update = {this.getPrograms}/>
             </div>
             );
         }

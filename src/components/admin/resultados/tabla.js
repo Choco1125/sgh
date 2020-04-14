@@ -1,7 +1,18 @@
 import React from 'react';
+import Eliminar from './eliminar';
 
 
 class Tabla extends React.Component {
+
+    constructor(props){
+        super(props)
+
+        this.state = {
+            delete:{
+                id: ''
+            }
+        }
+    }
 
     render() {
         return (
@@ -39,7 +50,11 @@ class Tabla extends React.Component {
                                             <span className="d-lg-inline btn btn-outline-danger btn-sm mt-1 col-6 col-md-12 btn-middle"
                                                 data-target="#eliminar"
                                                 data-toggle="modal"
-                                               
+                                                onClick = {()=>this.setState({
+                                                    delete:{
+                                                        id: resultado.id
+                                                    }
+                                                })}
                                             >
                                                 <i className="fas fa-trash-alt"></i>
                                             </span>
@@ -59,6 +74,11 @@ class Tabla extends React.Component {
                         }
                     </tbody>
                 </table>
+                <Eliminar 
+                    id = {this.state.delete.id}
+                    alerta = {this.props.alerta}
+                    update = {this.props.update}
+                />
             </div>
         );
     }
