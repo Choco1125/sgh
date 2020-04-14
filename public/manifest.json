@@ -4,17 +4,23 @@
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "190x114",
+      "sizes": "50x50",
       "type": "image/x-icon"
     },
     {
-      "src": "logo.png",
+      "src": "/icons/logo192x192.png",
       "type": "image/png",
-      "sizes": "190x114"
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icons/logo512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
+  "orientation": "portrait",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#FF8F00",
-  "background_color": "#FF8F00"
+  "theme_color": "#9dc44a",
+  "background_color": "#FFFFFF"
 }

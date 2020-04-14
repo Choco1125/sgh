@@ -57,6 +57,7 @@ class Crear extends React.Component {
             if(parseInt(trimestre)>0){
                toSave += `${trimestre},`;
             }
+            return null
         });
         this.setState({
           datos:{
