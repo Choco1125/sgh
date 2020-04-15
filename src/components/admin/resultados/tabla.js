@@ -1,7 +1,8 @@
 import React from 'react';
 import Eliminar from './eliminar';
 import Editar from './editar';
-
+import Ver from './ver';
+import './hider.css';
 
 class Tabla extends React.Component {
 
@@ -22,6 +23,15 @@ class Tabla extends React.Component {
                     value: '',
                     label: ''
                 },
+                associatedTrimesters:"",
+                trimesterEvaluate:""
+            },
+            ver: {
+                summary: "",
+                description:"",
+                hours:"",
+                projectPhase:"",
+                competence:"",
                 associatedTrimesters:"",
                 trimesterEvaluate:""
             }
@@ -64,10 +74,10 @@ class Tabla extends React.Component {
                     <thead>
                         <tr>
                             <th>Descripción</th>
-                            <th>Resumen</th>
-                            <th>Comptencia asociada</th>
+                            <th className="hiden">Resumen</th>
+                            <th className="hiden">Comptencia asociada</th>
                             <th>Trimestre Evaluado</th>
-                            <th>horas</th>
+                            <th className="hiden">horas</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
@@ -77,10 +87,10 @@ class Tabla extends React.Component {
                                 return (
                                     <tr key={resultado.id} id={i}>
                                         <td>{resultado.description}</td>
-                                        <td>{resultado.summary}</td>
-                                        <td>{resultado.competence.description}</td>
+                                        <td className="hiden">{resultado.summary}</td>
+                                        <td className="hiden">{resultado.competence.description}</td>
                                         <td>{resultado.trimesterEvaluate}</td>
-                                        <td >{resultado.hours}</td>
+                                        <td className="hiden">{resultado.hours}</td>
                                         <td className="align-items-center">
                                             <span className="d-lg-inline btn btn-outline-success btn-sm mt-1 col-6 col-md-12 btn-middle"
                                                 data-target="#editar"
@@ -119,7 +129,17 @@ class Tabla extends React.Component {
                                             <span className="d-lg-none d-md-inline-block btn btn-outline-primary btn-sm mt-1 col-6 col-md-12 btn-middle"
                                                 data-target="#ver"
                                                 data-toggle="modal"
-                                                
+                                                onClick = {()=>this.setState({
+                                                    ver: {
+                                                        summary: resultado.summary,
+                                                        description:resultado.description,
+                                                        hours:resultado.hours,
+                                                        projectPhase:resultado.projectPhase,
+                                                        competence:resultado.competence.description,
+                                                        associatedTrimesters:resultado.associatedTrimesters,
+                                                        trimesterEvaluate:resultado.trimesterEvaluate
+                                                    }
+                                                })}
                                             >
                                                 <i className="fas fa-eye"></i>
                                             </span>
@@ -143,7 +163,8 @@ class Tabla extends React.Component {
                     competencias = {this.props.competencias}
                     handleChange = {this.handleChange}
                     handleChange2 = {this.handleChange2}
-                />        
+                />      
+                <Ver datos = {this.state.ver}/>  
             </div>
         );
     }
