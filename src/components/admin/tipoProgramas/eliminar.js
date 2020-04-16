@@ -21,8 +21,12 @@ class Eliminar extends React.Component{
             await this.props.update();
             this.props.alerta(res, 'success');
         }else{
+            if(res.message){
+                this.props.alerta(res.message, 'danger');
+            }else{
+                this.props.alerta(res, 'danger');
+            }
             console.log(res);
-            this.props.alerta(res, 'danger');
 
         }
         $('#eliminar').modal('hide');

@@ -22,9 +22,9 @@ class Eliminar extends React.Component{
             $('#eliminar').modal('hide');
             this.props.alerta(datos,'success');
         }else{
-            if(datos.name){
+            if(datos.message){
                 $('#eliminar').modal('hide');
-                this.props.alerta('No se pede eliminar porque está enlazado','danger');
+                this.props.alerta(datos.message,'danger');
             }else{
                 $('#eliminar').modal('hide');
                 this.props.alerta(datos,'danger');

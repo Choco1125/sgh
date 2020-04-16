@@ -37,7 +37,8 @@ class Competencias extends React.Component {
             alertMsj: '',
             alertTipo: '',
 
-            loader: true
+            loader: true,
+            grupos: []
         }
     }
 
@@ -109,7 +110,30 @@ class Competencias extends React.Component {
         }        
         else {
             this.setState({ compencias: datos });
+            await this.getGrupos();
         }
+    }
+
+    getGrupos = async () =>{
+        let dato = await Api('groups','GET',sessionStorage.getItem('token'),'');
+        let grupos = [];
+
+        console.log(dato);
+
+        for (let i = 0; i < dato.length; i++) {
+            
+            grupos.push({
+                value: dato[i].id,
+                label: dato[i].codeTab + ' - ' +dato[i].formationProgram.name
+            });
+
+            
+        }
+
+        this.setState({
+            grupos: grupos
+        });
+        console.log(this.state.grupos);
     }
 
     setEdit = pos => this.setState({ 
@@ -214,7 +238,7 @@ class Competencias extends React.Component {
                             summary={this.state.summary} 
                             hours={this.state.hours} 
                         /> 
-                        <Crear pedirDatos={this.pedirDatos} alert={this.handleAlert} />
+                        <Crear pedirDatos={this.pedirDatos} alert={this.handleAlert} grupos={this.state.grupos} />
                         <Eliminar id={this.state.idDelete} pedirDatos={this.pedirDatos} alert={this.handleAlert} />
                     </div>
                     <Alert show={this.state.showAlert} msj={this.state.alertMsj} tipo={this.state.alertTipo}/>

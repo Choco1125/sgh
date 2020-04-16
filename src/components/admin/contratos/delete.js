@@ -20,8 +20,8 @@ class Delete extends React.Component {
         if(res === "Tipo de contrato eliminado"){
             await this.props.update();
             this.props.alerta(res, 'success');
-        }else if(res === 'Cannot delete or update a parent row: a foreign key constraint fails (`heroku_1e4ca3e13755145`.`users`, CONSTRAINT `users_ibfk_3` FOREIGN KEY (`contractTypeId`) REFERENCES `contracttypes` (`id`))'){
-            this.props.alerta('No se puede eliminar porque se encuentra en uso', 'danger');
+        }else if(res.message ){
+            this.props.alerta(res.message, 'danger');
         }else{
             console.log(res);
             this.props.alerta(res, 'danger');

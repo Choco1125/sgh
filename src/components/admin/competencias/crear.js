@@ -2,6 +2,8 @@ import React from 'react';
 import Api from './../../Api';
 import $ from 'jquery';
 import Spinner from '../../spinner';
+import Select from 'react-select';
+
 
 class Crear extends React.Component {
     constructor(props) {
@@ -60,6 +62,8 @@ class Crear extends React.Component {
                     hours: this.state.hours
                 }
 
+                console.log(datos)
+
                 let res = await Api('competences', 'POST', sessionStorage.getItem('token'), datos);
                 if (res === "Nueva competencia creada") {
                     $('#tbl').DataTable().destroy();
@@ -73,7 +77,7 @@ class Crear extends React.Component {
 
                 } else {
                     console.log(res);
-                    this.props.alert('danger',res);
+                    this.props.alert('danger',JSON.stringify(res));
 
                 }
             } else {
@@ -137,6 +141,13 @@ class Crear extends React.Component {
                                         (e) => this.setHours(e.target.value)
                                     }
                                 />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="summary">Programa de formación <span className="text-danger">*</span></label>
+                                <Select
+                                    options = {this.props.grupos}
+                                />
+                                <span className="text-danger">{this.state.msjResu}</span>
                             </div>
                         </div>
                         <div className="modal-footer">
