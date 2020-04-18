@@ -12,6 +12,7 @@ import Programas from './pages/Admin/Programas';
 import TiposProgramas from './pages/Admin/TipoProgramas';
 import Grupos from './pages/Admin/Grupos';
 import Resultados from "./pages/Admin/Resultados";
+import Municipios from "./pages/Admin/Municipios";
 
 const App = ()=>(
   <BrowserRouter>
@@ -25,6 +26,7 @@ const App = ()=>(
       <Route path="/admin/tipo-programas" exact component={TiposProgramas}/>
       <Route path="/admin/grupos" exact component={Grupos}/>
       <Route path="/admin/resultados" exact component={Resultados}/>
+      <Route path="/admin/municipios" exact component={Municipios}/>
     </Switch>
   </BrowserRouter>
 );

@@ -126,7 +126,7 @@ class Login extends React.Component{
                                     />
                                 <span className="text-danger">{this.state.passMsj}</span>
                             </div>
-                            <button className="btn btn-primary col-12" onClick={()=>this.login()}>
+                            <button className="btn btn-success col-12" onClick={()=>this.login()}>
                                 Iniciar sesión 
                                 <i className="fas fa-sign-in-alt ml-1 mr-2"></i>
                                 <Spinner show={this.state.sowSpinner}/>
