@@ -38,7 +38,7 @@ class Competencias extends React.Component {
             alertTipo: '',
 
             loader: true,
-            grupos: []
+            programas: []
         }
     }
 
@@ -115,25 +115,17 @@ class Competencias extends React.Component {
     }
 
     getGrupos = async () =>{
-        let dato = await Api('groups','GET',sessionStorage.getItem('token'),'');
-        let grupos = [];
-
-        console.log(dato);
-
-        for (let i = 0; i < dato.length; i++) {
-            
-            grupos.push({
-                value: dato[i].id,
-                label: dato[i].codeTab + ' - ' +dato[i].formationProgram.name
+        let res = await Api('formationPrograms','GET',sessionStorage.getItem('token'),'');
+        let programas = [];
+        for (let i = 0; i < res.length; i++) {
+            programas.push({
+                value: res[i].id,
+                label: res[i].name
             });
-
-            
         }
-
         this.setState({
-            grupos: grupos
+            programas
         });
-        console.log(this.state.grupos);
     }
 
     setEdit = pos => this.setState({ 
@@ -238,7 +230,10 @@ class Competencias extends React.Component {
                             summary={this.state.summary} 
                             hours={this.state.hours} 
                         /> 
-                        <Crear pedirDatos={this.pedirDatos} alert={this.handleAlert} grupos={this.state.grupos} />
+                        <Crear pedirDatos={this.pedirDatos} 
+                            alert={this.handleAlert} 
+                            programas={this.state.programas} 
+                        />
                         <Eliminar id={this.state.idDelete} pedirDatos={this.pedirDatos} alert={this.handleAlert} />
                     </div>
                     <Alert show={this.state.showAlert} msj={this.state.alertMsj} tipo={this.state.alertTipo}/>
