@@ -16,21 +16,25 @@ class Ver extends React.Component {
                         </div>
                         <div className="modal-body">
                             <div className="form-group mt-1">
-                                <h5 htmlFor="code">Código</h5>
-                                <p>{this.props.code}</p>
+                                <h5>Código</h5>
+                                <p>{this.props.datos.code}</p>
                             </div>
                             <div className="form-group">
-                                <h5 htmlFor="description">Descripción</h5>
-                                <p>{this.props.description}</p>
+                                <h5>Descripción</h5>
+                                <p>{this.props.datos.description}</p>
 
                             </div>
                             <div className="form-group">
-                                <h5 htmlFor="summary">Resumen</h5>
-                                <p>{this.props.summary}</p>
+                                <h5>Resumen</h5>
+                                <p>{this.props.datos.summary}</p>
                             </div>
                             <div className="form-group">
-                                <h5 htmlFor="hours">Horas</h5>
-                                <p>{this.props.hours}</p>
+                                <h5>Horas</h5>
+                                <p>{this.props.datos.hours}</p>
+                            </div>
+                            <div className="form-group">
+                                <h5>Programa de formación</h5>
+                                <p>{this.props.datos.formationProgramId}</p>
                             </div>
                         </div>
                         <div className="modal-footer">

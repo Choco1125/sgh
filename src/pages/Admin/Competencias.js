@@ -31,6 +31,13 @@ class Competencias extends React.Component {
                     value: '',
                     label: ''
                 }
+            },
+            ver:{
+                code: '',
+                description: '',
+                summary: '',
+                hours: '',
+                formationProgramId:''
             },   
             showAlert: false,
             alertMsj: '',
@@ -199,7 +206,21 @@ class Competencias extends React.Component {
                                                             <i className="fas fa-trash-alt"></i>
                                                         </span>
                                                         <span> </span>
-                                                        <span className="d-md-none d-sm-inline btn btn-outline-primary btn-sm mt-1 col-6 col-md-6 btn-middle" data-target="#ver" data-toggle="modal" onClick={() => this.setView(i)}>
+                                                        <span 
+                                                            className="d-md-none d-sm-inline btn btn-outline-primary btn-sm mt-1 col-6 
+                                                                col-md-6 btn-middle" 
+                                                            data-target="#ver" 
+                                                            data-toggle="modal" 
+                                                            onClick={() => this.setState({
+                                                                ver:{
+                                                                    code: code,
+                                                                    description: description,
+                                                                    summary: summary,
+                                                                    hours: hours,
+                                                                    formationProgramId:formationProgram.name
+                                                                }
+                                                            })}
+                                                        >
                                                             <i className="fas fa-eye"></i>
                                                         </span>
                                                     </td>
@@ -219,11 +240,7 @@ class Competencias extends React.Component {
                             programas={this.state.programas}
                         />
                         <Ver
-                            id={this.state.id} 
-                            code={this.state.code} 
-                            description={this.state.description} 
-                            summary={this.state.summary} 
-                            hours={this.state.hours} 
+                            datos={this.state.ver}
                         /> 
                         <Crear pedirDatos={this.pedirDatos} 
                             alert={this.handleAlert} 
