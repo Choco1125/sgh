@@ -21,18 +21,17 @@ class Competencias extends React.Component {
             compencias: [],
             idDelete: 0,
             pos: 0,
-            
-            id: '',
-            code: '',
-            description: '',
-            summary: '',
-            hours: '',
-           
-            erroDescrip: '',
-            msjDes: '',
-            erroResu: '',
-            msjResu: '',
-
+            edit:{
+                id:'',
+                code: '',
+                description: '',
+                summary: '',
+                hours: '',
+                formationProgramId:{
+                    value: '',
+                    label: ''
+                }
+            },   
             showAlert: false,
             alertMsj: '',
             alertTipo: '',
@@ -42,32 +41,26 @@ class Competencias extends React.Component {
         }
     }
 
-    //Setters
-    setCode = valor => this.setState({code: valor});
-    setDescription = valor => this.setState({description: valor});
-    setSummary = valor => this.setState({summary: valor});
-    setHours = valor => this.setState({hours: valor});
-
-    //Manejo de errores
-    addErrorDescripcion = msj => {
-        this.setState({ erroDescrip: 'is-invalid' });
-        this.setState({ msjDes: msj });
+    handleChange = (e) => {
+        this.setState({
+            edit: {
+                ...this.state.edit,
+                [e.target.name]: e.target.value.toLowerCase().charAt(0).toUpperCase() + e.target.value.slice(1)
+            }
+        });
     }
 
-    removeErrorDescripcion = () => {
-        this.setState({ erroDescrip: '' });
-        this.setState({ msjDes: '' });
-    }
-
-
-    addErrorResumen = msj => {
-        this.setState({ erroResu: 'is-invalid' });
-        this.setState({ msjResu: msj });
-    }
-
-    removeErrorResumen = () => {
-        this.setState({ erroResu: '' });
-        this.setState({ msjResu: '' });
+    handleChangeSelect = (e) => {
+        this.setState({
+            edit: {
+                ...this.state.edit,
+                formationProgramId:{
+                    value: e.value,
+                    label: e.label
+                }
+            }
+        });
+        document.getElementById('formationProgramId_edit').children[2].innerHTML = '';
     }
 
     async componentDidMount() {
@@ -128,13 +121,6 @@ class Competencias extends React.Component {
         });
     }
 
-    setEdit = pos => this.setState({ 
-        id: this.state.compencias[pos].id,
-        code: this.state.compencias[pos].code,
-        description: this.state.compencias[pos].description,
-        summary: this.state.compencias[pos].summary,
-        hours: this.state.compencias[pos].hours
-    });
 
     setView = pos => this.setState({ 
         id: this.state.compencias[pos].id,
@@ -180,14 +166,32 @@ class Competencias extends React.Component {
                                     </thead>
                                     <tbody>
                                         {
-                                            this.state.compencias.map(({ id, code, description, summary, hours }, i) => (
+                                            this.state.compencias.map(({ id, code, description, summary, hours,formationProgram }, i) => (
                                                 <tr key={id} id={i}>
                                                     <td className="hiden">{code}</td>
                                                     <td className="reducir">{description}</td>
                                                     <td className="reducir">{summary}</td>
                                                     <td className="hiden">{hours}</td>
                                                     <td className="align-items-center">
-                                                        <span className="d-md-inline btn btn-outline-success btn-sm mt-1 col-6 col-md-6 btn-middle" data-target="#editar" data-toggle="modal" onClick={() => this.setEdit(i)}>
+                                                        <span 
+                                                            className="d-md-inline btn btn-outline-success btn-sm mt-1 col-6 
+                                                            col-md-6 btn-middle" 
+                                                            data-target="#editar" 
+                                                            data-toggle="modal" 
+                                                            onClick={() => this.setState({
+                                                                edit:{
+                                                                    id:id,
+                                                                    code: code,
+                                                                    description: description,
+                                                                    summary: summary,
+                                                                    hours: hours,
+                                                                    formationProgramId:{
+                                                                        value: formationProgram.id,
+                                                                        label: formationProgram.name
+                                                                    }
+                                                                }
+                                                            })}
+                                                        >
                                                             <i className="fas fa-edit"></i>
                                                         </span>
                                                         <span> </span>
@@ -207,21 +211,12 @@ class Competencias extends React.Component {
                             </div>
                         </div>
                         <Edit
-                            id={this.state.id} 
-                            code={this.state.code} 
-                            description={this.state.description} 
-                            summary={this.state.summary} 
-                            hours={this.state.hours} 
-                            setCode={this.setCode}
-                            setDescription={this.setDescription}
-                            setSummary={this.setSummary}
-                            setHours={this.setHours}
-                            addErrorDescripcion={this.addErrorDescripcion}
-                            removeErrorDescripcion={this.removeErrorDescripcion}
-                            addErrorResumen={this.addErrorResumen}
-                            removeErrorResumen={this.removeErrorResumen}
+                            datos={this.state.edit}
+                            handleChange={this.handleChange}
+                            handleChangeSelect={this.handleChangeSelect}
                             pedirDatos={this.pedirDatos}
                             alert={this.handleAlert}
+                            programas={this.state.programas}
                         />
                         <Ver
                             id={this.state.id} 
