@@ -2,8 +2,10 @@ import React from 'react';
 import Navbar from './../../components/admin/Navbar';
 import consumidor from './../../helpers/consumidor';
 import Loader from './../../components/Loader';
-import validador from './../../helpers/validador';
 import Tabla from '../../components/admin/Municipios/tabla';
+import Crear from '../../components/admin/Municipios/crear';
+import Alert from './../../components/Alert';
+import handleTabla from './../../helpers/handleTabla';
 
 class Municipios extends React.Component {
 
@@ -13,22 +15,64 @@ class Municipios extends React.Component {
         this.state = {
             loader: true,
             municipios: [],
+            zonas:[],
+            alert:{
+                show: false,
+                tipo: '',
+                msj: ''
+            }
         }
     }
 
     getMunicipios = async () => {
         let data = await consumidor.get('municipalities');
         
-        validador(data);
         
         if (data) {
+            handleTabla.destroy('tbl');
             this.setState({
                 municipios: data,
                 loader: false
             });
-            console.log(data);
+            handleTabla.create('tbl');
+            await this.getZonas();
         }
 
+    }
+
+    getZonas = async () => {
+        let data = await consumidor.get('zones');       
+        if (data) {
+
+            let zonas = [];
+
+            for (let i = 0; i < data.length; i++) {
+                zonas.push({
+                    value: data[i].id,
+                    label: data[i].name
+                });         
+            }
+
+            this.setState({
+                zonas
+            });
+        }
+
+    }
+
+    handleAlert = (tipo,msj) =>{
+        this.setState({
+            alert:{
+                show: true,
+                tipo,
+                msj
+            }
+        });
+        setTimeout(()=>this.setState({
+            alert:{
+                show: false
+            }
+        }),2000);
     }
 
     async componentDidMount() {
@@ -56,6 +100,16 @@ class Municipios extends React.Component {
                         <Tabla datos={this.state.municipios}/>
                     </div>
                 </div>
+                <Crear 
+                    zonas = {this.state.zonas}
+                    alerta = {this.handleAlert}
+                    update = {this.getMunicipios}
+                />
+                <Alert 
+                    tipo = {this.state.alert.tipo}
+                    msj = {this.state.alert.msj}
+                    show = {this.state.alert.show}
+                />
             </div>
         );
     }

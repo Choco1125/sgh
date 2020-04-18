@@ -3,13 +3,9 @@ import 'datatables.net-bs4/css/dataTables.bootstrap4.css';
 import 'datatables.net-bs4/js/dataTables.bootstrap4.js';
 
 
-const handleTabla = id=>{
-
-    console.log('Tablas');
-
-    console.log(id);
-    $('#'+id).DataTable().destroy();
-    $('#'+id).dataTable({
+const handleTabla = {
+    destroy: id => $('#'+id).DataTable().destroy(),
+    create: id => $('#'+id).dataTable({
         "language": {
             "lengthMenu": "Mostrar _MENU_ registros",
             "zeroRecords": "No se encontraron resultados",
@@ -25,7 +21,7 @@ const handleTabla = id=>{
             },
             "sProcessing": "",
         }
-    });
+    })
 }
 
 export default handleTabla;

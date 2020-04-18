@@ -1,14 +1,7 @@
 import React from 'react';
-import handleTabla from './../../../helpers/handleTabla';
 
 
-class Tabla extends React.Component{
-
-    componentDidMount(){
-        handleTabla('tbl');
-    }
-
-    
+class Tabla extends React.Component{  
 
     render(){
         return(
