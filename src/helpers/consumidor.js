@@ -46,6 +46,30 @@ const consumidor = {
             console.log(error);
             return null;
         }
+    },
+    put:async (route,id,datos) =>{
+
+        try {
+            let res = await fetch(`${linkApi}/${route}/${id}`,{
+                method: 'PUT',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': sessionStorage.getItem('token')
+                },
+                body: JSON.stringify(datos)
+            });
+
+            let data = await res.json();
+
+            validador(data);
+
+            return data;
+
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
     }
 
 }

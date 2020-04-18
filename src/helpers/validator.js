@@ -60,6 +60,29 @@ const validator = {
         }
 
         return valido;
+    },
+    validarDatosEdit: json =>{
+        let valido = true;
+        for (let key  in json) {
+            
+            if(typeof(json[key])=='object'){
+                let select = json[key];
+
+                for (let key2  in select) {
+                    if(!select[key2]){
+                        valido = false
+                        handleError.select(`${key}_edit`);
+                    }
+                }
+            }else{
+                if(!json[key]){
+                    valido = false
+                    handleError.input(`${key}_edit`);
+                }
+            }
+        }
+
+        return valido;
     }
 }
 

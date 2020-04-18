@@ -97,7 +97,12 @@ class Municipios extends React.Component {
                         </button>
                     </div>
                     <div className="mt-1 mb-2">
-                        <Tabla datos={this.state.municipios}/>
+                        <Tabla 
+                            datos={this.state.municipios}
+                            zonas={this.state.zonas}
+                            update={this.getMunicipios}
+                            alerta={this.handleAlert}
+                        />
                     </div>
                 </div>
                 <Crear 
