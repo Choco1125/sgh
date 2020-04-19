@@ -5,6 +5,7 @@ import Tabla from './../../components/admin/tipoProgramas/tabla';
 import Crear from '../../components/admin/tipoProgramas/crear';
 import Alerta from './../../components/Alert';
 import Loader from './../../components/Loader';
+import handleTabla from '../../helpers/handleTabla';
 
 
 
@@ -30,10 +31,12 @@ class TipoProgramas extends React.Component {
             sessionStorage.removeItem('token');
             window.location.href = "/";
         }else{
+            handleTabla.destroy('tbl');
             this.setState({
                 loader: false,
                 tipoProgramas: datos
             });
+            handleTabla.create('tbl');
         }
     }
 
