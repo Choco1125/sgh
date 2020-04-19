@@ -70,6 +70,29 @@ const consumidor = {
             console.log(error);
             return null;
         }
+    },
+    delete:async (route,id) =>{
+
+        try {
+            let res = await fetch(`${linkApi}/${route}/${id}`,{
+                method: 'DELETE',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': sessionStorage.getItem('token')
+                },
+            });
+
+            let data = await res.json();
+
+            validador(data);
+
+            return data;
+
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
     }
 
 }

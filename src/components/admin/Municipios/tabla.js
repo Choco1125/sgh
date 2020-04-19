@@ -2,6 +2,7 @@ import React from 'react';
 import handleError from '../../../helpers/handleError';
 import handleMayus from '../../../helpers/handleMayus';
 import Editar from './editar';
+import Eliminar from './eliminar';
 
 
 class Tabla extends React.Component{  
@@ -17,6 +18,9 @@ class Tabla extends React.Component{
                     value: '',
                     label: ''
                 }
+            },
+            eliminar:{
+                id:''
             }
         }
     }
@@ -79,6 +83,11 @@ class Tabla extends React.Component{
                                             <span className="d-lg-inline btn btn-outline-danger btn-sm mt-1 col-6 col-md-6 btn-middle" 
                                                 data-target="#eliminar" 
                                                 data-toggle="modal"
+                                                onClick={()=>this.setState({
+                                                    eliminar:{
+                                                        id: municipio.id
+                                                    }
+                                                })}
                                             >
                                                 <i className="fas fa-trash-alt"></i>
                                             </span>
@@ -98,6 +107,11 @@ class Tabla extends React.Component{
                     alerta={this.props.alerta}
                     handleChange={this.handleChange}
                     handleChangeSelect={this.handleChangeSelect}
+                />
+                <Eliminar 
+                    id={this.state.eliminar.id}
+                    alerta={this.props.alerta}
+                    update={this.props.update}
                 />
             </div>
         );

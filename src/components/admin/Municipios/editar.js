@@ -42,6 +42,8 @@ class Editar extends React.Component{
             }else if(res === "Muncipio ya existente"){
                 handleError.inputMsj('name_edit',res);
             }else{
+                $('#editar').modal('hide');
+                this.props.alerta('danger',res);
                 console.log(res);
             }
         }
