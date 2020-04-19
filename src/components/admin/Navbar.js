@@ -47,6 +47,7 @@ const Nabvar = ({ active }) => (
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                         <Link className="dropdown-item" to="/admin/municipios">Municipios</Link>
+                        <Link className="dropdown-item" to="/admin/zonas">Zonas</Link>
                     </div>
                 </li>
                 <li className={`nav-item `}>
