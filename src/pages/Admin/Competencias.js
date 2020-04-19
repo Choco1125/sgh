@@ -157,7 +157,7 @@ class Competencias extends React.Component {
                     <Nabvar active="competencias" />
                     <div className="container">
                         <div className="row justify-content-end mt-3">
-                            <button className="btn btn-primary border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
+                            <button className="btn btn-success border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
                         </div>
                         <div className="row mt-2">
                             <div className="table-responsive">

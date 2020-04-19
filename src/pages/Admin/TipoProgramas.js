@@ -65,7 +65,7 @@ class TipoProgramas extends React.Component {
                     <Navbar active="programas" />
                     <div className="container">
                         <div className="row justify-content-end mt-3">
-                            <button className="btn btn-primary border mr-3" 
+                            <button className="btn btn-success border mr-3" 
                                 data-target="#crear" data-toggle="modal">
                                 Crear <i className="fas fa-plus"></i>
                             </button>
