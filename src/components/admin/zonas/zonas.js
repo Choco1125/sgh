@@ -6,7 +6,7 @@ const Zona = ({datos,edit,delet}) => {
             <div className="card-body">
                 <h5 className="card-title" style={{ height: '50px' }}>{datos.name}</h5>
                 <button className="btn btn-outline-success col-11" data-toggle="modal" data-target="#editar"
-                    onClick={() => edit(datos.nombre, datos.id)}
+                    onClick={() => edit(datos.name, datos.id)}
                 >Editar <i className="fas fa-edit"></i></button>
                 <button className="btn btn-outline-danger col-11 mt-2" data-toggle="modal" data-target="#eliminar"
                     onClick={() => delet(datos.id)}

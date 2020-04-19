@@ -4,7 +4,9 @@ import Navbar from './../../components/admin/Navbar';
 import consumidor from './../../helpers/consumidor';
 import handleTabla from './../../helpers/handleTabla';
 import Zona from '../../components/admin/zonas/zonas';
-
+import Crear from '../../components/admin/zonas/crear';
+import Alerta from './../../components/Alert';
+import Eliminar from '../../components/admin/zonas/elminar';
 
 
 
@@ -15,8 +17,37 @@ class Zonas extends React.Component{
 
         this.state = {
             loader: true,
-            zonas:[]
+            zonas:[],
+            editar: {
+                name: '',
+                id: ''
+            },
+            eliminar:{
+                id:''
+            },
+            alerta:{
+                tipo: '',
+                msj: '',
+                shoW: ''
+            }
         }
+    }
+
+    setEdit = (name,id) => {
+        this.setState({
+            editar:{
+                name: name,
+                id:id
+            }
+        });
+    }
+
+    setDelete = id =>{
+        this.setState({
+            eliminar:{
+                id
+            }
+        });
     }
 
     getZonas = async ()=>{
@@ -31,7 +62,22 @@ class Zonas extends React.Component{
             handleTabla.create('tbl');
         }
 
-        console.log(res);
+    }
+
+    handleAlerta = (msj,tipo)=>{
+        this.setState({
+            alerta:{
+                msj,
+                tipo,
+                show: true
+            }
+        });
+
+        setTimeout(()=>this.setState({
+            alerta:{
+                show: true
+            }
+        }),2000);
     }
 
     async componentDidMount(){
@@ -58,11 +104,27 @@ class Zonas extends React.Component{
                                     <Zona
                                         key={i}
                                         datos={zona}
+                                        delet={this.setDelete}
+                                        edit={this.setEdit}
                                     />
                                 )
                             }
                         </div>
                     </div>
+                    <Crear 
+                        update = {this.getZonas}
+                        alerta = {this.handleAlerta}
+                    />
+                    <Eliminar 
+                        id ={this.state.eliminar.id}
+                        alerta = {this.handleAlerta}
+                        update = {this.getZonas}
+                    />
+                    <Alerta 
+                        tipo={this.state.alerta.tipo}
+                        msj={this.state.alerta.msj}
+                        show={this.state.alerta.show}
+                    />
                 </div>
             );
         }
