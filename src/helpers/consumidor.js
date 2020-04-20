@@ -93,7 +93,31 @@ const consumidor = {
             console.log(error);
             return null;
         }
-    }
+    },
+    auth:async (route,datos) =>{
+
+        try {
+            let res = await fetch(`${linkApi}/${route}`,{
+                method: 'POST',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                },
+                body: JSON.stringify(datos)
+            });
+
+            let data = await res.json();
+
+            validador(data);
+
+            return data;
+
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    },
 
 }
 

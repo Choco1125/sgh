@@ -35,6 +35,7 @@ const peticion = async (route,metodo,token,datos) =>{
         return await peticion.json();
         
     } catch (erro) {
+        console.log(erro);
         return {error: erro}
     }
     

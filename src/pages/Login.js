@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from './../assets/logoSGH1.png';
 import Spinner from '../components/spinner';
-import Api from './../components/Api';
+import consumidor from '../helpers/consumidor';
 
 class Login extends React.Component{
 
@@ -73,8 +73,8 @@ class Login extends React.Component{
             password: this.state.password
         };
 
-        let datos = await Api('users/login','POST','',formlario);
-
+        let datos = await consumidor.post('authenticate',formlario);
+        
         if(datos.token){
             sessionStorage.setItem('token',datos.token);
             window.location.href="/admin";
