@@ -14,7 +14,7 @@ const peticion = async (route,metodo,token,datos) =>{
             Myheaders = {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': token
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
             };
         }
     
