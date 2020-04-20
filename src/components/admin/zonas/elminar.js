@@ -18,10 +18,10 @@ const Eliminar = ({id,alerta,update})=>{
             alerta(res,'success');
         }else if(res.message){
             $('#eliminar').modal('hide');
-            alerta(res,'danger');
+            alerta(res.message,'danger');
         }else{
             $('#eliminar').modal('hide');
-            alerta(res,'danger');
+            alerta(JSON.stringify(res),'danger');
             console.log(res);
         }
 

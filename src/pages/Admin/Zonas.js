@@ -7,7 +7,8 @@ import Zona from '../../components/admin/zonas/zonas';
 import Crear from '../../components/admin/zonas/crear';
 import Alerta from './../../components/Alert';
 import Eliminar from '../../components/admin/zonas/elminar';
-
+import Editar from './../../components/admin/zonas/editar';
+import handleMayus from '../../helpers/handleMayus';
 
 
 class Zonas extends React.Component{
@@ -80,6 +81,15 @@ class Zonas extends React.Component{
         }),2000);
     }
 
+    handleChange = (e)=>{
+        this.setState({
+            editar:{
+                ...this.state.editar,
+                [e.target.name]: handleMayus(e.target.value)
+            }
+        });
+    }
+
     async componentDidMount(){
         await this.getZonas();
     }
@@ -124,6 +134,12 @@ class Zonas extends React.Component{
                         tipo={this.state.alerta.tipo}
                         msj={this.state.alerta.msj}
                         show={this.state.alerta.show}
+                    />
+                    <Editar
+                        datos = {this.state.editar}
+                        handleChange = {this.handleChange}
+                        alerta = {this.handleAlerta}
+                        update = {this.getZonas}
                     />
                 </div>
             );
