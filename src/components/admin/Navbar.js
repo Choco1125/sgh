@@ -50,6 +50,14 @@ const Nabvar = ({ active }) => (
                         <Link className="dropdown-item" to="/admin/zonas">Zonas</Link>
                     </div>
                 </li>
+                <li className={`nav-item  dropdown ${(active === "parametrizacion") ? 'active' : ''}`}>
+                    <a className="nav-link dropdown-toggle" href="#0" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Parametrización
+                    </a>
+                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <Link className="dropdown-item" to="/admin/posiciones">Posiciones</Link>
+                    </div>
+                </li>
                 <li className={`nav-item `}>
                     <a className="nav-link" href="/" onClick={() => {
                         sessionStorage.removeItem('token');
