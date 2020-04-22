@@ -140,7 +140,7 @@ class Contratos extends React.Component {
         }else{
             return (
                 <div>
-                    <Nabvar active="contratos" />
+                    <Nabvar active="parametrizacion" />
                     <div className="container">
                         <div className="row justify-content-end mt-3">
                             <button className="btn btn-success border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>

@@ -28,9 +28,6 @@ const Nabvar = ({ active }) => (
                 <li className={`nav-item ${(active === "ambientes") ? 'active' : ''}`}>
                     <Link className="nav-link" to="/admin/ambientes">Ambientes</Link>
                 </li>
-                <li className={`nav-item ${(active === "contratos") ? 'active' : ''}`}>
-                    <Link className="nav-link" to="/admin/contratos">Tipos de contratos</Link>
-                </li>
                 <li className={`nav-item  dropdown ${(active === "programas") ? 'active' : ''}`}>
                     <a className="nav-link dropdown-toggle" href="#0" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Programas de formación
@@ -55,6 +52,7 @@ const Nabvar = ({ active }) => (
                         Parametrización
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <Link className="dropdown-item" to="/admin/contratos">Tipos de contratos</Link>
                         <Link className="dropdown-item" to="/admin/posiciones">Posiciones</Link>
                     </div>
                 </li>
