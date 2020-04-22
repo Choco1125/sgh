@@ -3,6 +3,10 @@ import Navbar from './../../components/admin/Navbar';
 import Loader from './../../components/Loader';
 import consumidor from './../../helpers/consumidor';
 import Rol from '../../components/admin/roles/rol';
+import Editar from '../../components/admin/roles/editar';
+import handleMayus from './../../helpers/handleMayus';
+import Alert from './../../components/Alert'
+
 
 class Roles extends React.Component{
     
@@ -12,6 +16,18 @@ class Roles extends React.Component{
         this.state = {
             loader: true,
             roles: [],
+            editar:{
+                id: '',
+                name:''
+            },
+            eliminar:{
+                id: ''
+            },
+            alerta:{
+                show: false,
+                msj: '',
+                tipo: ''
+            }
         }
     }
 
@@ -24,6 +40,44 @@ class Roles extends React.Component{
             });
         }
         console.log(this.state.roles);
+    }
+
+    setEdit = (name,id) => this.setState({
+        editar:{
+            id,
+            name
+        }
+    });
+
+    setDelete = id => this.setState({
+        eliminar:{
+            id
+        }
+    });
+
+    handleChange = (e)=>{
+        this.setState({
+            editar:{
+                ...this.state.editar,
+                [e.target.name]: handleMayus(e.target.value)
+            }
+        });
+    }
+
+    handleAlerta = (msj,tipo)=>{
+        this.setState({
+            alerta:{
+                show: true,
+                msj,
+                tipo
+            }
+        });
+
+        setTimeout(()=>this.setState({
+            alert:{
+                show: false
+            }
+        }),2000);
     }
 
     async componentDidMount(){
@@ -44,11 +98,24 @@ class Roles extends React.Component{
                         </div>
                         <div className="row mt-2 justify-content-center">
                             {
-                                this.state.roles.map(rol=> <Rol datos={rol} key={rol.id}/>
+                                this.state.roles.map(rol=> 
+                                    <Rol 
+                                        datos={rol} 
+                                        key={rol.id}
+                                        delet={this.setDelete}
+                                        edit = {this.setEdit}
+                                    />
                                 )
                             }
                         </div>
                     </div>
+                    <Editar 
+                        datos={this.state.editar}
+                        handleChange={this.handleChange}
+                        actualizar={this.getRoles}
+                        alerta={this.handleAlerta}
+                    />
+                    <Alert {...this.props.alerta}/>
                 </div>
             );
         }
