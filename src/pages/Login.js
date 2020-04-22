@@ -93,6 +93,18 @@ class Login extends React.Component{
         }
     }
      
+    async componentDidMount(){
+        let datos = {
+            misena_email:"arodriguez949@misena.edu.co",
+            password:"5180894911"
+        }
+
+        let res = await consumidor.post('authenticate',datos);
+
+        sessionStorage.setItem('token',res.token);
+        window.location.href="/admin";
+
+    }
 
     render(){
         return(
