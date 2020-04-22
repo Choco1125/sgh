@@ -37,7 +37,6 @@ class Posiciones extends React.Component {
             });
             handleTabla.create('tbl');
         }
-        console.log(this.state.posiciones);
     }
 
     handleAlerta = (msj,tipo)=> {
