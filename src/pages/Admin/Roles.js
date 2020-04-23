@@ -6,6 +6,7 @@ import Rol from '../../components/admin/roles/rol';
 import Editar from '../../components/admin/roles/editar';
 import handleMayus from './../../helpers/handleMayus';
 import Alert from './../../components/Alert'
+import Eliminar from '../../components/admin/roles/eliminar';
 
 
 class Roles extends React.Component{
@@ -39,7 +40,6 @@ class Roles extends React.Component{
                 loader: false
             });
         }
-        console.log(this.state.roles);
     }
 
     setEdit = (name,id) => this.setState({
@@ -74,7 +74,7 @@ class Roles extends React.Component{
         });
 
         setTimeout(()=>this.setState({
-            alert:{
+            alerta:{
                 show: false
             }
         }),2000);
@@ -115,7 +115,16 @@ class Roles extends React.Component{
                         actualizar={this.getRoles}
                         alerta={this.handleAlerta}
                     />
-                    <Alert {...this.props.alerta}/>
+                    <Eliminar
+                        datos={this.state.eliminar}
+                        alerta={this.handleAlerta}
+                        update={this.getRoles}
+                    />
+                    <Alert 
+                        show={this.state.alerta.show}
+                        msj={this.state.alerta.msj}
+                        tipo={this.state.alerta.tipo}
+                    />
                 </div>
             );
         }

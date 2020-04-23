@@ -14,6 +14,8 @@ const Administrador = ()=>(
                     <ul className="list-group">
                         <li className="list-group-item list-group-item-success">Crud de posiciones</li>
                         <li className="list-group-item list-group-item-success">Se añadió tipo de contrato a parametrización</li>
+                        <li className="list-group-item list-group-item-success">Fast Login</li>
+                        <li className="list-group-item list-group-item-warning">Falta crear en roles </li>
                         <li className="list-group-item list-group-item-warning">No se han aplicado cambios del documento ni los del backend</li>
                     </ul>
                 </div>
