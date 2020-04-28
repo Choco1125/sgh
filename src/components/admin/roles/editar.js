@@ -54,10 +54,10 @@ const Editar = ({datos,handleChange,actualizar,alerta}) =>{
                             Los campos con
                             <i className="text-danger">* </i>
                             son obligatorios
-                    </span>
+                        </span>
                         <div className="form-group mt-1" id="name_edit">
                             <label htmlFor="name">
-                                Name
+                                Nombre
                             <span className="text-danger">*</span>
                             </label>
                             <input name="name" type="text"

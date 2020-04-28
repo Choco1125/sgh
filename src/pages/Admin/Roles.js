@@ -7,6 +7,7 @@ import Editar from '../../components/admin/roles/editar';
 import handleMayus from './../../helpers/handleMayus';
 import Alert from './../../components/Alert'
 import Eliminar from '../../components/admin/roles/eliminar';
+import Crear from '../../components/admin/roles/crear';
 
 
 class Roles extends React.Component{
@@ -124,6 +125,10 @@ class Roles extends React.Component{
                         show={this.state.alerta.show}
                         msj={this.state.alerta.msj}
                         tipo={this.state.alerta.tipo}
+                    />
+                    <Crear
+                        alerta={this.handleAlerta}
+                        update={this.getRoles}
                     />
                 </div>
             );
