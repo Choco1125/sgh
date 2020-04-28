@@ -33,9 +33,10 @@ const Nabvar = ({ active }) => (
                         Programas de formación
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <Link className="dropdown-item" to="/admin/grupos">Grupos</Link>
+                        <Link className="dropdown-item" to="/admin/modalidades">Modalidades</Link>
                         <Link className="dropdown-item" to="/admin/programas">Programas de formación</Link>
                         <Link className="dropdown-item" to="/admin/tipo-programas">Tipos de programación de formación </Link>
-                        <Link className="dropdown-item" to="/admin/grupos">Grupos</Link>
                     </div>
                 </li>
                 <li className={`nav-item  dropdown ${(active === "ubicaciones") ? 'active' : ''}`}>

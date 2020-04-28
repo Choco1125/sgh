@@ -16,6 +16,7 @@ import Municipios from "./pages/Admin/Municipios";
 import Zonas from './pages/Admin/Zonas';
 import Posiciones from './pages/Admin/Posiciones';
 import Roles from './pages/Admin/Roles';
+import Modalidades from './pages/Admin/Modalidades';
 
 const App = ()=>(
   <BrowserRouter>
@@ -33,6 +34,7 @@ const App = ()=>(
       <Route path="/admin/zonas" exact component={Zonas}/>
       <Route path="/admin/posiciones" exact component={Posiciones}/>
       <Route path="/admin/roles" exact component={Roles}/>
+      <Route path="/admin/modalidades" exact component={Modalidades}/>
     </Switch>
   </BrowserRouter>
 );
