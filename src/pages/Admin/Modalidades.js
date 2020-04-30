@@ -3,6 +3,10 @@ import Loader from '../../components/Loader';
 import Navbar from './../../components/admin/Navbar';
 import consumidor  from './../../helpers/consumidor';
 import Modalidad from '../../components/admin/modalidades/modalidad';
+import Crear from '../../components/admin/modalidades/crear';
+import Alert from './../../components/Alert';
+import Eliminar from '../../components/admin/modalidades/eliminar';
+
 
 
 class Modalidades extends React.Component{
@@ -12,7 +16,19 @@ class Modalidades extends React.Component{
 
         this.state = {
             loader: true,
-            modalidades: []
+            modalidades: [],
+            alerta:{
+                show: false,
+                msj: '',
+                tipo: ''
+            },
+            edit:{
+                id:'',
+                name:''
+            },
+            delete:{
+                id: ''
+            }
         }
     }
 
@@ -24,7 +40,6 @@ class Modalidades extends React.Component{
                 modalidades: res
             });    
         }
-        console.log(res);
     }
     
     setEdit= (name,id)=> this.setState({
@@ -39,6 +54,22 @@ class Modalidades extends React.Component{
             id
         }
     });
+
+    handleAlerta = (msj,tipo)=>{
+        this.setState({
+            alerta:{
+                show: true,
+                msj,
+                tipo
+            }
+        });
+
+        setTimeout(()=> this.setState({
+            alerta:{
+                show: true
+            }
+        }),2000);
+    } 
 
     async componentDidMount(){
         await this.getModalidades();
@@ -61,13 +92,25 @@ class Modalidades extends React.Component{
                                     <Modalidad
                                         datos={modalidad}
                                         edit={this.setEdit}
-                                        delet={this}
+                                        delet={this.setDelete}
                                         key={modalidad.id}
                                     />
                                 )
                             }
                         </div>
                     </div>
+                    <Crear
+                        update={this.getModalidades}
+                        alerta={this.handleAlerta}
+                    />
+                    <Eliminar
+                        datos={this.state.delete}
+                        alerta={this.handleAlerta}
+                        update={this.getModalidades}
+                    />
+                    <Alert 
+                        {...this.state.alerta}
+                    />
                 </div>
             );
         }
