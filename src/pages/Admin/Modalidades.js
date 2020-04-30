@@ -6,6 +6,8 @@ import Modalidad from '../../components/admin/modalidades/modalidad';
 import Crear from '../../components/admin/modalidades/crear';
 import Alert from './../../components/Alert';
 import Eliminar from '../../components/admin/modalidades/eliminar';
+import handleMayus from '../../helpers/handleMayus';
+import Editar from '../../components/admin/modalidades/editar';
 
 
 
@@ -71,6 +73,13 @@ class Modalidades extends React.Component{
         }),2000);
     } 
 
+    handleChange= e=>this.setState({
+        edit:{
+            ...this.state.edit,
+            [e.target.name]: handleMayus(e.target.value)
+        }
+    });
+
     async componentDidMount(){
         await this.getModalidades();
     }
@@ -100,6 +109,12 @@ class Modalidades extends React.Component{
                         </div>
                     </div>
                     <Crear
+                        update={this.getModalidades}
+                        alerta={this.handleAlerta}
+                    />
+                    <Editar
+                        datos={this.state.edit}
+                        handleChange={this.handleChange}
                         update={this.getModalidades}
                         alerta={this.handleAlerta}
                     />
