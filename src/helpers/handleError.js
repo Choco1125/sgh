@@ -10,7 +10,7 @@ const handleError = {
             elemento.children[1].classList.remove('is-invalid');
             elemento.children[2].innerHTML = '';
         });
-        
+
     },
     select: id => {
         let elemento = document.getElementById(id);

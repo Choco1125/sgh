@@ -58,7 +58,6 @@ const validator = {
                 }
             }
         }
-
         return valido;
     },
     validarDatosEdit: json =>{

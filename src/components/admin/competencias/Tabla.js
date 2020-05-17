@@ -22,7 +22,7 @@ class Tabla extends React.Component{
                         <th >Descripción</th>
                         <th >Resúmen</th>
                         <th className="d-none d-md-block">Horas</th>
-                        <th ></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
