@@ -8,6 +8,7 @@ import Crear from './../../components/admin/usuariosTemporales/crear';
 import Alert from './../../components/Alert';
 import handleMayus from '../../helpers/handleMayus';
 import Editar from '../../components/admin/usuariosTemporales/editar';
+import Eliminar from '../../components/admin/usuariosTemporales/eliminar';
 
 class UsuariosTemporales extends React.Component {
 
@@ -36,6 +37,9 @@ class UsuariosTemporales extends React.Component {
                 startDate: '',
                 endDate: '',
                 type: ''
+            },
+            eliminar:{
+                id:''
             },
             loader: true
         }
@@ -109,6 +113,12 @@ class UsuariosTemporales extends React.Component {
         }), 2000);
     }
 
+    setEliminar = (id)=>this.setState({
+        eliminar:{
+            id
+        }
+    });
+
     async componentDidMount(){
         await this.getUsuarios();
         // await this.getPeriocidades()
@@ -135,6 +145,7 @@ class UsuariosTemporales extends React.Component {
                         <Tabla
                             datos={this.state.usuarios}
                             setEdit = {this.setEdit}
+                            eliminar = {this.setEliminar}
                         />
                     </div>
                 </div>
@@ -148,6 +159,10 @@ class UsuariosTemporales extends React.Component {
                     datos={this.state.edit}
                     handleChange={this.handleChange}
                     handleChangeSelect={this.handleChangeSelect}
+                />
+                <Eliminar
+                    id={this.state.eliminar.id}
+                    alerta={this.handleAlert}
                 />
                 <Alert
                     show={this.state.alerta.show}
