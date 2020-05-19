@@ -35,9 +35,9 @@ class RazonesDesprogramacion extends React.Component{
     }
 
     getRazones= async ()=>{
-        handleTabla.destroy('tbl');
         let datos = await consumidor.get('deprogrammingReasons');
         if(datos){
+            handleTabla.destroy('tbl');
             this.setState({
                 datos,
                 loader: false

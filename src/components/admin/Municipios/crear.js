@@ -51,7 +51,6 @@ class Crear extends React.Component{
             }
         });
 
-        // console.log(validator.validarDatos(this.state.datos));
         if(validator.validarDatos(this.state.datos)){
             let datos = {
                 name: this.state.datos.name,

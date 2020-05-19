@@ -18,6 +18,7 @@ import Posiciones from './pages/Admin/Posiciones';
 import Roles from './pages/Admin/Roles';
 import Modalidades from './pages/Admin/Modalidades';
 import RazonesDesprogramaciones from './pages/Admin/RazonesDesprogramacion';
+import UsuariosTemporales from './pages/Admin/UsuariosTemporales';
 
 
 const App = ()=>(
@@ -38,6 +39,7 @@ const App = ()=>(
       <Route path="/admin/roles" exact component={Roles}/>
       <Route path="/admin/modalidades" exact component={Modalidades}/>
       <Route path="/admin/razonesdesprogramaciones" exact component={RazonesDesprogramaciones}/>
+      <Route path="/admin/usuariostemporales" exact component={UsuariosTemporales}/>
     </Switch>
   </BrowserRouter>
 );
