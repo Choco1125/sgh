@@ -1,25 +1,17 @@
 import React, { useState } from 'react';
 import Spinner from '../../spinner';
 import handleMayus from '../../../helpers/handleMayus';
-import Select from 'react-select';
 import validator from '../../../helpers/validator';
 import consumidor from '../../../helpers/consumidor';
 import $ from 'jquery';
 import handleError from '../../../helpers/handleError';
 
-const Crear = ({periocidades,alerta,actualizar}) => {
+const Crear = ({alerta,actualizar}) => {
 
     const [spinner, setSpinner] = useState(false);
     const [name, setName] = useState('');
     const [observations, setObservations] = useState('');
     const [type, setType] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setendDate] = useState('');
-    const [periodicityId, setPeriodicityId] = useState({
-        value: null,
-        label: ''
-    })
-
 
     const save = async ()=>{
         setSpinner(true);
@@ -27,10 +19,7 @@ const Crear = ({periocidades,alerta,actualizar}) => {
             let datos = {
                 name,
                 observations,
-                type,
-                startDate,
-                endDate,
-                periodicityId: periodicityId.value
+                type
             }
             console.log(datos);
             let res = await consumidor.post('temporaryUserActivities',datos);
@@ -41,12 +30,6 @@ const Crear = ({periocidades,alerta,actualizar}) => {
                 setName('');
                 setObservations('');
                 setType('');
-                setStartDate('');
-                setendDate('');
-                setPeriodicityId({
-                    value: null,
-                    label: ''
-                });
             }else if(res === 'Usuario/Actividad ya existente'){
                 handleError.inputMsj('name',res);
             }else{
@@ -113,39 +96,6 @@ const Crear = ({periocidades,alerta,actualizar}) => {
                                 onChange={e => setType(handleMayus(e.target.value))}
                                 value={type}
                                 maxLength="255"
-                            />
-                            <span className="text-danger"></span>
-                        </div>
-                        <div className="form-group" id="startDate">
-                            <label htmlFor="startDate">
-                                Fecha inicio
-                            </label>
-                            <input name="startDate" type="date"
-                                className="form-control"
-                                onChange={e => setStartDate(e.target.value)}
-                                value={startDate}
-                            />
-                            <span className="text-danger"></span>
-                        </div>
-                        <div className="form-group" id="endDate">
-                            <label htmlFor="endDate">
-                                Fecha fin
-                            </label>
-                            <input name="endDate" type="date"
-                                className="form-control"
-                                onChange={e => setendDate(e.target.value)}
-                                value={endDate}
-                            />
-                            <span className="text-danger"></span>
-                        </div>
-                        <div className="form-group" id="periodicityId">
-                            <label htmlFor="periodicityId">
-                               Periocidad
-                            </label>    
-                            <Select 
-                                value={periodicityId}
-                                options={periocidades}
-                                onChange={e=>setPeriodicityId(e)}
                             />
                             <span className="text-danger"></span>
                         </div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Select from 'react-select';
 import Spinner from '../../spinner';
 
 const Editar = ({datos,periocidades,handleChange,handleChangeSelect}) =>{
@@ -68,39 +67,6 @@ const Editar = ({datos,periocidades,handleChange,handleChangeSelect}) =>{
                                 onChange={e => handleChange(e.target.value)}
                                 value={datos.type}
                                 maxLength="255"
-                            />
-                            <span className="text-danger"></span>
-                        </div>
-                        <div className="form-group" id="startDate_edit">
-                            <label htmlFor="startDate">
-                                Fecha inicio
-                            </label>
-                            <input name="startDate" type="date"
-                                className="form-control"
-                                onChange={e => handleChange(e.target.value)}
-                                value={datos.startDate}
-                            />
-                            <span className="text-danger"></span>
-                        </div>
-                        <div className="form-group" id="endDate_edit">
-                            <label htmlFor="endDate">
-                                Fecha fin
-                            </label>
-                            <input name="endDate" type="date"
-                                className="form-control"
-                                onChange={e => handleChange(e.target.value)}
-                                value={datos.endDate}
-                            />
-                            <span className="text-danger"></span>
-                        </div>
-                        <div className="form-group" id="periodicityId_edit">
-                            <label htmlFor="periodicityId">
-                               Periocidad
-                            </label>    
-                            <Select 
-                                value={datos.periodicityId}
-                                options={periocidades}
-                                onChange={e=>handleChangeSelect(e)}
                             />
                             <span className="text-danger"></span>
                         </div>
