@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import Spinner from '../../spinner';
 import handleMayus from '../../../helpers/handleMayus';
+import Select from 'react-select';
+import validator from '../../../helpers/validator';
+import consumidor from '../../../helpers/consumidor';
+import $ from 'jquery';
+import handleError from '../../../helpers/handleError';
 
-const Crear = () => {
+const Crear = ({periocidades,alerta,actualizar}) => {
 
     const [spinner, setSpinner] = useState(false);
     const [name, setName] = useState('');
@@ -10,8 +15,43 @@ const Crear = () => {
     const [type, setType] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setendDate] = useState('');
-    const save = ()=>{
+    const [periodicityId, setPeriodicityId] = useState({
+        value: null,
+        label: ''
+    })
+
+
+    const save = async ()=>{
         setSpinner(true);
+        if(validator.validarDatos({name})){
+            let datos = {
+                name,
+                observations,
+                type,
+                startDate,
+                endDate,
+                periodicityId: periodicityId.value
+            } 
+            let res = await consumidor.post('temporaryUserActivities',datos);
+            if(res === 'Usuario/Actividad creada(o)'){
+                await actualizar();
+                $('#crear').modal('hide');
+                alerta(res,'success');
+                setName('');
+                setObservations('');
+                setType('');
+                setStartDate('');
+                setendDate('');
+                setPeriodicityId({
+                    value: null,
+                    label: ''
+                });
+            }else if(res === 'Usuario/Actividad ya existente'){
+                handleError.inputMsj('name',res);
+            }else{
+                console.log(res);
+            }
+        }
         setSpinner(false);
     }
 
@@ -101,6 +141,11 @@ const Crear = () => {
                             <label htmlFor="periodicityId">
                                Periocidad
                             </label>    
+                            <Select 
+                                value={periodicityId}
+                                options={periocidades}
+                                onChange={e=>setPeriodicityId(e)}
+                            />
                             <span className="text-danger"></span>
                         </div>
                     </div>
