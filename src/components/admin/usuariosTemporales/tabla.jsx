@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Tabla = ({datos})=>{
+const Tabla = ({datos,setEdit})=>{
     return(
         <table className="table table-sm text-center" id="tbl">
             <thead>
@@ -20,6 +20,10 @@ const Tabla = ({datos})=>{
                                 <span className="d-lg-inline btn btn-outline-success btn-sm mt-1 col-6 col-md-6 btn-middle"
                                     data-target="#editar"
                                     data-toggle="modal"
+                                    onClick={()=>{
+                                        console.log(usuario)
+                                        setEdit(usuario.id,usuario.name,usuario.observations,usuario.startDate,usuario.endDate,usuario.type,usuario.periodicity)
+                                    }}
                                 >
                                     <i className="fas fa-edit"></i>
                                 </span>
