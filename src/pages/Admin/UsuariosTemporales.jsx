@@ -1,7 +1,7 @@
 import React from 'react';
 import Nabvar from '../../components/admin/Navbar';
 import consumidor from './../../helpers/consumidor';
-// import handleTabla from './../../helpers/handleTabla';
+import handleTabla from './../../helpers/handleTabla';
 import Tabla from './../../components/admin/usuariosTemporales/tabla';
 import Loader from './../../components/Loader';
 import Crear from './../../components/admin/usuariosTemporales/crear';
@@ -37,12 +37,14 @@ class UsuariosTemporales extends React.Component {
 
     getUsuarios = async () => {
 
-        let datos = await consumidor.get('temporaryUserActivities');
-        if (datos) {
+        let usuarios = await consumidor.get('temporaryUserActivities');
+        if (usuarios) {
+            handleTabla.destroy('tbl');
             this.setState({
-                loader: false,
-                usuarios: datos
+                usuarios,
+                loader: false
             });
+            handleTabla.create('tbl');        
         }
     }
 
@@ -94,49 +96,50 @@ class UsuariosTemporales extends React.Component {
     render() {
         if (this.state.loader) {
             return <Loader />
-        }
-        return (
-            <div>
-                <Nabvar active="usuarios" />
-                <div className="container">
-                    <div className="row justify-content-end mt-3">
-                        <button className="btn btn-success border mr-3"
-                            data-target="#crear"
-                            data-toggle="modal"
-                        >
-                            Crear <i className="fas fa-plus"></i>
-                        </button>
+        }else{
+            return (
+                <div>
+                    <Nabvar active="usuarios" />
+                    <div className="container">
+                        <div className="row justify-content-end mt-3">
+                            <button className="btn btn-success border mr-3"
+                                data-target="#crear"
+                                data-toggle="modal"
+                            >
+                                Crear <i className="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div className="mt-2 mb-3">
+                            <Tabla
+                                datos={this.state.usuarios}
+                                setEdit = {this.setEdit}
+                                eliminar = {this.setEliminar}
+                            />
+                        </div>
                     </div>
-                    <div className="row mt-2 mb-3">
-                        <Tabla
-                            datos={this.state.usuarios}
-                            setEdit = {this.setEdit}
-                            eliminar = {this.setEliminar}
-                        />
-                    </div>
+                    <Crear
+                        periocidades={this.state.periocidades}
+                        actualizar={this.getUsuarios}
+                        alerta={this.handleAlert}
+                    />
+                    <Editar
+                        datos={this.state.edit}
+                        handleChange={this.handleChange}
+                        update = {this.getUsuarios}
+                        alerta = {this.handleAlert}
+                    />
+                    <Eliminar
+                        id={this.state.eliminar.id}
+                        alerta={this.handleAlert}
+                    />
+                    <Alert
+                        show={this.state.alerta.show}
+                        msj={this.state.alerta.msj}
+                        tipo={this.state.alerta.tipo}
+                    />
                 </div>
-                <Crear
-                    periocidades={this.state.periocidades}
-                    actualizar={this.getUsuarios}
-                    alerta={this.handleAlert}
-                />
-                <Editar
-                    datos={this.state.edit}
-                    handleChange={this.handleChange}
-                    update = {this.getUsuarios}
-                    alerta = {this.handleAlert}
-                />
-                <Eliminar
-                    id={this.state.eliminar.id}
-                    alerta={this.handleAlert}
-                />
-                <Alert
-                    show={this.state.alerta.show}
-                    msj={this.state.alerta.msj}
-                    tipo={this.state.alerta.tipo}
-                />
-            </div>
-        )
+            )
+        }
     }
 }
 
