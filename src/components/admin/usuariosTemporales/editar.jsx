@@ -1,12 +1,38 @@
 import React, { useState } from 'react';
 import Spinner from '../../spinner';
+import validator from '../../../helpers/validator';
+import consumidor from '../../../helpers/consumidor';
+import $ from 'jquery';
+import handleError from '../../../helpers/handleError';
 
-const Editar = ({datos,periocidades,handleChange,handleChangeSelect}) =>{
+const Editar = ({datos,handleChange,update,alerta}) =>{
     const [spinner, setSpinner] = useState(false);
 
-    const save = ()=>{
+    const save = async ()=>{
         setSpinner(true);
-        console.log(datos);
+        if(validator.validarDatosEdit({name: datos.name})){
+
+            let data = {
+                name: datos.name,
+                observations: datos.observations,
+                type: datos.type
+            }
+
+            let res = await consumidor.put('temporaryUserActivities',datos.id,data);
+
+            if(res === 'Usuario/Actividad actualizada(o)'){
+                await update();
+                $('#editar').modal('hide');
+                alerta(res,'success');
+            }else if(res.message){
+                $('#editar').modal('hide');
+                alerta(res.danger,'danger');
+            }else if(res === 'Usuario/Actividad ya existente'){
+                handleError.inputMsj('name_edit',res);
+            }else{
+                console.log(res);
+            }
+        }
         setSpinner(false);
     }
 
@@ -17,7 +43,7 @@ const Editar = ({datos,periocidades,handleChange,handleChangeSelect}) =>{
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="editarLabel">
-                            Editar razón de desprogramación
+                            Editar usuario temporal
                             </h5>
                         <button type="button" className="close" data-dismiss="modal"
                             aria-label="Close">
@@ -36,7 +62,7 @@ const Editar = ({datos,periocidades,handleChange,handleChangeSelect}) =>{
                             <input name="name" type="text"
                                 className="form-control"
                                 placeholder="Nombre de la razón de desprogramación"
-                                onChange={e => handleChange(e.target.value)}
+                                onChange={e => handleChange(e)}
                                 value={datos.name}
                                 maxLength="255"
                             />
@@ -50,7 +76,7 @@ const Editar = ({datos,periocidades,handleChange,handleChangeSelect}) =>{
                             <input name="observations" type="text"
                                 className="form-control"
                                 placeholder="Observación de la razón de desprogramación"
-                                onChange={e => handleChange(e.target.value)}
+                                onChange={e => handleChange(e)}
                                 value={datos.observations}
                                 maxLength="255"
                             />
@@ -64,7 +90,7 @@ const Editar = ({datos,periocidades,handleChange,handleChangeSelect}) =>{
                             <input name="type" type="text"
                                 className="form-control"
                                 placeholder="Tipo de razón de desprogramación"
-                                onChange={e => handleChange(e.target.value)}
+                                onChange={e => handleChange(e)}
                                 value={datos.type}
                                 maxLength="255"
                             />

@@ -46,7 +46,7 @@ const Crear = ({alerta,actualizar}) => {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="crearLabel">
-                            Crear razón de desprogramación
+                            Crear usuario temporal
                             </h5>
                         <button type="button" className="close" data-dismiss="modal"
                             aria-label="Close">

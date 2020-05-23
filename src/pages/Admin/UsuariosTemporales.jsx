@@ -17,10 +17,6 @@ class UsuariosTemporales extends React.Component {
 
         this.state = {
             usuarios: [],
-            periocidades: [{
-                value: null,
-                label: ''
-            }],
             alerta: {
                 show: false,
                 msj: '',
@@ -29,13 +25,7 @@ class UsuariosTemporales extends React.Component {
             edit:{
                 id: '',
                 name: '',
-                observations: null,
-                periodicity:{
-                    label: '',
-                    value: null
-                },
-                startDate: '',
-                endDate: '',
+                observations: '',
                 type: ''
             },
             eliminar:{
@@ -56,11 +46,6 @@ class UsuariosTemporales extends React.Component {
         }
     }
 
-    // getPeriocidades = async () => {
-    //     let res = await consumidor.get('periodicities');
-    //     console.log(res);
-    // }
-
     handleChange = (e) =>{
         this.setState({
             edit:{
@@ -68,33 +53,16 @@ class UsuariosTemporales extends React.Component {
                 [e.target.name]: handleMayus(e.target.value)
             }
         });
-        console.log(this.state.edit)
-    }
-    handleChangeSelect = (e) =>{
-        this.setState({
-            edit:{
-                ...this.state.edit,
-                periodicity:{
-                    label: e.label,
-                    value: e.value
-                }
-            }
-        });
-        console.log(this.state.edit)
     }
 
-    setEdit = (id,name,observations,startDate,endDate,type,periodicity) =>  this.setState({
+
+    setEdit = (id,name,observations,type) =>  this.setState({
         edit:{
             id,
             name,
             observations,
-            startDate,
-            endDate,
             type,
-            periodicity:{
-                label: '',
-                value: null
-            }
+           
         }
     });
 
@@ -121,8 +89,6 @@ class UsuariosTemporales extends React.Component {
 
     async componentDidMount(){
         await this.getUsuarios();
-        // await this.getPeriocidades()
-        // console.log(this.state.usuarios)
     }
 
     render() {
@@ -155,10 +121,10 @@ class UsuariosTemporales extends React.Component {
                     alerta={this.handleAlert}
                 />
                 <Editar
-                    periocidades={this.state.periocidades}
                     datos={this.state.edit}
                     handleChange={this.handleChange}
-                    handleChangeSelect={this.handleChangeSelect}
+                    update = {this.getUsuarios}
+                    alerta = {this.handleAlert}
                 />
                 <Eliminar
                     id={this.state.eliminar.id}
