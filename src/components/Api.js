@@ -1,4 +1,4 @@
-const API = 'https://app-sgh.herokuapp.com/api/';
+const API = 'https://cronode.herokuapp.com/api/';
 
 const peticion = async (route,metodo,token,datos) =>{
     try {

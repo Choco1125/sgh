@@ -1,6 +1,6 @@
 import validador from './validador';
 
-const linkApi = 'https://app-sgh.herokuapp.com/api';
+const linkApi = 'https://cronode.herokuapp.com/api';
 
 const consumidor = {
     get:async route =>{
