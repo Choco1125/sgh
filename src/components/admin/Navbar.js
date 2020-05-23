@@ -14,29 +14,29 @@ const Nabvar = ({ active }) => (
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
                 <li className={`nav-item ${(active === "home") ? 'active' : ''}`}>
-                    <Link to="/admin" className="nav-link">Inicio</Link>
+                    <Link to="/coordinador" className="nav-link">Inicio</Link>
                 </li>
                 <li className={`nav-item  dropdown ${(active === "competencias") ? 'active' : ''}`}>
                     <a className="nav-link dropdown-toggle" href="#0" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Competencias
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <Link className="dropdown-item" to="/admin/competencias">Competencias</Link> 
-                        <Link className="dropdown-item" to="/admin/resultados">Resultados de aprendizaje</Link>
+                        <Link className="dropdown-item" to="/coordinador/competencias">Competencias</Link> 
+                        <Link className="dropdown-item" to="/coordinador/resultados">Resultados de aprendizaje</Link>
                     </div>
                 </li>
                 <li className={`nav-item ${(active === "ambientes") ? 'active' : ''}`}>
-                    <Link className="nav-link" to="/admin/ambientes">Ambientes</Link>
+                    <Link className="nav-link" to="/coordinador/ambientes">Ambientes</Link>
                 </li>
                 <li className={`nav-item  dropdown ${(active === "programas") ? 'active' : ''}`}>
                     <a className="nav-link dropdown-toggle" href="#0" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Programas de formación
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <Link className="dropdown-item" to="/admin/grupos">Grupos</Link>
-                        <Link className="dropdown-item" to="/admin/modalidades">Modalidades</Link>
-                        <Link className="dropdown-item" to="/admin/programas">Programas de formación</Link>
-                        <Link className="dropdown-item" to="/admin/tipo-programas">Tipos de programación de formación </Link>
+                        <Link className="dropdown-item" to="/coordinador/grupos">Grupos</Link>
+                        <Link className="dropdown-item" to="/coordinador/modalidades">Modalidades</Link>
+                        <Link className="dropdown-item" to="/coordinador/programas">Programas de formación</Link>
+                        <Link className="dropdown-item" to="/coordinador/tipo-programas">Tipos de programación de formación </Link>
                     </div>
                 </li>
                 <li className={`nav-item  dropdown ${(active === "ubicaciones") ? 'active' : ''}`}>
@@ -44,8 +44,8 @@ const Nabvar = ({ active }) => (
                         Ubicaciones
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <Link className="dropdown-item" to="/admin/municipios">Municipios</Link>
-                        <Link className="dropdown-item" to="/admin/zonas">Zonas</Link>
+                        <Link className="dropdown-item" to="/coordinador/municipios">Municipios</Link>
+                        <Link className="dropdown-item" to="/coordinador/zonas">Zonas</Link>
                     </div>
                 </li>
                 <li className={`nav-item  dropdown ${(active === "parametrizacion") ? 'active' : ''}`}>
@@ -53,9 +53,9 @@ const Nabvar = ({ active }) => (
                         Parametrización
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <Link className="dropdown-item" to="/admin/contratos">Tipos de contratos</Link>
-                        <Link className="dropdown-item" to="/admin/posiciones">Posiciones</Link>
-                        <Link className="dropdown-item" to="/admin/roles">Roles</Link>
+                        <Link className="dropdown-item" to="/coordinador/contratos">Tipos de contratos</Link>
+                        <Link className="dropdown-item" to="/coordinador/posiciones">Posiciones</Link>
+                        <Link className="dropdown-item" to="/coordinador/roles">Roles</Link>
                     </div>
                 </li>
                 <li className={`nav-item  dropdown ${(active === "desprogramacion") ? 'active' : ''}`}>
@@ -63,7 +63,7 @@ const Nabvar = ({ active }) => (
                         Desprogramaciones
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <Link className="dropdown-item" to="/admin/razonesdesprogramaciones">Razones de desprogramación</Link> 
+                        <Link className="dropdown-item" to="/coordinador/razonesdesprogramaciones">Razones de desprogramación</Link> 
                     </div>
                 </li>
                 <li className={`nav-item  dropdown ${(active === "usuarios") ? 'active' : ''}`}>
@@ -71,7 +71,7 @@ const Nabvar = ({ active }) => (
                         Usuarios
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <Link className="dropdown-item" to="/admin/usuariostemporales">Usuarios temporales</Link> 
+                        <Link className="dropdown-item" to="/coordinador/usuariostemporales">Usuarios temporales</Link> 
                     </div>
                 </li>
                 <li className={`nav-item `}>

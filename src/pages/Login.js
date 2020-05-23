@@ -77,7 +77,7 @@ class Login extends React.Component{
         
         if(datos.token){
             sessionStorage.setItem('token',datos.token);
-            window.location.href="/admin";
+            window.location.href="/coordinador";
         }else{
             switch(datos.status){
                 case 404:

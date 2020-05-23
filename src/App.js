@@ -25,21 +25,21 @@ const App = ()=>(
   <BrowserRouter>
     <Switch>
       <Route path="/" exact component={Login}/>
-      <Route path="/admin" exact component={Administrador}/>
-      <Route path="/admin/competencias" exact component={Competencias}/>
-      <Route path="/admin/ambientes" exact component={Ambientes}/>
-      <Route path="/admin/contratos" exact component={Contratos}/>
-      <Route path="/admin/programas" exact component={Programas}/>
-      <Route path="/admin/tipo-programas" exact component={TiposProgramas}/>
-      <Route path="/admin/grupos" exact component={Grupos}/>
-      <Route path="/admin/resultados" exact component={Resultados}/>
-      <Route path="/admin/municipios" exact component={Municipios}/>
-      <Route path="/admin/zonas" exact component={Zonas}/>
-      <Route path="/admin/posiciones" exact component={Posiciones}/>
-      <Route path="/admin/roles" exact component={Roles}/>
-      <Route path="/admin/modalidades" exact component={Modalidades}/>
-      <Route path="/admin/razonesdesprogramaciones" exact component={RazonesDesprogramaciones}/>
-      <Route path="/admin/usuariostemporales" exact component={UsuariosTemporales}/>
+      <Route path="/coordinador" exact component={Administrador}/>
+      <Route path="/coordinador/competencias" exact component={Competencias}/>
+      <Route path="/coordinador/ambientes" exact component={Ambientes}/>
+      <Route path="/coordinador/contratos" exact component={Contratos}/>
+      <Route path="/coordinador/programas" exact component={Programas}/>
+      <Route path="/coordinador/tipo-programas" exact component={TiposProgramas}/>
+      <Route path="/coordinador/grupos" exact component={Grupos}/>
+      <Route path="/coordinador/resultados" exact component={Resultados}/>
+      <Route path="/coordinador/municipios" exact component={Municipios}/>
+      <Route path="/coordinador/zonas" exact component={Zonas}/>
+      <Route path="/coordinador/posiciones" exact component={Posiciones}/>
+      <Route path="/coordinador/roles" exact component={Roles}/>
+      <Route path="/coordinador/modalidades" exact component={Modalidades}/>
+      <Route path="/coordinador/razonesdesprogramaciones" exact component={RazonesDesprogramaciones}/>
+      <Route path="/coordinador/usuariostemporales" exact component={UsuariosTemporales}/>
     </Switch>
   </BrowserRouter>
 );
