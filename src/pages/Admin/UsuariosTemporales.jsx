@@ -131,6 +131,7 @@ class UsuariosTemporales extends React.Component {
                     <Eliminar
                         id={this.state.eliminar.id}
                         alerta={this.handleAlert}
+                        update = {this.getUsuarios}
                     />
                     <Alert
                         show={this.state.alerta.show}

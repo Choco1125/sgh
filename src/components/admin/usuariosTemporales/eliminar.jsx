@@ -4,18 +4,24 @@ import consumidor from '../../../helpers/consumidor';
 import $ from 'jquery';
 
 
-const Eliminar = ({id,alerta})=>{
+const Eliminar = ({id,alerta,update})=>{
 
     const [spinner, setSpinner] = useState(false);
 
     const remove = async ()=>{
         setSpinner(true);
-        let res = await consumidor.delete('periodicities',id);
+        let res = await consumidor.delete('temporaryUserActivities',id);
         if(res.message){
             $('#eliminar').modal('hide');
             alerta(res.message,'danger');
+        }else if(res === 'Usuario/Actividad eliminada(o)'){
+            await update();
+            $('#eliminar').modal('hide');
+            alerta(res,'success');
+        }else{
+            $('#eliminar').modal('hide');
+            console.log(res);
         }
-        console.log(res);
         setSpinner(false);
     }
 
