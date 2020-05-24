@@ -19,7 +19,7 @@ import Roles from './pages/Admin/Roles';
 import Modalidades from './pages/Admin/Modalidades';
 import RazonesDesprogramaciones from './pages/Admin/RazonesDesprogramacion';
 import UsuariosTemporales from './pages/Admin/UsuariosTemporales';
-
+import TipoActividades from './pages/Admin/TiposActividades';
 
 const App = ()=>(
   <BrowserRouter>
@@ -40,6 +40,7 @@ const App = ()=>(
       <Route path="/coordinador/modalidades" exact component={Modalidades}/>
       <Route path="/coordinador/razonesdesprogramaciones" exact component={RazonesDesprogramaciones}/>
       <Route path="/coordinador/usuariostemporales" exact component={UsuariosTemporales}/>
+      <Route path="/coordinador/tipo-actividades" exact component={TipoActividades}/>
     </Switch>
   </BrowserRouter>
 );

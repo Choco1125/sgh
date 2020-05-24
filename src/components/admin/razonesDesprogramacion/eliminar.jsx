@@ -30,13 +30,10 @@ const Eliminar = ({id,update,alerta}) => {
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="eliminarLabel">Eliminar razón de desprogramación</h5>
+                        <h5 className="modal-title" id="eliminarLabel">¿Deseas eliminar la razón de desprogramación?</h5>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>
-                    <div className="modal-body">
-                        ¿Deseas eliminar la razón de desprogramación?
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
