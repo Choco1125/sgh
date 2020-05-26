@@ -107,7 +107,7 @@ class Resultados extends React.Component{
         }else{
             return (
                 <div>
-                <Navbar active="competencias" />
+                <Navbar active="programas" />
                 <div className="container">
                     <div className="row justify-content-end mt-3">
                         <button className="btn btn-success border mr-3" data-target="#crear" 

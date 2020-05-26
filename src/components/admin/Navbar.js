@@ -16,15 +16,6 @@ const Nabvar = ({ active }) => (
                 <li className={`nav-item ${(active === "home") ? 'active' : ''}`}>
                     <Link to="/coordinador" className="nav-link">Inicio</Link>
                 </li>
-                <li className={`nav-item  dropdown ${(active === "competencias") ? 'active' : ''}`}>
-                    <a className="nav-link dropdown-toggle" href="#0" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Competencias
-                    </a>
-                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <Link className="dropdown-item" to="/coordinador/competencias">Competencias</Link> 
-                        <Link className="dropdown-item" to="/coordinador/resultados">Resultados de aprendizaje</Link>
-                    </div>
-                </li>
                 <li className={`nav-item ${(active === "ambientes") ? 'active' : ''}`}>
                     <Link className="nav-link" to="/coordinador/ambientes">Ambientes</Link>
                 </li>
@@ -33,9 +24,11 @@ const Nabvar = ({ active }) => (
                         Programas de formación
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <Link className="dropdown-item" to="/coordinador/competencias">Competencias</Link> 
                         <Link className="dropdown-item" to="/coordinador/grupos">Grupos</Link>
                         <Link className="dropdown-item" to="/coordinador/modalidades">Modalidades</Link>
                         <Link className="dropdown-item" to="/coordinador/programas">Programas de formación</Link>
+                        <Link className="dropdown-item" to="/coordinador/resultados">Resultados de aprendizaje</Link>
                         <Link className="dropdown-item" to="/coordinador/tipo-programas">Tipos de programación de formación </Link>
                     </div>
                 </li>
