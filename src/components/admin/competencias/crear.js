@@ -186,7 +186,8 @@ class Crear extends React.Component {
                                 <input name="hours" 
                                     type="number" 
                                     className="form-control" 
-                                    min="0" step="1" placeholder="0" max="500"
+                                    min="0" step="1" placeholder="0" max="100"
+                                    maxLength="5"
                                     onChange={e=>this.handleChange(e)}
                                     value={this.state.datos.hours}
                                 />

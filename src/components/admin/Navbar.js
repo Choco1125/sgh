@@ -29,7 +29,7 @@ const Nabvar = ({ active }) => (
                         <Link className="dropdown-item" to="/coordinador/modalidades">Modalidades</Link>
                         <Link className="dropdown-item" to="/coordinador/programas">Programas de formación</Link>
                         <Link className="dropdown-item" to="/coordinador/resultados">Resultados de aprendizaje</Link>
-                        <Link className="dropdown-item" to="/coordinador/tipo-programas">Tipos de programación de formación </Link>
+                        <Link className="dropdown-item" to="/coordinador/tipo-programas">Tipos de programa de formación </Link>
                     </div>
                 </li>
                 <li className={`nav-item  dropdown ${(active === "ubicaciones") ? 'active' : ''}`}>
