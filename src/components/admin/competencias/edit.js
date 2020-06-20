@@ -82,7 +82,7 @@ class Edit extends React.Component {
                                     <button  className="btn btn-sm" 
                                         data-toggle="tooltip" 
                                         data-placement="right" 
-                                        title="Corresponde al código de la competencia que 
+                                        title="Corresponde al código de la competencia que &nbsp; 
                                         se encuentra en el programa de formación"
                                     >
                                         <i className="fas fa-question-circle"></i>
@@ -133,7 +133,7 @@ class Edit extends React.Component {
                                     type="number" 
                                     className="form-control" 
                                     min="0" step="1" placeholder="0" max="500"
-                                    onChange={e=>this.props.handleChange(e)}
+                                    onChange={e=>this.props.handleChangeHours(e)}
                                     value={this.props.datos.hours}
                                 />
                                 <span className="text-danger"></span>

@@ -57,6 +57,17 @@ class Competencias extends React.Component {
         });
     }
 
+    handleChangeHours = (e)=>{        
+        if(e.target.value.length <= 5){
+            this.setState({
+                edit: {
+                    ...this.state.edit,
+                    [e.target.name]: e.target.value
+                }
+            });
+        }
+    }
+
     handleChangeSelect = (e) => {
         this.setState({
             edit: {
@@ -167,6 +178,7 @@ class Competencias extends React.Component {
                                             <th className="hiden">Código</th>
                                             <th className="reducir">Descripción</th>
                                             <th className="reducir">Resúmen</th>
+                                            <th className="reducir">Programa de formación</th>
                                             <th className="hiden">Horas</th>
                                             <th >Opciones</th>
                                         </tr>
@@ -178,6 +190,7 @@ class Competencias extends React.Component {
                                                     <td className="hiden">{code}</td>
                                                     <td className="reducir">{description}</td>
                                                     <td className="reducir">{summary}</td>
+                                                    <td className="reducir">{formationProgram.name}</td>
                                                     <td className="hiden">{hours}</td>
                                                     <td className="align-items-center">
                                                         <span 
@@ -234,6 +247,7 @@ class Competencias extends React.Component {
                         <Edit
                             datos={this.state.edit}
                             handleChange={this.handleChange}
+                            handleChangeHours={this.handleChangeHours}
                             handleChangeSelect={this.handleChangeSelect}
                             pedirDatos={this.pedirDatos}
                             alert={this.handleAlert}

@@ -32,6 +32,17 @@ class Crear extends React.Component {
         $('[data-toggle="tooltip"]').tooltip();
     }
 
+    handleChangeHours(e){        
+        if(e.target.value.length <= 5){
+            this.setState({
+                datos: {
+                    ...this.state.datos,
+                    [e.target.name]: e.target.value
+                }
+            });
+        }
+    }
+
     handleChange(e) {
         this.setState({
             datos: {
@@ -136,7 +147,7 @@ class Crear extends React.Component {
                                     <button  className="btn btn-sm" 
                                         data-toggle="tooltip" 
                                         data-placement="right" 
-                                        title="Corresponde al código de la competencia que 
+                                        title="Corresponde al código de la competencia que &nbsp;
                                         se encuentra en el programa de formación"
                                     >
                                         <i className="fas fa-question-circle"></i>
@@ -188,7 +199,7 @@ class Crear extends React.Component {
                                     className="form-control" 
                                     min="0" step="1" placeholder="0" max="100"
                                     maxLength="5"
-                                    onChange={e=>this.handleChange(e)}
+                                    onChange={e=>this.handleChangeHours(e)}
                                     value={this.state.datos.hours}
                                 />
                                 <span className="text-danger"></span>

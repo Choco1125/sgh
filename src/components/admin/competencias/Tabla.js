@@ -18,9 +18,10 @@ class Tabla extends React.Component{
             <table className="table table-sm" id="tbl">
                 <thead>
                     <tr>
-                        <th  className="d-none d-md-block">Código</th>
-                        <th >Descripción</th>
-                        <th >Resúmen</th>
+                        <th className="d-none d-md-block">Código</th>
+                        <th>Descripción</th>
+                        <th>Resúmen</th>
+                        <th>Programa de formación</th>
                         <th className="d-none d-md-block">Horas</th>
                         <th></th>
                     </tr>
@@ -28,11 +29,12 @@ class Tabla extends React.Component{
                 <tbody>
                     {
                        
-                        competencias.map(({id,code,description,summary,hours},i)=>(
+                        competencias.map(({id,code,description,summary,hours,formationProgram})=>(
                             <tr key={id}>
                                 <td className="d-none d-md-block">{code}</td>
                                 <td>{description}</td>
                                 <td>{summary}</td>
+                                <td>{formationProgram.name}</td>
                                 <td className="d-none d-md-block">{hours}</td>
                                 <td>
                                     <button className="btn btn-outline-success btn-sm mt-1">
