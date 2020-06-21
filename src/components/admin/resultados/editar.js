@@ -1,6 +1,6 @@
 import React from 'react';
 import Spinner from './../../spinner';
-import $ from 'jquery';
+import $, { isNumeric } from 'jquery';
 import Select from 'react-select';
 import agregarError from './../../../helpers/agregarError';
 import Api from './../../Api';
@@ -38,7 +38,15 @@ class Editar extends React.Component{
             if(this.props.datos.hours !== ''){
                 if(this.props.datos.projectPhase !== ''){
                     if(this.props.datos.trimesterEvaluate !== ''){
-                        if(this.props.datos.associatedTrimesters !== ''){
+                        let separadaso = this.props.datos.associatedTrimesters.split(',');
+                        let is_valid = true;
+
+                        separadaso.forEach(valor => {
+                            if(!isNumeric(valor) || valor.includes('.')){
+                                is_valid = false;
+                            }
+                        });
+                        if(this.props.datos.associatedTrimesters !== '' && is_valid){
                             if(this.props.datos.competenceId.value !== ''){
 
                                 if(this.asociatedValid()){
@@ -76,7 +84,7 @@ class Editar extends React.Component{
                                 agregarError(document.getElementById('competenceId_edit'),'Debes llenar este campo');
                             }
                         }else{
-                            agregarError(document.getElementById('associatedTrimesters_edit'),'Debes llenar este campo');
+                            agregarError(document.getElementById('associatedTrimesters_edit'),'Debes llenar este campo o ingresar datos válidos');
                         }
                     }else{
                         agregarError(document.getElementById('trimesterEvaluate_edit'),'Debes llenar este campo');
@@ -185,7 +193,7 @@ class Editar extends React.Component{
                             </div>
                             <div className="form-group" id="trimesterEvaluate_edit">
                                 <label htmlFor="trimesterEvaluate">
-                                    Trimestre evaluado
+                                    Trimestre a evaluar
                                     <span className="text-danger">*</span>
                                 </label>
                                 <input name="trimesterEvaluate" type="number" 
@@ -225,7 +233,7 @@ class Editar extends React.Component{
                             <button type="button" className="btn btn-outline-success" 
                                 onClick = {()=> this.update()}
                             >
-                                Crear <i className="fas fa-save"></i> 
+                                Actualizar <i className="fas fa-save"></i> 
                                 <Spinner show={this.state.showSpinner} />
                             </button>
                         </div>

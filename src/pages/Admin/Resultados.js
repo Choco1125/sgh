@@ -50,11 +50,10 @@ class Resultados extends React.Component{
                 window.location.href = "/";
             }        
             else {
-                // console.log(datos);
                 $('#tbl').DataTable().destroy();
                 this.setState({
                     loader: false,
-                    resultados: datos
+                    resultados: datos.learningResults
                 });
                 $('#tbl').DataTable({
                     "language": {

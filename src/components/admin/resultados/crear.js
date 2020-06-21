@@ -1,6 +1,6 @@
 import React from 'react';
 import Spinner from './../../spinner';
-import $ from 'jquery';
+import $, { isNumeric } from 'jquery';
 import agregarError from './../../../helpers/agregarError';
 import Api from './../../Api';
 
@@ -37,7 +37,6 @@ class Crear extends React.Component {
                 e.target.value = e.target.value[0]
             }
         }
-
         this.setState({
             datos: {
                 ...this.state.datos,
@@ -55,12 +54,12 @@ class Crear extends React.Component {
         });
     }
 
+
     asociatedValid(){
         let valores = this.state.datos.associatedTrimesters.split(',');
 
         for(let i = 0; i < valores.length; i++){
             let valor = parseInt(valores[i]);
-            console.log('Validando')
             if(isNaN(valor)){
                 return false;
             }
@@ -84,11 +83,18 @@ class Crear extends React.Component {
             if(this.state.datos.hours !== ''){
                 if(this.state.datos.projectPhase !== ''){
                     if(this.state.datos.trimesterEvaluate !== ''){
-                        if(this.state.datos.associatedTrimesters !== ''){
+                        let separadaso = this.state.datos.associatedTrimesters.split(',');
+                        let is_valid = true;
+
+                        separadaso.forEach(valor => {
+                            if(!isNumeric(valor) || valor.includes('.')){
+                                is_valid = false;
+                            }
+                        });
+                        if(this.state.datos.associatedTrimesters !== '' && is_valid){
                             if(this.state.datos.competenceId.value !== ''){
 
                                 if(this.asociatedValid()){
-                                    console.log('Guardar...')
                                     let datos ={
                                         summary: this.state.datos.summary,
                                         description:this.state.datos.description,
@@ -126,7 +132,6 @@ class Crear extends React.Component {
                                             console.log(res)
                                             break;
                                     }
-                                    console.log(res);
                                 }else{
                                     agregarError(document.getElementById('associatedTrimesters'),'Debes ingresar únicamente números');
 
@@ -135,7 +140,7 @@ class Crear extends React.Component {
                                 agregarError(document.getElementById('competenceId'),'Debes llenar este campo');
                             }
                         }else{
-                            agregarError(document.getElementById('associatedTrimesters'),'Debes llenar este campo');
+                            agregarError(document.getElementById('associatedTrimesters'),'Debes llenar este campo con datos válidos');
                         }
                     }else{
                         agregarError(document.getElementById('trimesterEvaluate'),'Debes llenar este campo');
@@ -239,7 +244,7 @@ class Crear extends React.Component {
                             </div>
                             <div className="form-group" id="trimesterEvaluate">
                                 <label htmlFor="trimesterEvaluate">
-                                    Trimestre evaluado
+                                    Trimestre a evaluar
                                     <span className="text-danger">*</span>
                                 </label>
                                 <input name="trimesterEvaluate" type="number" 

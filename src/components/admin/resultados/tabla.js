@@ -76,7 +76,7 @@ class Tabla extends React.Component {
                             <th>Descripción</th>
                             <th className="hiden">Resumen</th>
                             <th className="hiden">Comptencia asociada</th>
-                            <th>Trimestre Evaluado</th>
+                            <th>Trimestre a evaluar</th>
                             <th className="hiden">horas</th>
                             <th>Opciones</th>
                         </tr>
