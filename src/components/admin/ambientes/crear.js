@@ -44,7 +44,6 @@ class Crear extends React.Component {
     async save() {
         this.setState({ showSpinner: true });
         try {
-            console.log(this.state.datos.name !== '');
             if (this.state.datos.name !== "") {
 
                 if (this.state.datos.usability !== "") {
@@ -100,8 +99,13 @@ class Crear extends React.Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <div className="form-group" id="name">
-                                <label htmlFor="name">Nombre</label>
+                            <span className="font-weight-lighter">
+                                Los campos con 
+                                <i className="text-danger">*</i> 
+                                son obligatorios
+                            </span>
+                            <div className="form-group mt-1" id="name">
+                                <label htmlFor="name">Nombre <span className="text-danger">*</span></label>
                                 <input type="text" className="form-control" placeholder="Ambiente SENA" name="name" value={this.state.datos.name} onChange={(e) => this.handleChange(e)} />
                                 <span className="text-danger"></span>
                             </div>
@@ -114,7 +118,7 @@ class Crear extends React.Component {
                                 <span className="text-danger"></span>
                             </div>
                             <div className="form-group" id="usability">
-                                <label htmlFor="usability">Usabilidad</label>
+                                <label htmlFor="usability">Usabilidad <span className="text-danger">*</span></label>
                                 <input type="text" className="form-control" placeholder="Usabilidad del ambiente" name="usability" value={this.state.datos.usability} onChange={(e) => this.handleChange(e)} />
                                 <span className="text-danger"></span>
                             </div>

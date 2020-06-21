@@ -46,7 +46,6 @@ class Ambientes extends React.Component{
     }
 
     hadleAlert = (msj,tipo)=>{
-        console.log(msj,tipo)
         this.setState({
             alerta:{
                 show: true,

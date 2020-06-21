@@ -91,8 +91,13 @@ class Editar extends React.Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <div className="form-group" id="name_editar">
-                                <label htmlFor="name">Nombre</label>
+                            <span className="font-weight-lighter">
+                                Los campos con 
+                                <i className="text-danger">*</i> 
+                                son obligatorios
+                            </span>
+                            <div className="form-group mt-1" id="name_editar">
+                                <label htmlFor="name">Nombre <span className="text-danger">*</span></label>
                                 <input type="text" className="form-control" placeholder="Ambiente SENA" name="name" value={this.props.datos.name} onChange={(e) => this.props.handleChange(e)} />
                                 <span className="text-danger"></span>
                             </div>
@@ -105,7 +110,7 @@ class Editar extends React.Component {
                                 <span className="text-danger"></span>
                             </div>
                             <div className="form-group" id="usability_editar">
-                                <label htmlFor="usability">Usabilidad</label>
+                                <label htmlFor="usability">Usabilidad <span className="text-danger">*</span></label>
                                 <input type="text" className="form-control" placeholder="Usabilidad del ambiente" name="usability" value={this.props.datos.usability} onChange={(e) => this.props.handleChange(e)} />
                                 <span className="text-danger"></span>
                             </div>

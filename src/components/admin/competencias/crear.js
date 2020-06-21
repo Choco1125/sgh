@@ -164,8 +164,8 @@ class Crear extends React.Component {
                             </div>
                             <div className="form-group" id="description">
                                 <label htmlFor="description">
-                                        Descripción 
-                                        <span className="text-danger">*</span>
+                                    Descripción 
+                                    <span className="text-danger">*</span>
                                 </label>
                                 <input name="description" type="text" 
                                     className="form-control" 
