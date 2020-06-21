@@ -16,7 +16,6 @@ class Eliminar extends React.Component{
     async delete(id){
         this.setState({showSpinner: true});
         let res = await Api(`formationProgramTypes/${id}`,'DELETE',sessionStorage.getItem('token'),'');
-        console.log(res)
         if(res === "Tipo de programa de formacion eliminado"){
             await this.props.update();
             this.props.alerta(res, 'success');

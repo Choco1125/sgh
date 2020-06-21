@@ -19,7 +19,6 @@ class Editar extends React.Component {
         this.setState({
             showSpinner: true
         });
-        console.log(this.props.datos);
 
         if (this.props.datos.name !== '') {
             if (this.props.datos.electiveMonths !== '') {
@@ -49,13 +48,13 @@ class Editar extends React.Component {
                             agregarError(document.getElementById('practiceMonths_edit'), 'Debes poner un número entre 0 y 12');
                         }
                     } else {
-                        agregarError(document.getElementById('practiceMonths_edit'), 'Debes llenar este campo');
+                        agregarError(document.getElementById('practiceMonths_edit'), 'Debes llenar este campo o ingresar número');
                     }
                 } else {
                     agregarError(document.getElementById('electiveMonths_edit'), 'Debes poner un número entre 0 y 12');
                 }
             } else {
-                agregarError(document.getElementById('electiveMonths_edit'), 'Debes llenar este campo');
+                agregarError(document.getElementById('electiveMonths_edit'), 'Debes llenar este campo o ingresar número');
 
             }
         } else {
@@ -79,8 +78,13 @@ class Editar extends React.Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <div className="form-group" id="name_edit">
-                                <label htmlFor="name">Nombre</label>
+                            <span className="font-weight-lighter">
+                                Los campos con 
+                                <i className="text-danger">*</i> 
+                                son obligatorios
+                            </span>
+                            <div className="form-group mt-1" id="name_edit">
+                                <label htmlFor="name">Nombre <span className="text-danger">*</span></label>
                                 <input name="name" type="text" className="form-control" placeholder="Nombre del tipo programa"
                                     value={this.props.datos.name}
                                     onChange={(e) => this.props.handleChange(e)}
@@ -89,7 +93,7 @@ class Editar extends React.Component {
                                 <span className="text-danger"></span>
                             </div>
                             <div className="form-group" id="electiveMonths_edit">
-                                <label htmlFor="electiveMonths">Meses lectivos</label>
+                                <label htmlFor="electiveMonths">Meses lectivos <span className="text-danger">*</span></label>
                                 <input type="number" name="electiveMonths" className="form-control"
                                     value={this.props.datos.electiveMonths}
                                     step="1"
@@ -99,7 +103,7 @@ class Editar extends React.Component {
                                 <span className="text-danger"></span>
                             </div>
                             <div className="form-group" id="practiceMonths_edit">
-                                <label htmlFor="practiceMonths">Meses electivos</label>
+                                <label htmlFor="practiceMonths">Meses electivos <span className="text-danger">*</span></label>
                                 <input type="number" name="practiceMonths" className="form-control"
                                     value={this.props.datos.practiceMonths}
                                     step="1"
