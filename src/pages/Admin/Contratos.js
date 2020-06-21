@@ -106,7 +106,6 @@ class Contratos extends React.Component {
         if (this.state.edit.name !== '') {
             try {
                 let datos = await Api(`contractTypes/${this.state.edit.id}`,'PUT',sessionStorage.getItem('token'),this.state.edit);
-                console.log(datos);
                 if(datos === 'Tipo de contrato actualizado'){
                     await this.getContratos();
                     $('#editar').modal('hide');

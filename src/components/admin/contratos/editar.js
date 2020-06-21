@@ -14,8 +14,13 @@ class Editar extends React.Component {
                             </button>
                         </div>
                         <div className="modal-body">
+                            <span className="font-weight-lighter">
+                                Los campos con 
+                                <i className="text-danger">*</i> 
+                                son obligatorios
+                            </span>
                             <div className="form-group" id="name_edit">
-                                <label htmlFor="name">Nombre</label>
+                                <label htmlFor="name">Nombre <span className="text-danger">*</span></label>
                                 <input name="name" type="text" className="form-control" placeholder="Nombre del contrato"
                                     value={this.props.datos.name}
                                     onChange={(e) => this.props.handleChange(e)}

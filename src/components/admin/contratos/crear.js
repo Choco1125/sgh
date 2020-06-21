@@ -45,6 +45,11 @@ class Crear extends React.Component {
                 if(datos === 'Nuevo tipo de contrato creado'){
                     await this.props.update();
                     $('#crear').modal('hide');
+                    this.setState({
+                        datos:{
+                            name: ''
+                        }
+                    });
                     this.props.alerta(datos,'success');
                 }else if(datos === 'Tipo de contrato ya existente'){
                     this.agregarError(document.getElementById('name'), datos);
@@ -74,8 +79,13 @@ class Crear extends React.Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <div className="form-group" id="name">
-                                <label htmlFor="name">Nombre</label>
+                            <span className="font-weight-lighter">
+                                    Los campos con 
+                                    <i className="text-danger">*</i> 
+                                    son obligatorios
+                            </span>
+                            <div className="form-group mt-1" id="name">
+                                <label htmlFor="name">Nombre <span className="text-danger">*</span></label>
                                 <input name="name" type="text" className="form-control" placeholder="Nombre del contrato"
                                     value={this.state.datos.name}
                                     onChange={(e) => this.handleChange(e)}
