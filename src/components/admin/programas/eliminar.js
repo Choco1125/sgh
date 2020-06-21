@@ -17,7 +17,6 @@ class Eliminar extends React.Component {
 
     async delete(id){
         this.setState({showSpinner: true});
-        console.log(id);
         let res = await Api(`formationPrograms/${id}`,'DELETE',sessionStorage.getItem('token'),'');
         if(res === "Programa de formacion eliminado"){
             await this.props.update();
@@ -28,8 +27,6 @@ class Eliminar extends React.Component {
             }else{
                 this.props.alerta(res, 'danger');
             }
-            // console.log(res);
-
         }
         $('#eliminar').modal('hide');
         this.setState({showSpinner: false});

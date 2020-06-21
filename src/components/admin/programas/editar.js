@@ -46,13 +46,13 @@ class Editar extends React.Component {
                 if(this.props.datos.formationTypeId !== ''){
                     try{
                         let datos = await Api(`formationPrograms/${this.props.datos.id}`,'PUT',sessionStorage.getItem('token'),this.props.datos);
-                        if(datos === 'Programa de formacion actualizada'){
+                        if(datos === 'Programa de formacion actualizado'){
                             await this.props.update();
                             $('#editar').modal('hide');
                             this.props.alerta(datos,'success');
-                        }else if(datos === 'Programa de formacion ya existente'){
+                        }else if(datos.message === 'Este programa de formacion ya existe'){
                             $('#editar').modal('hide');
-                            this.props.alerta(datos,'danger');
+                            this.props.alerta(datos.message,'danger');
                         }else if(datos === 'Programa de formacion ya existente'){
                             this.agregarError(document.getElementById('name_edit'),datos);
                         }else{
@@ -75,6 +75,7 @@ class Editar extends React.Component {
 
 
     async componentDidMount() { 
+        $('[data-toggle="tooltip"]').tooltip();
         await this.getformationType();
     }
 

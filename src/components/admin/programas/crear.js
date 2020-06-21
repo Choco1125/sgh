@@ -66,21 +66,21 @@ class Crear extends React.Component {
                 if(this.state.datos.formationTypeId !== ''){
                     try{
                         let datos = await Api('formationPrograms','POST',sessionStorage.getItem('token'),this.state.datos);
-                        console.log(datos);
                         if(datos=== 'Nuevo programa de formacion creado'){
-
                             await this.props.update();
                             $('#crear').modal('hide');
                             this.props.alerta(datos,'success');
                             this.setState({
-                                code: '',
-                                name: '',
-                                formationTypeId:'',
-                                isRegisterQualified: false,
-                                isRegisterQualifiedDate: ''
+                                datos:{
+                                    code: '',
+                                    name: '',
+                                    formationTypeId:'',
+                                    isRegisterQualified: false,
+                                    isRegisterQualifiedDate: ''
+                                }
                             });
-                        }else if(datos === 'Programa de formacion ya existente'){
-                            this.agregarError(document.getElementById('name'),datos);
+                        }else if(datos.message === 'Este programa de formacion ya existe'){
+                            this.agregarError(document.getElementById('name'),datos.message);
                         }else{
                             console.log(datos)
                         }
@@ -101,6 +101,7 @@ class Crear extends React.Component {
 
 
     async componentDidMount() { 
+        $('[data-toggle="tooltip"]').tooltip();
         await this.getformationType();
     }
 

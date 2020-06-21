@@ -83,7 +83,6 @@ class Programas extends React.Component {
     async componentDidMount(){
         $('[data-toggle="tooltip"]').tooltip();
         await this.getPrograms();
-        
     }
 
     render() {
