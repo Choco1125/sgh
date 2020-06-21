@@ -104,10 +104,14 @@ class Crear extends React.Component{
                             </button>
                         </div>
                         <div className="modal-body">
-                            
-                            <div className="form-group" id="name">
+                            <span className="font-weight-lighter">
+                                Los campos con 
+                                <i className="text-danger">*</i> 
+                                son obligatorios
+                            </span>
+                            <div className="form-group mt-1" id="name">
                                 <label htmlFor="name">
-                                    Nombre
+                                    Nombre <span className="text-danger">*</span>
                                 </label>
                                 <input name="name" type="text" 
                                     className="form-control" 
@@ -120,7 +124,7 @@ class Crear extends React.Component{
 
                             <div className="form-group" id="zone_id">
                                 <label htmlFor="zone_id">
-                                    Zona
+                                    Zona <span className="text-danger">*</span>
                                 </label>
                                 <Select 
                                     value = { this.state.datos.zone_id }

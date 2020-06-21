@@ -70,10 +70,14 @@ class Editar extends React.Component{
                             </button>
                         </div>
                         <div className="modal-body">
-                            
-                            <div className="form-group" id="name_edit">
+                            <span className="font-weight-lighter">
+                                Los campos con 
+                                <i className="text-danger">*</i> 
+                                son obligatorios
+                            </span>
+                            <div className="form-group mt-1" id="name_edit">
                                 <label htmlFor="name">
-                                    Nombre
+                                    Nombre <span className="text-danger">*</span>
                                 </label>
                                 <input name="name" type="text" 
                                     className="form-control" 
@@ -86,7 +90,7 @@ class Editar extends React.Component{
 
                             <div className="form-group" id="zone_id_edit">
                                 <label htmlFor="zone_id">
-                                    Zona
+                                    Zona <span className="text-danger">*</span>
                                 </label>
                                 <Select 
                                     value = { this.props.datos.zone_id }
