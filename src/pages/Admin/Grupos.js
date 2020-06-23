@@ -128,6 +128,8 @@ class Grupos extends React.Component{
                         <div className="mt-2 mb-3">
                             <Tabla
                                 grupos = {this.state.grupos}
+                                update = {this.getGrupos}
+                                alerta = {this.handleAlert}
                             />
                         </div>
                     </div>
