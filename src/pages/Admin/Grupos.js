@@ -124,7 +124,7 @@ class Grupos extends React.Component {
     } else {
       return (
         <div>
-          <Navbar active="grupos" />
+          <Navbar active="programas" />
           <div className="container">
             <div className="row justify-content-end mt-3">
               <button
