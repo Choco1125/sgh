@@ -7,52 +7,47 @@ import validator from "../../../helpers/validator";
 import consumidor from "../../../helpers/consumidor";
 import $ from "jquery";
 
-const Crear = ({
+const Editar = ({
   alerta,
   actualizar,
   modalidades,
   usuarios,
   programasFromacion,
   aprendices,
+  codeTab,
+  setCodeTab,
+  modalidad,
+  setModalidad,
+  quantityLearners,
+  setQuantityLearners,
+  activeLearners,
+  setActiveLearners,
+  electiveStartDate,
+  setElectiveStartDate,
+  electiveEndDate,
+  setElectiveEndDate,
+  practiceStartDate,
+  setPracticeStartDate,
+  practiceEndDate,
+  setPracticeEndDate,
+  managerId,
+  setManagerId,
+  offer,
+  setOffer,
+  formationProgramId,
+  setFormationProgramId,
+  groupState,
+  setGroupState,
+  learnerId,
+  setLearnerId,
+  grupoId
 }) => {
   //States-----------------------------------------------------------
   const [spinner, setSpinner] = useState(false);
-  const [codeTab, setCodeTab] = useState("");
-  const [modalidad, setModalidad] = useState({
-    label: "",
-    value: "",
-  });
-  const [quantityLearners, setQuantityLearners] = useState(0);
-  const [activeLearners, setActiveLearners] = useState(0);
-  const [electiveStartDate, setElectiveStartDate] = useState("");
-  const [electiveEndDate, setElectiveEndDate] = useState("");
-  const [practiceStartDate, setPracticeStartDate] = useState("");
-  const [practiceEndDate, setPracticeEndDate] = useState("");
-  const [managerId, setManagerId] = useState({
-    label: "",
-    value: "",
-  });
-  const [offer, setOffer] = useState("");
-  const [formationProgramId, setFormationProgramId] = useState({
-    label: "",
-    value: "",
-  });
-  const [groupState, setGroupState] = useState("Activo");
-  const [learnerId, setLearnerId] = useState({
-    label: "",
-    value: "",
-  });
   //---------------------------------------------------------------
 
-  const handleChangeSelect = ({ label, value }) => {
-    setModalidad({
-      label,
-      value,
-    });
-  };
-
   const guradar = async () => {
-    DisableButton.setId("btn-guardar");
+    DisableButton.setId("btn-actualizar");
     DisableButton.disable();
     setSpinner(true);
 
@@ -71,9 +66,7 @@ const Crear = ({
       groupState,
     };
 
-    console.log(validator.validarDatos(datos))
-
-    if (validator.validarDatos(datos)) {
+    if (validator.validarDatosEdit(datos)) {
       datos = {
         codeTab,
         modalityId: modalidad.value,
@@ -89,7 +82,6 @@ const Crear = ({
         groupState,
       };
 
-
       if (learnerId.value !== "") {
         datos = {
           ...datos,
@@ -97,17 +89,16 @@ const Crear = ({
         };
       }
 
-      let res = await consumidor.post("groups", datos);
-
-      if (res === "Nuevo grupo creado") {
+      let res = await consumidor.put("groups",grupoId, datos);
+      if (res === "Grupo actualizado") {
         await actualizar();
-        $("#crear").modal("hide");
+        $("#editar").modal("hide");
         alerta(res, "success");
       } else if (res.message) {
-        $("#crear").modal("hide");
+        $("#editar").modal("hide");
         alerta(res.message, "danger");
       } else {
-        $("#crear").modal("hide");
+        $("#editar").modal("hide");
         alerta(
           "Ha ocurrido un error en el servidor, vuelve a intentarlo",
           "danger"
@@ -145,17 +136,17 @@ const Crear = ({
   return (
     <div
       className="modal fade"
-      id="crear"
+      id="editar"
       data-backdrop="static"
       role="dialog"
-      aria-labelledby="crearLabel"
+      aria-labelledby="editarLabel"
       aria-hidden="true"
     >
       <div className="modal-dialog" role="document">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="crearLabel">
-              Crear grupo
+            <h5 className="modal-title" id="editarLabel">
+              Editar grupo
             </h5>
             <button
               type="button"
@@ -172,7 +163,7 @@ const Crear = ({
               <i className="text-danger">*</i>
               son obligatorios
             </span>
-            <div className="form-group mt-1" id="codeTab">
+            <div className="form-group mt-1" id="codeTab_edit">
               <label htmlFor="codeTab">
                 ID <span className="text-danger">*</span>
               </label>
@@ -186,18 +177,18 @@ const Crear = ({
               />
               <span className="text-danger"></span>
             </div>
-            <div className="form-group" id="modalityId">
+            <div className="form-group" id="modalityId_edit">
               <label htmlFor="modalityId">
                 Modalidad <span className="text-danger">*</span>
               </label>
               <Select
                 value={modalidad}
-                onChange={(e) => handleChangeSelect(e)}
+                onChange={({ value, label }) => setModalidad({ value, label })}
                 options={modalidades}
               />
               <span className="text-danger"></span>
             </div>
-            <div className="form-group" id="quantityLearners">
+            <div className="form-group" id="quantityLearners_edit">
               <label htmlFor="quantityLearners">
                 Número de aprendices <span className="text-danger">*</span>
               </label>
@@ -213,7 +204,7 @@ const Crear = ({
               />
               <span className="text-danger"></span>
             </div>
-            <div className="form-group" id="activeLearners">
+            <div className="form-group" id="activeLearners_edit">
               <label htmlFor="activeLearners">
                 Número de aprendices activos
                 <span className="text-danger">*</span>
@@ -230,7 +221,7 @@ const Crear = ({
               />
               <span className="text-danger"></span>
             </div>
-            <div className="form-group" id="electiveStartDate">
+            <div className="form-group" id="electiveStartDate_edit">
               <label htmlFor="electiveStartDate">
                 Feha inicio etapa electiva<span className="text-danger">*</span>
               </label>
@@ -244,7 +235,7 @@ const Crear = ({
               />
               <span className="text-danger"></span>
             </div>
-            <div className="form-group" id="electiveEndDate">
+            <div className="form-group" id="electiveEndDate_edit">
               <label htmlFor="electiveEndDate">
                 Feha fin etapa electiva<span className="text-danger">*</span>
               </label>
@@ -258,7 +249,7 @@ const Crear = ({
               />
               <span className="text-danger"></span>
             </div>
-            <div className="form-group" id="practiceStartDate">
+            <div className="form-group" id="practiceStartDate_edit">
               <label htmlFor="practiceStartDate">
                 Feha inicio etapa práctica<span className="text-danger">*</span>
               </label>
@@ -272,7 +263,7 @@ const Crear = ({
               />
               <span className="text-danger"></span>
             </div>
-            <div className="form-group" id="practiceEndDate">
+            <div className="form-group" id="practiceEndDate_edit">
               <label htmlFor="practiceEndDate">
                 Feha fin etapa práctica<span className="text-danger">*</span>
               </label>
@@ -286,7 +277,7 @@ const Crear = ({
               />
               <span className="text-danger"></span>
             </div>
-            <div className="form-group" id="managerId">
+            <div className="form-group" id="managerId_edit">
               <label htmlFor="managerId">
                 Gefe de grupo <span className="text-danger">*</span>
               </label>
@@ -297,7 +288,7 @@ const Crear = ({
               />
               <span className="text-danger"></span>
             </div>
-            <div className="form-group" id="offer">
+            <div className="form-group" id="offer_edit">
               <label htmlFor="offer">
                 Oferta <span className="text-danger">*</span>
               </label>
@@ -311,7 +302,7 @@ const Crear = ({
               />
               <span className="text-danger"></span>
             </div>
-            <div className="form-group" id="formationProgramId">
+            <div className="form-group" id="formationProgramId_edit">
               <label htmlFor="formationProgramId">
                 Programa de formación <span className="text-danger">*</span>
               </label>
@@ -324,7 +315,7 @@ const Crear = ({
               />
               <span className="text-danger"></span>
             </div>
-            <div className="form-group" id="groupState">
+            <div className="form-group" id="groupState_edit">
               <label htmlFor="groupState">
                 Estado <span className="text-danger">*</span>
               </label>
@@ -339,7 +330,7 @@ const Crear = ({
               </select>
               <span className="text-danger"></span>
             </div>
-            <div className="form-group" id="learnerId">
+            <div className="form-group" id="learnerId_edit">
               <label htmlFor="learnerId">Aprendiz</label>
               <Select
                 value={learnerId}
@@ -360,10 +351,11 @@ const Crear = ({
             <button
               type="button"
               className="btn btn-outline-success"
-              id="btn-guardar"
+              id="btn-actualizar"
               onClick={() => guradar()}
             >
-              Crear <i className="fas fa-save"></i> <Spinner show={spinner} />
+              Actualizar <i className="fas fa-save"></i>{" "}
+              <Spinner show={spinner} />
             </button>
           </div>
         </div>
@@ -372,4 +364,4 @@ const Crear = ({
   );
 };
 
-export default Crear;
+export default Editar;

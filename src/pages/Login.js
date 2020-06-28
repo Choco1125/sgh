@@ -7,9 +7,7 @@ class Login extends React.Component {
 
     constructor(props) {
         super(props);
-        if (sessionStorage.getItem('token') !== null) {
-            window.location.href = "/admin";
-        }
+
         this.state = {
             misena_email: '',
             password: '',

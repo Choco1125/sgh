@@ -5,7 +5,7 @@ const validador = datos => {
     }else if (datos.message === "jwt malformed") {
         sessionStorage.removeItem('token');
         window.location.href = "/";
-    }  
+    }
 }
 
 export default validador;
