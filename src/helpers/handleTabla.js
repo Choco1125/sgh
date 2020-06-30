@@ -6,6 +6,7 @@ import 'datatables.net-bs4/js/dataTables.bootstrap4.js';
 const handleTabla = {
     destroy: id => $('#'+id).DataTable().destroy(),
     create: id => $('#'+id).dataTable({
+        responsive: true,
         "language": {
             "lengthMenu": "Mostrar _MENU_ registros",
             "zeroRecords": "No se encontraron resultados",

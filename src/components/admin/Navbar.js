@@ -64,6 +64,7 @@ const Nabvar = ({ active }) => (
                         Usuarios
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <Link className="dropdown-item" to="/coordinador/usuarios">Usuarios</Link> 
                         <Link className="dropdown-item" to="/coordinador/usuariostemporales">Usuarios temporales</Link> 
                     </div>
                 </li>

@@ -20,6 +20,7 @@ import Modalidades from './pages/Admin/Modalidades';
 import RazonesDesprogramaciones from './pages/Admin/RazonesDesprogramacion';
 import UsuariosTemporales from './pages/Admin/UsuariosTemporales';
 import TipoActividades from './pages/Admin/TiposActividades';
+import Usuarios from './pages/Admin/Usuarios'
 
 const App = ()=>(
   <BrowserRouter>
@@ -41,6 +42,7 @@ const App = ()=>(
       <Route path="/coordinador/razonesdesprogramaciones" exact component={RazonesDesprogramaciones}/>
       <Route path="/coordinador/usuariostemporales" exact component={UsuariosTemporales}/>
       <Route path="/coordinador/tipo-actividades" exact component={TipoActividades}/>
+      <Route path="/coordinador/usuarios" exact component={Usuarios}/>
     </Switch>
   </BrowserRouter>
 );
