@@ -6,6 +6,7 @@ import Tabla from './../../components/admin/usuarios/tabla';
 import handleTabla from '../../helpers/handleTabla';
 import Crear from '../../components/admin/usuarios/crear';
 import Alert from '../../components/Alert';
+import Eliminar from '../../components/admin/usuarios/eliminar';
 
 class Usuarios extends React.Component{
     constructor(props){
@@ -30,6 +31,9 @@ class Usuarios extends React.Component{
                 show: false,
                 tipo: '',
                 msj: ''
+            },
+            editar:{
+                id: ''
             }
         }
     }
@@ -110,6 +114,12 @@ class Usuarios extends React.Component{
         handleTabla.create('tbl');
     }
 
+    setId = id => this.setState({
+        editar:{
+            id
+        }
+    });
+
     async componentDidMount(){
         await this.getRols();
         await this.getTipoDeContratos();
@@ -135,7 +145,7 @@ class Usuarios extends React.Component{
                             </button>
                         </div>
                         <div>
-                            <Tabla usuarios={this.state.users}/>
+                            <Tabla usuarios={this.state.users} setId={this.setId}/>
                         </div>
                     </div>
                     <Crear
@@ -144,6 +154,11 @@ class Usuarios extends React.Component{
                         rols={this.state.rols}
                         update = {this.getUsuarios}
                         alerta = {this.handleAlerta}
+                    />
+                    <Eliminar 
+                        id={this.state.editar.id}
+                        alerta = {this.handleAlerta}
+                        update = {this.getUsuarios}
                     />
                     <Alert {...this.state.alerta}/>
                 </div>

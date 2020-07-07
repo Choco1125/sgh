@@ -1,6 +1,6 @@
 import React from 'react';
 import './../../css/tablas.css'
-const Tabla = ({usuarios})=>{
+const Tabla = ({usuarios, setId})=>{
     return (
         <div>
             <table className="table table-sm text-center" id="tbl">
@@ -36,6 +36,7 @@ const Tabla = ({usuarios})=>{
                                     <span className="d-lg-inline btn btn-outline-danger btn-sm mt-1 col-md-6 btn-middle"
                                         data-target="#eliminar"
                                         data-toggle="modal"
+                                        onClick = {() => setId(usuario.id)}
                                     >
                                         <i className="fas fa-trash-alt"></i>
                                     </span>
