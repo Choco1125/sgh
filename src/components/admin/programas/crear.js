@@ -125,7 +125,7 @@ class Crear extends React.Component {
                                 </label>
                                 <input name="code" type="text" className="form-control" placeholder="Código del programa" 
                                     value={this.state.datos.code}
-                                    onChange={(e)=> this.handleChange(e)}    
+                                    onChange={(e)=> this.handleChange(e)}
                                 />
                                 <span className="text-danger"></span>
                             </div>

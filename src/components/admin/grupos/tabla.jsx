@@ -81,13 +81,13 @@ const Tabla = ({
       <table className="table table-sm text-center" id="tbl">
         <thead>
           <tr>
-            <th>ID</th>
+            <th data-priority="1">ID</th>
             <th>Programa de formación</th>
             <th>Jefe de grupo</th>
             <th>Número de aprendices</th>
             <th>Estado</th>
             <th>Modalidad</th>
-            <th>Opciones</th>
+            <th data-priority="1">Opciones</th>
           </tr>
         </thead>
         <tbody>

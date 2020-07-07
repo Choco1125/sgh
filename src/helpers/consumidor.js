@@ -11,7 +11,6 @@ const consumidor = {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-                    
                 }
             });
 

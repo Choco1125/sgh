@@ -1,0 +1,12 @@
+@media (max-width: 768px) {
+    .hide{
+        display: none !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hide{
+        display: block;
+    }
+}
+

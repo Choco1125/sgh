@@ -137,8 +137,7 @@ class Crear extends React.Component {
                         </div>
                         <div className="modal-body">
                             <span className="font-weight-lighter">
-                                    Los campos con 
-                                    <i className="text-danger">*</i> 
+                                    Los campos con <i className="text-danger">*</i> 
                                     son obligatorios
                             </span>
                             <div className="form-group mt-1" id="code">

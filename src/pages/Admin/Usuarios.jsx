@@ -4,6 +4,8 @@ import Loader from './../../components/Loader'
 import consumidor from '../../helpers/consumidor';
 import Tabla from './../../components/admin/usuarios/tabla';
 import handleTabla from '../../helpers/handleTabla';
+import Crear from '../../components/admin/usuarios/crear';
+import Alert from '../../components/Alert';
 
 class Usuarios extends React.Component{
     constructor(props){
@@ -11,7 +13,88 @@ class Usuarios extends React.Component{
 
         this.state = {
             loader:  true,
-            users: []
+            users: [],
+            cargos: [{
+                label: '',
+                values: ''
+            }],
+            tipoContrato: [{
+                label: '',
+                values: ''
+            }],
+            rols: [{
+                label: '',
+                values: ''
+            }],
+            alerta:{
+                show: false,
+                tipo: '',
+                msj: ''
+            }
+        }
+    }
+
+    handleAlerta = (tipo, msj) => {
+        this.setState({
+            alerta:{
+                show: true,
+                tipo,
+                msj
+            }
+        });
+
+        setTimeout(()=>this.setState({
+            alerta: {
+                show: false
+            }
+        }),2000);
+    }
+
+    getRols = async () => {
+        let response = await consumidor.get('rols');
+        if(response){
+            let roles = [];
+            response.map(rol => roles.push({
+                label: rol.name,
+                value: rol.id
+            }));
+            this.setState({
+                rols: roles
+            });
+        }
+    }
+
+    getCargos = async () => {
+        let response = await consumidor.get('positions');
+        
+        if(response){
+            let jsonCargos = [];
+
+            response.map(cargo => jsonCargos.push({
+                value: cargo.id,
+                label: cargo.name
+            }));
+
+            this.setState({
+                cargos : jsonCargos
+            });
+        }
+    }
+
+    getTipoDeContratos = async () => {
+        let response = await consumidor.get('contractTypes');
+
+        if(response){
+            let JSONTipoDeContrato = [];
+
+            response.map(tipoContrato => JSONTipoDeContrato.push({
+                label: tipoContrato.name,
+                value: tipoContrato.id
+            }));
+            
+            this.setState({
+                tipoContrato: JSONTipoDeContrato
+            });
         }
     }
 
@@ -28,6 +111,9 @@ class Usuarios extends React.Component{
     }
 
     async componentDidMount(){
+        await this.getRols();
+        await this.getTipoDeContratos();
+        await this.getCargos();
         await this.getUsuarios();
     }
 
@@ -40,7 +126,11 @@ class Usuarios extends React.Component{
                     <Navbar active="usuarios"/>
                     <div className="container">
                         <div className="row justify-content-end mt-3 mb-3">
-                            <button className="btn btn-success">
+                            <button 
+                                className="btn btn-success"
+                                data-target="#crear"
+                                data-toggle="modal"
+                            >
                                 Crear <i className="fas fa-plus"></i>
                             </button>
                         </div>
@@ -48,6 +138,14 @@ class Usuarios extends React.Component{
                             <Tabla usuarios={this.state.users}/>
                         </div>
                     </div>
+                    <Crear
+                        cargos={this.state.cargos}
+                        tiposContratos={this.state.tipoContrato}
+                        rols={this.state.rols}
+                        update = {this.getUsuarios}
+                        alerta = {this.handleAlerta}
+                    />
+                    <Alert {...this.state.alerta}/>
                 </div>
             );
         }

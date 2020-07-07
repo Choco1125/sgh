@@ -1,30 +1,30 @@
 import React from 'react';
-
+import './../../css/tablas.css'
 const Tabla = ({usuarios})=>{
     return (
         <div>
             <table className="table table-sm text-center" id="tbl">
                 <thead>
                     <tr>
-                        <th scope="col">Documento</th>
-                        <th scope="col" data-priority="1">Nombres</th>
-                        <th scope="col">Misena correo</th>
-                        <th scope="col">Correo institucional</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Rol</th>
-                        <th scope="col" data-priority="1">Opciones</th>
+                        <th scope="col" className="hide">Documento</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col" className="hide">Misena correo</th>
+                        <th scope="col" className="hide">Correo institucional</th>
+                        <th scope="col" className="hide">Estado</th>
+                        <th scope="col" className="hide">Rol</th>
+                        <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         usuarios.map(usuario =>
                             <tr key={usuario.id}>
-                                <td>{usuario.document}</td>
-                                <td>{usuario.username}</td>
-                                <td>{usuario.misena_email}</td>
-                                <td>{usuario.institutional_email}</td>
-                                <td>{usuario.state}</td>
-                                <td data-priority="2">{usuario.rol.name}</td>
+                                <td className="hide">{usuario.document}</td>
+                                <td >{usuario.username}</td>
+                                <td className="hide">{usuario.misena_email}</td>
+                                <td className="hide">{usuario.institutional_email}</td>
+                                <td className="hide">{usuario.state}</td>
+                                <td className="hide">{usuario.rol.name}</td>
                                 <td>
                                     <span className="d-lg-inline btn btn-outline-success btn-sm mt-1 col-md-6 btn-middle"
                                         data-target="#editar"
