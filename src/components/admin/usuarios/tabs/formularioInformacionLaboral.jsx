@@ -11,7 +11,7 @@ const FormularioInformacionLaboral = ({
     return(
         <div className="card-body">
             <div className="form-group" id="positionId">
-                <label htmlFor="positionId">Cargo</label>
+                <label htmlFor="positionId">Cargo <span className="text-danger">*</span></label>
                 <Select 
                     options={cargos}
                     value={position}
@@ -20,7 +20,7 @@ const FormularioInformacionLaboral = ({
                 <span className="text-danger"></span>
             </div>
             <div className="form-group" id="contractTypeId">
-                <label htmlFor="contractTypeId">Tipo de contrato</label>
+                <label htmlFor="contractTypeId">Tipo de contrato <span className="text-danger">*</span></label>
                 <Select
                     options={tiposContratos}
                     value={contractType}
@@ -29,7 +29,7 @@ const FormularioInformacionLaboral = ({
                 <span className="text-danger"></span>
             </div>
             <div className="form-group" id="porfession">
-                <label htmlFor="porfession">Profesión</label>
+                <label htmlFor="porfession">Profesión <span className="text-danger">*</span></label>
                 <input type="text" name="porfession" className="form-control" placeholder="Profesión del usuario" value={profession} onChange={e => setProfession(handleMayus(e.target.value))}/>
                 <span className="text-danger"></span>
             </div>

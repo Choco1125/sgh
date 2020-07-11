@@ -1,5 +1,6 @@
 import React from 'react';
 import './../../css/tablas.css'
+import { Link } from 'react-router-dom';
 const Tabla = ({usuarios, setId})=>{
     return (
         <div>
@@ -26,12 +27,14 @@ const Tabla = ({usuarios, setId})=>{
                                 <td className="hide">{usuario.state}</td>
                                 <td className="hide">{usuario.rol.name}</td>
                                 <td>
-                                    <span className="d-lg-inline btn btn-outline-success btn-sm mt-1 col-md-6 btn-middle"
-                                        data-target="#editar"
-                                        data-toggle="modal"
-                                    >
-                                        <i className="fas fa-edit"></i>
-                                    </span>
+                                    <Link to={`/coordinador/usuarios/editar/${usuario.id}`}>
+                                        <span className="d-lg-inline btn btn-outline-success btn-sm mt-1 col-md-6 btn-middle"
+                                            data-target="#editar"
+                                            data-toggle="modal"
+                                        >
+                                            <i className="fas fa-edit"></i>
+                                        </span>
+                                    </Link>
                                     <span> </span>
                                     <span className="d-lg-inline btn btn-outline-danger btn-sm mt-1 col-md-6 btn-middle"
                                         data-target="#eliminar"

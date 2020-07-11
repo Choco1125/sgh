@@ -19,6 +19,9 @@ const Eliminar = ({id, alerta, update}) => {
             await update();
             $('#eliminar').modal('hide');
             alerta('success',response);
+	}else if(response.message){
+	    $('#eliminar').modal('hide');
+            alerta('danger',response.message);
         }else{
             console.log(response);
             $('#eliminar').modal('hide');

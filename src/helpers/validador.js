@@ -5,6 +5,8 @@ const validador = datos => {
     }else if (datos.message === "jwt malformed") {
         sessionStorage.removeItem('token');
         window.location.href = "/";
+    }else if(datos.message === "invalid signature"){
+        window.location.href = "/";
     }
 }
 
