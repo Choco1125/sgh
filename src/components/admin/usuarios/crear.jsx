@@ -14,7 +14,7 @@ const Crear = ({cargos, tiposContratos, rols, alerta, update})=>{
     const [username, setUsername] = useState("");
     const [document, setDocument] = useState("");
     const [birthdate, setBirthdate] = useState("");
-    const [gender, setGender] = useState("");
+    const [gender, setGender] = useState("F");
 
     //-----------------  Contacto  ----------------//
     const [misena_email, setMisena_email] = useState("");
@@ -79,28 +79,28 @@ const Crear = ({cargos, tiposContratos, rols, alerta, update})=>{
                 last_academic_level: last_academic_level
             }
 
-            //console.log(datos);
+            console.log(datos);
 
             let respuesta = await consumidor.post('users',datos);
             if(respuesta === 'Nuevo usuario creado'){
                 await update();
                 $('#crear').modal('hide');
                 alerta('success',respuesta);
-		setUsername('');
-	        setDocument('');
-	        setBirthdate('');
-	        setGender('');
-	        setMisena_email('');
-	        setInstitutionalEmail('');
-	        setPhone_ip('');
-	        setPhone('');
-	        setPosition({label:'',value:''});
-	        setContractType({label:'',value:''});
-	        setProfession("");
-	        setRol({label:'',value:''});
-	        setIsBossArea(false);
-	        setLast_academic_level('');
-	    }else{
+                setUsername('');
+                setDocument('');
+                setBirthdate('');
+                setGender('');
+                setMisena_email('');
+                setInstitutionalEmail('');
+                setPhone_ip('');
+                setPhone('');
+                setPosition({label:'',value:''});
+                setContractType({label:'',value:''});
+                setProfession("");
+                setRol({label:'',value:''});
+                setIsBossArea(false);
+                setLast_academic_level('');
+            }else{
                 $('#crear').modal('hide');
                 alerta('danger',"Error del servidor");
                 console.log(respuesta)

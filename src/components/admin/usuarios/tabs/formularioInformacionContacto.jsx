@@ -15,7 +15,7 @@ const FormularioInformacionContanto = ({
             </div>
             <div className="form-group" id="institutional_email">
                 <label htmlFor="institutional_email">Correo institucional <span className="text-danger">*</span></label>
-                <input type="email" placeholder="usuario@mail.com" name="institutional_email" className="form-control" value={institutionalEmail} onChange={e => setInstitutionalEmail(e.target.value)}/>
+                <input type="email" placeholder="usuario@mail.com" name="institutional_email" className="form-control" value={institutionalEmail || ""} onChange={e => setInstitutionalEmail(e.target.value)}/>
                 <span className="text-danger"></span>
             </div>
             <div className="form-group" id="phone_ip">

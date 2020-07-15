@@ -84,7 +84,7 @@ const Tabs = ({
                         username={username} setUsername={setUsername}
                         document={document} setDocument={setDocument}
                         birthdate={birthdate} setBirthdate={setBirthdate}
-                        setGender={setGender}
+                        setGender={setGender} gender={gender}
                     />
                 </div>
                 <div 

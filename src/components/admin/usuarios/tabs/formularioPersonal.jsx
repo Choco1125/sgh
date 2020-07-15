@@ -1,7 +1,7 @@
 import React from 'react';
 import handleMayus from './../../../../helpers/handleMayus';
 
-const FormularioInformacionPersonal = ({username,setUsername,document, setDocument, birthdate, setBirthdate, setGender})=>{
+const FormularioInformacionPersonal = ({username,setUsername,document, setDocument, birthdate, setBirthdate, setGender,gender})=>{
     return(
         <div className="card-body">
             <div className="form-group" id="username">
@@ -22,12 +22,12 @@ const FormularioInformacionPersonal = ({username,setUsername,document, setDocume
             <div className="form-group" id="genere">
                 <p>Sexo <span className="text-danger">*</span></p>
                 <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" name="genere" id="Femenenino" value="Femenino" onClick={() => setGender('Femenino')} defaultChecked/>
-                    <label className="form-check-label" htmlFor="Femenenino" onClick={() => setGender('Femenino')}>Femenenino</label>
+                    <input className="form-check-input" type="radio" name="genere" id="Femenenino" value="F" onClick={() => setGender('F')} checked={gender === 'F' } onChange={() => setGender('F')}/>
+                    <label className="form-check-label" htmlFor="Femenenino" onClick={() => setGender('F')}>Femenenino</label>
                 </div>
                 <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" name="genere" id="Masculino" value="Masculino" onClick={() => setGender('Masculino')}/>
-                    <label className="form-check-label" htmlFor="Masculino" onClick={() => setGender('Masculino')}>Masculino</label>
+                    <input className="form-check-input" type="radio" name="genere" id="Masculino" value="M" onClick={() => setGender('M')} checked={gender === 'M' } onChange={() => setGender('M')}/>
+                    <label className="form-check-label" htmlFor="Masculino" onClick={() => setGender('M')}>Masculino</label>
                 </div>
             </div>
         </div>
