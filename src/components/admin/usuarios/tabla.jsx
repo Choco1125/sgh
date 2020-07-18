@@ -1,7 +1,7 @@
 import React from 'react';
 import './../../css/tablas.css'
 import { Link } from 'react-router-dom';
-const Tabla = ({usuarios, setId})=>{
+const Tabla = ({ usuarios, setId }) => {
     return (
         <div>
             <table className="table table-sm text-center" id="tbl">
@@ -36,20 +36,23 @@ const Tabla = ({usuarios, setId})=>{
                                         </span>
                                     </Link>
                                     <span> </span>
-                                    <span className="d-lg-inline btn btn-outline-danger btn-sm mt-1 col-md-6 btn-middle"
-                                        data-target="#eliminar"
-                                        data-toggle="modal"
-                                        onClick = {() => setId(usuario.id)}
-                                    >
-                                        <i className="fas fa-trash-alt"></i>
-                                    </span>
+                                    {
+                                        usuario.state === 'Activo' &&
+                                        <span className="d-lg-inline btn btn-outline-danger btn-sm mt-1 col-md-6 btn-middle"
+                                            data-target="#eliminar"
+                                            data-toggle="modal"
+                                            onClick={() => setId(usuario.id)}
+                                        >
+                                            <i className="fas fa-trash-alt"></i>
+                                        </span>
+                                    }
                                 </td>
                             </tr>
                         )
                     }
                 </tbody>
             </table>
-        </div>
+        </div >
     );
 }
 export default Tabla;

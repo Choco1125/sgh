@@ -4,7 +4,7 @@ import DisableButton from './../../../helpers/DisableButton';
 import consumidor from '../../../helpers/consumidor';
 import $ from 'jquery';
 
-const Eliminar = ({id, alerta, update}) => {
+const Eliminar = ({ id, alerta, update }) => {
 
     const [spinner, setSpinner] = useState(false);
 
@@ -12,22 +12,22 @@ const Eliminar = ({id, alerta, update}) => {
         DisableButton.setId('btn-eliminar')
         DisableButton.disable();
         setSpinner(true);
-        
-        let response = await consumidor.delete('users',id);
 
-        if(response === "Usuario eliminado"){
+        let response = await consumidor.put('users', id, { state: 'Inactivo' });
+
+        if (response === "Usuario actualizado") {
             await update();
             $('#eliminar').modal('hide');
-            alerta('success',response);
-	}else if(response.message){
-	    $('#eliminar').modal('hide');
-            alerta('danger',response.message);
-        }else{
+            alerta('success', response);
+        } else if (response.message) {
+            $('#eliminar').modal('hide');
+            alerta('danger', response.message);
+        } else {
             console.log(response);
             $('#eliminar').modal('hide');
-            alerta('danger','Error del servidor');
+            alerta('danger', 'Error del servidor');
         }
-        
+
         DisableButton.enable();
         setSpinner(false);
     }
@@ -44,12 +44,12 @@ const Eliminar = ({id, alerta, update}) => {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                        <button 
-                            type="button" className="btn btn-outline-danger" 
+                        <button
+                            type="button" className="btn btn-outline-danger"
                             onClick={() => remove()}
                             id="btn-eliminar"
                         >
-                            Sí, eliminar <Spinner show={spinner}/> 
+                            Sí, eliminar <Spinner show={spinner} />
                         </button>
                     </div>
                 </div>
