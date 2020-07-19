@@ -4,6 +4,9 @@ import consumidor from "../../../../helpers/consumidor";
 import Loader from "../../../Loader";
 import Nabvar from "../../Navbar";
 import Tabs from "./tabs/tabs";
+import $ from 'jquery';
+
+
 
 const EditarUserPage = () => {
   const [loader, setLoader] = useState(true);
@@ -45,6 +48,8 @@ const EditarUserPage = () => {
   const [last_academic_level, setLast_academic_level] = useState("");
   const [state, setState] = useState('Active');
 
+  const [lostFocusMainTab, setLostFocusMainTab] = useState(false);
+
   const [contracts, setContracts] = useState([
     {
       id: 1,
@@ -66,6 +71,27 @@ const EditarUserPage = () => {
       description: 'Contrato de pruebas',
       startDate: '2020-07-10T20:22:00Z',
       endDate: '2021-07-10T20:22:00Z',
+    }
+  ]);
+
+  const [otherActivity, setOtherActivity] = useState([
+    {
+      name: "Actividad 1",
+      day: 'Lunes',
+      startDate: '2020-07-10T20:22:00Z',
+      endDate: '2021-07-10T20:22:00Z'
+    },
+    {
+      name: "Actividad 2",
+      day: 'Martes',
+      startDate: '2020-07-10T20:22:00Z',
+      endDate: '2021-07-10T20:22:00Z'
+    },
+    {
+      name: "Viernes 3",
+      day: 'Lunes',
+      startDate: '2020-07-10T20:22:00Z',
+      endDate: '2021-07-10T20:22:00Z'
     }
   ]);
   const [zones, setZones] = useState([]);
@@ -147,6 +173,7 @@ const EditarUserPage = () => {
       setZones(datos.zones);
       setState(datos.state);
       // setContracts(datos.contract);
+      // setOtherActivity(datos.otherActivity);
     }
     getInfo();
   }, [id]);
@@ -161,8 +188,26 @@ const EditarUserPage = () => {
               <img
                 src="https://image.freepik.com/vector-gratis/sigueme-diseno-tematica-social-empresarial_24877-50426.jpg"
                 alt="User"
-                style={{ height: 250 }}
+                style={{
+                  height: 250,
+                  cursor: 'pointer'
+                }}
+                onClick={() => $('#customFile').trigger('click')}
               />
+              <div className="custom-file mt-2 d-none">
+                <input type="file" className="custom-file-input" id="customFile" onChange={(e) => console.log(e.target.files[0])} accept="image/*" />
+                <label className="custom-file-label" htmlFor="customFile">Selecciona una foto</label>
+              </div>
+              {
+                !lostFocusMainTab ?
+                  <div></div> :
+                  <div className="card card-body border-0">
+                    <h4 className="card-title">{username}</h4>
+                    <h5 className="card-text mt-0 mb-0">{document}</h5>
+                    <h6 className="card-text mt-0 mb-0">{rol.label}</h6>
+                  </div>
+
+              }
             </div>
             <div className="col-lg-7">
               <Tabs
@@ -202,6 +247,8 @@ const EditarUserPage = () => {
                 zones={zones}
                 state={state} setState={setState}
                 contratos={contracts}
+                actividades={otherActivity}
+                setLostFocusMainTab={setLostFocusMainTab}
               />
             </div>
           </div>

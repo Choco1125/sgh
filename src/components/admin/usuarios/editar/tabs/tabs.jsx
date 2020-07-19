@@ -5,6 +5,7 @@ import FormularioInformacionLaboral from './formularioInformacionLaboral';
 import FormularioOtraInformacion from './formularioOtraInformacion';
 import FormularioContratros from './formularioContratos';
 import { FormularioZonas } from './formularioZonas';
+import FormuarioOtrasActividades from './formuarioOtrasActividades';
 
 
 const Tabs = ({
@@ -25,7 +26,8 @@ const Tabs = ({
   isBossArea, setIsBossArea,
   last_academic_level, setLast_academic_level,
   zones, state, setState,
-  contratos
+  contratos, actividades,
+  setLostFocusMainTab
 }) => {
   return (
     <div>
@@ -39,6 +41,7 @@ const Tabs = ({
             role="tab"
             aria-controls="nac-personal"
             aria-selected="true"
+            onClick={() => setLostFocusMainTab(false)}
           >
             Personal
           </a>
@@ -50,6 +53,7 @@ const Tabs = ({
             role="tab"
             aria-controls="nav-contacto"
             aria-selected="false"
+            onClick={() => setLostFocusMainTab(true)}
           >
             Contacto
           </a>
@@ -72,6 +76,7 @@ const Tabs = ({
             role="tab"
             aria-controls="nav-otra"
             aria-selected="false"
+            onClick={() => setLostFocusMainTab(true)}
           >
             Otra
           </a>
@@ -83,6 +88,7 @@ const Tabs = ({
             role="tab"
             aria-controls="nav-contratos"
             aria-selected="false"
+            onClick={() => setLostFocusMainTab(true)}
           >
             Contratos
           </a>
@@ -94,6 +100,7 @@ const Tabs = ({
             role="tab"
             aria-controls="nav-zonas"
             aria-selected="false"
+            onClick={() => setLostFocusMainTab(true)}
           >
             Zonas
           </a>
@@ -105,6 +112,7 @@ const Tabs = ({
             role="tab"
             aria-controls="nav-actividades"
             aria-selected="false"
+            onClick={() => setLostFocusMainTab(true)}
           >
             Otras actividades
           </a>
@@ -187,6 +195,7 @@ const Tabs = ({
           role="tabpanel"
           aria-labelledby="nav-actividades-tab"
         >
+          <FormuarioOtrasActividades actividades={actividades} />
         </div>
       </div>
     </div>
