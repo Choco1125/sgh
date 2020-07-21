@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CrearContratoModal from './contractos/crearContratoModal';
-import EliminarContratoModal from './contractos/eliminarContratoModal'
+import EliminarContratoModal from './contractos/eliminarContratoModal';
+import EditarContratoModal from './contractos/editarContratosModal';
 
 const manejarFecha = (fecha) => {
   let arregloFechas = fecha.split("T");
@@ -14,7 +15,7 @@ const CardContrato = ({ contrato, setContrato }) => (
     <p className="card-text">Inicio: {manejarFecha(contrato.startDate)}</p>
     <p className="card-text">Fin: {manejarFecha(contrato.endDate)}</p>
     <div className="row">
-      <button className="btn btn-link btn-sm col-md-2"> Editar</button>
+      <button className="btn btn-link btn-sm col-md-2" data-target="#EditarContrato" data-toggle="modal" onClick={() => setContrato(contrato)}> Editar</button>
       <button className="btn btn-link btn-sm text-danger col-md-2" data-target="#eliminarContrato" data-toggle="modal" onClick={() => setContrato({ id: contrato.id })}> Eliminar</button>
     </div>
   </div>
@@ -37,6 +38,7 @@ const FormularioContratros = ({ contratos, handleAlert, setContracts }) => {
         {contratos.map(contrato => <CardContrato key={contrato.id} contrato={contrato} setContrato={setContrato} />)}
       </div>
       <CrearContratoModal handleAlert={handleAlert} setContracts={setContracts} />
+      <EditarContratoModal handleAlert={handleAlert} setContracts={setContracts} contrato={contrato} />
       <EliminarContratoModal idContract={contrato.id} handleAlert={handleAlert} setContrato={setContracts} />
     </div>
   );
