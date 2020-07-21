@@ -15,7 +15,6 @@ const EditarUserPage = () => {
   const [tiposContratos, setTiposContratos] = useState([{}]);
   const [rols, setRols] = useState([{}]);
 
-  const [spinner, setSpinner] = useState(false);
   //-----------------  Personal  ----------------//
   const [username, setUsername] = useState("");
   const [document, setDocument] = useState("");
@@ -154,7 +153,7 @@ const EditarUserPage = () => {
       setZones(datos.zones);
       setState(datos.state);
       setContracts(datos.contract);
-      // setOtherActivity(datos.otherActivity);
+      setOtherActivity(datos.otherActivity);
     }
     getInfo();
   }, [id]);

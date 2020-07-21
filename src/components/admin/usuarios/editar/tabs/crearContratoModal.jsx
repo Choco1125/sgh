@@ -38,16 +38,14 @@ function CrearContratoModal({ handleAlert, setContracts }) {
       if (response.message) {
         $('#crearContrato').modal('hide');
         handleAlert('success', response.message);
-      } else if (response === 'Nuevo contrato creado') {
-        $('#crearContrato').modal('hide');
-        handleAlert('danger', response);
+        let datos = await consumidor.get(`users/${id}`);
+        setContracts(datos.contract);
         setData({
           name: '',
           description: '',
           startDate: '',
           endDate: ''
         });
-
       } else {
         $('#crearContrato').modal('hide');
         handleAlert('danger', 'Ha ocurrido un error, vuelve a intentarlo más tarde.');
