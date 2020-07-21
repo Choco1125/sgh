@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import CrearContratoModal from './crearContratoModal';
-import EliminarContratoModal from './eliminarContratoModal'
+import CrearContratoModal from './contractos/crearContratoModal';
+import EliminarContratoModal from './contractos/eliminarContratoModal'
 
 const manejarFecha = (fecha) => {
   let arregloFechas = fecha.split("T");

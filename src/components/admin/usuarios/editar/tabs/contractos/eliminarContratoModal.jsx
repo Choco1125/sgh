@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import consumidor from '../../../../../helpers/consumidor';
+import consumidor from '../../../../../../helpers/consumidor';
 import $ from 'jquery';
 import { useParams } from 'react-router-dom';
-import Spinner from '../../../../spinner';
-import DisableButton from '../../../../../helpers/DisableButton';
+import Spinner from '../../../../../spinner';
+import DisableButton from '../../../../../../helpers/DisableButton';
 
 export default function EliminarContratoModal({ handleAlert, idContract, setContrato }) {
 
@@ -25,7 +25,7 @@ export default function EliminarContratoModal({ handleAlert, idContract, setCont
       $('#eliminarContrato').modal('hide');
       handleAlert('danger', response);
     }
-    DisableButton.enable()
+    DisableButton.enable();
     setShowSpinner(false);
   }
 

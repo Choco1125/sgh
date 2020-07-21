@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import handleMayus from './../../../../../helpers/handleMayus';
-import TagObligatorio from '../../../../tagObligatorio';
-import Spinner from './../../../../spinner';
-import DisableButton from './../../../../../helpers/DisableButton';
-import validator from './../../../../../helpers/validator';
-import consumidor from './../../../../../helpers/consumidor';
+import handleMayus from '../../../../../../helpers/handleMayus';
+import TagObligatorio from '../../../../../tagObligatorio';
+import Spinner from '../../../../../spinner';
+import DisableButton from '../../../../../../helpers/DisableButton';
+import validator from '../../../../../../helpers/validator';
+import consumidor from '../../../../../../helpers/consumidor';
 import { useParams } from 'react-router-dom';
 import $ from 'jquery';
 
