@@ -16,8 +16,8 @@ const CardActividad = ({ actividad }) => (
 
 function FormuarioOtrasActividades({ actividades }) {
   return (
-    <div>
-      {actividades.map(actividad => <CardActividad actividad={actividad} key={actividad.id} />)}
+    <div className="col-12">
+      {actividades.map(actividad => <CardActividad key={actividad.id} actividad={actividad} />)}
     </div>
   );
 }

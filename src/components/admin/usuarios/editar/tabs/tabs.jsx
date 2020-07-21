@@ -27,7 +27,8 @@ const Tabs = ({
   last_academic_level, setLast_academic_level,
   zones, state, setState,
   contratos, actividades,
-  setLostFocusMainTab
+  setLostFocusMainTab,
+  handleAlert, setContracts
 }) => {
   return (
     <div>
@@ -81,7 +82,7 @@ const Tabs = ({
             Otra
           </a>
           <a
-            className="nav-item nav-link"
+            className={`nav-item nav-link ${contractType.label !== 'Contratista' ? 'd-none' : ''}`}
             id="nav-contratos-tab"
             data-toggle="tab"
             href="#nav-contratos"
@@ -179,7 +180,7 @@ const Tabs = ({
           role="tabpanel"
           aria-labelledby="nav-contratos-tab"
         >
-          <FormularioContratros contratos={contratos} />
+          <FormularioContratros contratos={contratos} handleAlert={handleAlert} setContracts={setContracts} />
         </div>
         <div
           className="tab-pane fade"

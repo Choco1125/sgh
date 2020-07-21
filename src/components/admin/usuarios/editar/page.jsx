@@ -5,6 +5,7 @@ import Loader from "../../../Loader";
 import Nabvar from "../../Navbar";
 import Tabs from "./tabs/tabs";
 import $ from 'jquery';
+import Alert from './../../../Alert'
 
 
 
@@ -50,53 +51,18 @@ const EditarUserPage = () => {
 
   const [lostFocusMainTab, setLostFocusMainTab] = useState(false);
 
-  const [contracts, setContracts] = useState([
-    {
-      id: 1,
-      name: 'Test',
-      description: 'Contrato de pruebas',
-      startDate: '2020-07-10T20:22:00Z',
-      endDate: '2021-07-10T20:22:00Z',
-    },
-    {
-      id: 2,
-      name: 'Test 2',
-      description: 'Contrato de pruebas 2',
-      startDate: '2020-07-10T20:22:00Z',
-      endDate: '2021-07-10T20:22:00Z',
-    },
-    {
-      id: 3,
-      name: 'Test 3',
-      description: 'Contrato de pruebas',
-      startDate: '2020-07-10T20:22:00Z',
-      endDate: '2021-07-10T20:22:00Z',
-    }
-  ]);
+  const [contracts, setContracts] = useState([]);
 
-  const [otherActivity, setOtherActivity] = useState([
-    {
-      name: "Actividad 1",
-      day: 'Lunes',
-      startDate: '2020-07-10T20:22:00Z',
-      endDate: '2021-07-10T20:22:00Z'
-    },
-    {
-      name: "Actividad 2",
-      day: 'Martes',
-      startDate: '2020-07-10T20:22:00Z',
-      endDate: '2021-07-10T20:22:00Z'
-    },
-    {
-      name: "Viernes 3",
-      day: 'Lunes',
-      startDate: '2020-07-10T20:22:00Z',
-      endDate: '2021-07-10T20:22:00Z'
-    }
-  ]);
+  const [otherActivity, setOtherActivity] = useState([]);
   const [zones, setZones] = useState([]);
 
   const { id } = useParams();
+
+  const [alerta, setAlerta] = useState({
+    tipo: '',
+    msj: '',
+    show: false
+  });
 
   const manejarFecha = (fecha) => {
     let arregloFechas = fecha.split("T");
@@ -145,6 +111,21 @@ const EditarUserPage = () => {
     }
   };
 
+
+  const handleAlert = (tipo, msj) => {
+    setAlerta({
+      tipo,
+      msj,
+      show: true
+    });
+
+    setTimeout(() => setAlerta({
+      tipo: '',
+      msj: '',
+      show: false
+    }), 2000);
+  }
+
   useEffect(() => {
     async function getInfo() {
       await getCargos();
@@ -172,7 +153,7 @@ const EditarUserPage = () => {
       setLast_academic_level(datos.last_academic_level);
       setZones(datos.zones);
       setState(datos.state);
-      // setContracts(datos.contract);
+      setContracts(datos.contract);
       // setOtherActivity(datos.otherActivity);
     }
     getInfo();
@@ -247,11 +228,14 @@ const EditarUserPage = () => {
                 zones={zones}
                 state={state} setState={setState}
                 contratos={contracts}
+                setContracts={setContracts}
                 actividades={otherActivity}
                 setLostFocusMainTab={setLostFocusMainTab}
+                handleAlert={handleAlert}
               />
             </div>
           </div>
+          <Alert {...alerta} />
         </div>
       </div>
     );
