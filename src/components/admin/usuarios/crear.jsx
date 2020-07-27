@@ -7,12 +7,12 @@ import validator from '../../../helpers/validator';
 import consumidor from '../../../helpers/consumidor';
 import $ from 'jquery';
 
-const Crear = ({cargos, tiposContratos, rols, alerta, update})=>{
+const Crear = ({ cargos, tiposContratos, rols, alerta, update }) => {
 
     const [spinner, setSpinner] = useState(false);
     //-----------------  Personal  ----------------//
     const [username, setUsername] = useState("");
-    const [document, setDocument] = useState("");
+    const [documento, setDocument] = useState("");
     const [birthdate, setBirthdate] = useState("");
     const [gender, setGender] = useState("F");
 
@@ -39,6 +39,8 @@ const Crear = ({cargos, tiposContratos, rols, alerta, update})=>{
     const [isBossArea, setIsBossArea] = useState(false);
     const [last_academic_level, setLast_academic_level] = useState("");
 
+    const [photo, setPhoto] = useState({});
+
     const save = async () => {
         setSpinner(true);
         disabledButton.setId('btn-guardar');
@@ -46,7 +48,7 @@ const Crear = ({cargos, tiposContratos, rols, alerta, update})=>{
 
         let PreSend = {
             username: username,
-            document: document,
+            document: documento,
             birthdate: birthdate,
             misena_email: misena_email,
             institutional_email: institutionalEmail,
@@ -55,17 +57,16 @@ const Crear = ({cargos, tiposContratos, rols, alerta, update})=>{
             positionId: position,
             contractTypeId: contractType,
             porfession: profession,
-            grade: grade,
             rolId: rol,
             last_academic_level: last_academic_level
         }
 
-        if(validator.validarDatos(PreSend)){
+        if (validator.validarDatos(PreSend)) {
             let datos = {
                 username: username,
                 misena_email: misena_email,
                 institutional_email: institutionalEmail,
-                document: document,
+                document: documento,
                 birthdate: birthdate,
                 phone: phone,
                 phone_ip: phone_ip,
@@ -78,14 +79,20 @@ const Crear = ({cargos, tiposContratos, rols, alerta, update})=>{
                 isBossArea: isBossArea,
                 last_academic_level: last_academic_level
             }
-
-            console.log(datos);
-
-            let respuesta = await consumidor.post('users',datos);
-            if(respuesta === 'Nuevo usuario creado'){
+            let respuesta = await consumidor.post('users', datos);
+            if (respuesta.message === 'Nuevo usuario creado') {
+                if (photo.name) {
+                    let formData = new FormData();
+                    let foto = document.getElementById('customFile');
+                    formData.append('photo', foto.files[0]);
+                    let res = await consumidor.sendFile('users', respuesta.user.id, 'PUT', formData);
+                    if (!res) {
+                        alerta('danger', 'No se pudo subir la foto');
+                    }
+                }
                 await update();
                 $('#crear').modal('hide');
-                alerta('success',respuesta);
+                alerta('success', respuesta.message);
                 setUsername('');
                 setDocument('');
                 setBirthdate('');
@@ -94,15 +101,15 @@ const Crear = ({cargos, tiposContratos, rols, alerta, update})=>{
                 setInstitutionalEmail('');
                 setPhone_ip('');
                 setPhone('');
-                setPosition({label:'',value:''});
-                setContractType({label:'',value:''});
+                setPosition({ label: '', value: '' });
+                setContractType({ label: '', value: '' });
                 setProfession("");
-                setRol({label:'',value:''});
+                setRol({ label: '', value: '' });
                 setIsBossArea(false);
                 setLast_academic_level('');
-            }else{
+            } else {
                 $('#crear').modal('hide');
-                alerta('danger',"Error del servidor");
+                alerta('danger', "Error del servidor");
                 console.log(respuesta)
             }
         }
@@ -111,7 +118,7 @@ const Crear = ({cargos, tiposContratos, rols, alerta, update})=>{
         disabledButton.enable();
     }
 
-    return(
+    return (
         <div className="modal fade" id="crear" data-backdrop="static" role="dialog"
             aria-labelledby="crearLabel" aria-hidden="true">
             <div className="modal-dialog" role="document">
@@ -129,31 +136,32 @@ const Crear = ({cargos, tiposContratos, rols, alerta, update})=>{
                         <div className="modal-body">
                             <div className="form-group mt-1 mb-2">
                                 <span className="font-weight-lighter">
-                                        Los campos con 
-                                        <i className="text-danger">*</i> 
-                                        son obligatorios
+                                    Los campos con
+                                        <i className="text-danger">*</i>
+                                    son obligatorios
                                 </span>
                             </div>
-                                <Tabs 
-                                    cargos = {cargos} 
-                                    tiposContratos = {tiposContratos} 
-                                    rols={rols}
-                                    username = {username} setUsername = {setUsername}
-                                    document = {document} setDocument = {setDocument}
-                                    birthdate = {birthdate} setBirthdate = {setBirthdate}
-                                    gender = {gender} setGender = {setGender}
-                                    misena_email = {misena_email} setMisena_email = {setMisena_email}
-                                    institutionalEmail = {institutionalEmail} setInstitutionalEmail = {setInstitutionalEmail}
-                                    phone_ip = {phone_ip} setPhone_ip = {setPhone_ip}
-                                    phone = {phone} setPhone = {setPhone}
-                                    position = {position} setPosition = {setPosition}
-                                    contractType = {contractType} setContractType = {setContractType}
-                                    profession = {profession} setProfession = {setProfession}
-                                    grade = {grade} setGrade = {setGrade}
-                                    rol = {rol} setRol = {setRol}
-                                    isBossArea = {isBossArea} setIsBossArea = {setIsBossArea}
-                                    last_academic_level = {last_academic_level} setLast_academic_level = {setLast_academic_level}
-                                />
+                            <Tabs
+                                cargos={cargos}
+                                tiposContratos={tiposContratos}
+                                rols={rols}
+                                username={username} setUsername={setUsername}
+                                document={documento} setDocument={setDocument}
+                                birthdate={birthdate} setBirthdate={setBirthdate}
+                                gender={gender} setGender={setGender}
+                                misena_email={misena_email} setMisena_email={setMisena_email}
+                                institutionalEmail={institutionalEmail} setInstitutionalEmail={setInstitutionalEmail}
+                                phone_ip={phone_ip} setPhone_ip={setPhone_ip}
+                                phone={phone} setPhone={setPhone}
+                                position={position} setPosition={setPosition}
+                                contractType={contractType} setContractType={setContractType}
+                                profession={profession} setProfession={setProfession}
+                                grade={grade} setGrade={setGrade}
+                                rol={rol} setRol={setRol}
+                                isBossArea={isBossArea} setIsBossArea={setIsBossArea}
+                                last_academic_level={last_academic_level} setLast_academic_level={setLast_academic_level}
+                                photo={photo} setPhoto={setPhoto}
+                            />
                         </div>
                         <div className="modal-footer">
                             <button
@@ -164,7 +172,7 @@ const Crear = ({cargos, tiposContratos, rols, alerta, update})=>{
                                 </button>
                             <button type="button"
                                 className="btn btn-outline-success"
-                                onClick = {() => save()}
+                                onClick={() => save()}
                                 id="btn-guardar"
                             >
                                 Crear <i className="ml-1 mr-1 fas fa-save"></i>
