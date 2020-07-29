@@ -30,7 +30,7 @@ const FormularioInformacionLaboral = ({
             </div>
             <div className="form-group" id="porfession">
                 <label htmlFor="porfession">Profesión <span className="text-danger">*</span></label>
-                <input type="text" name="porfession" className="form-control" placeholder="Profesión del usuario" value={profession} onChange={e => setProfession(handleMayus(e.target.value))} />
+                <input type="text" name="porfession" className="form-control" placeholder="Profesión del usuario" value={profession || ''} onChange={e => setProfession(handleMayus(e.target.value))} />
                 <span className="text-danger"></span>
             </div>
             <div className="form-group" id="grade">

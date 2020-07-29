@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import consumidor from "../../../../helpers/consumidor";
 import Loader from "../../../Loader";
 import Nabvar from "../../Navbar";
 import Tabs from "./tabs/tabs";
 import $ from 'jquery';
-import Alert from './../../../Alert'
+import Alert from './../../../Alert';
 
+const API_LINK = 'https://cronode.herokuapp.com/'
 
 
 const EditarUserPage = () => {
@@ -43,8 +44,7 @@ const EditarUserPage = () => {
   const [rol, setRol] = useState({
     label: "",
     value: "",
-  });
-  const [isBossArea, setIsBossArea] = useState(false);
+  }); const [isBossArea, setIsBossArea] = useState(false);
   const [last_academic_level, setLast_academic_level] = useState("");
   const [state, setState] = useState('Active');
 
@@ -62,6 +62,8 @@ const EditarUserPage = () => {
     msj: '',
     show: false
   });
+
+  const [photo, setPhoto] = useState("");
 
   const manejarFecha = (fecha) => {
     let arregloFechas = fecha.split("T");
@@ -125,38 +127,46 @@ const EditarUserPage = () => {
     }), 2000);
   }
 
+  let  history = useHistory();
+
   useEffect(() => {
     async function getInfo() {
       await getCargos();
       await getTiposContrato();
       await getRols();
       let datos = await consumidor.get(`users/${id}`);
-      setLoader(false);
-      setUsername(datos.username);
-      setDocument(datos.document);
-      setBirthdate(manejarFecha(datos.birthdate));
-      setGender(datos.gender);
-      setMisena_email(datos.misena_email);
-      setInstitutionalEmail(datos.institutional_email);
-      setPhone_ip(datos.phone_ip);
-      setPhone(datos.phone);
-      setPosition({ label: datos.position.name, id: datos.position.id });
-      setContractType({
-        label: datos.contractType.name,
-        id: datos.contractType.id,
-      });
-      setProfession(datos.profession);
-      setGrade(datos.grade);
-      setRol({ label: datos.rol.name, value: datos.rol.id });
-      setIsBossArea(datos.isBossArea);
-      setLast_academic_level(datos.last_academic_level);
-      setZones(datos.zones);
-      setState(datos.state);
-      setContracts(datos.contract);
-      setOtherActivity(datos.otherActivity);
+      console.log(datos);
+      if(datos !== 'Usuario no encontrado'){
+        setLoader(false);
+        setUsername(datos.username);
+        setDocument(datos.document);
+        setBirthdate(manejarFecha(datos.birthdate));
+        setGender(datos.gender);
+        setMisena_email(datos.misena_email);
+        setInstitutionalEmail(datos.institutional_email);
+        setPhone_ip(datos.phone_ip);
+        setPhone(datos.phone);
+        setPosition({ label: datos.position.name, id: datos.position.id });
+        setContractType({
+          label: datos.contractType.name,
+          id: datos.contractType.id,
+        });
+        setProfession(datos.profession);
+        setGrade(datos.grade);
+        setRol({ label: datos.rol.name, value: datos.rol.id });
+        setIsBossArea(datos.isBossArea);
+        setLast_academic_level(datos.last_academic_level);
+        setZones(datos.zones);
+        setState(datos.state);
+        setContracts(datos.contract);
+        setOtherActivity(datos.otherActivity);
+	setPhoto(datos.photo ? `${API_LINK}${datos.photo}` : "https://image.freepik.com/vector-gratis/sigueme-diseno-tematica-social-empresarial_24877-50426.jpg");
+      }else{
+	history.push('/coordinador/usuarios');
+      }
     }
     getInfo();
-  }, [id]);
+  }, [id,history]);
   return loader ? (
     <Loader />
   ) : (
@@ -164,12 +174,13 @@ const EditarUserPage = () => {
         <Nabvar active="usuarios" />
         <div className="container">
           <div className="row mt-3">
-            <div className="col-lg-3">
+            <div className="col-lg-3 col-md-4 mb-2">
               <img
-                src="https://image.freepik.com/vector-gratis/sigueme-diseno-tematica-social-empresarial_24877-50426.jpg"
+                src={photo}
                 alt="User"
                 style={{
                   height: 250,
+		  width: '100%',
                   cursor: 'pointer'
                 }}
                 onClick={() => $('#customFile').trigger('click')}
@@ -231,6 +242,7 @@ const EditarUserPage = () => {
                 actividades={otherActivity}
                 setLostFocusMainTab={setLostFocusMainTab}
                 handleAlert={handleAlert}
+    		setZones={setZones}
               />
             </div>
           </div>

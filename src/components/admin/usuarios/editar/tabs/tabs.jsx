@@ -28,7 +28,8 @@ const Tabs = ({
   zones, state, setState,
   contratos, actividades,
   setLostFocusMainTab,
-  handleAlert, setContracts
+  handleAlert, setContracts,
+  setZones
 }) => {
   return (
     <div>
@@ -188,7 +189,7 @@ const Tabs = ({
           role="tabpanel"
           aria-labelledby="nav-zonas-tab"
         >
-          <FormularioZonas zones={zones} />
+          <FormularioZonas zones={zones} setZones={setZones}  alerta={handleAlert} />
         </div>
         <div
           className="tab-pane fade"
