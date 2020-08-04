@@ -22,14 +22,14 @@ export const FormularioZonas = ({ zones, setZones, alerta }) => {
   const [zonas,setZonas] = useState([{label: '', value: ''}]);
   const [myzonas, setMyZonas] = useState([]);
   const [zoneId, setZoneId] = useState(0);
-
-  const setMyIdZones = () => {
-    let myZones = [];
-    zones.map(zone => myZones.push(zone.id)); 
-    setMyZonas(myZones);
-  }
-
+  
   useEffect(()=>{
+	 const setMyIdZones = () => {
+     let myZones = [];
+     zones.map(zone => myZones.push(zone.id)); 
+     setMyZonas(myZones);
+   }	
+
    const fetchDatos = async () => {
      const datos = await consumidor.get('zones'); 
      if(datos){
@@ -61,7 +61,7 @@ export const FormularioZonas = ({ zones, setZones, alerta }) => {
      <EliminarZonaModal 
     	idzone={zoneId}
     	myZones={myzonas}
-        setZones={setZones}
+      setZones={setZones}
     	alerta={alerta}
      />
     </div>

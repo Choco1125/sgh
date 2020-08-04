@@ -135,7 +135,6 @@ const EditarUserPage = () => {
       await getTiposContrato();
       await getRols();
       let datos = await consumidor.get(`users/${id}`);
-      console.log(datos);
       if(datos !== 'Usuario no encontrado'){
         setLoader(false);
         setUsername(datos.username);
@@ -160,7 +159,7 @@ const EditarUserPage = () => {
         setState(datos.state);
         setContracts(datos.contract);
         setOtherActivity(datos.otherActivity);
-	setPhoto(datos.photo ? `${API_LINK}${datos.photo}` : "https://image.freepik.com/vector-gratis/sigueme-diseno-tematica-social-empresarial_24877-50426.jpg");
+				setPhoto(datos.photo ? `${API_LINK}${datos.photo}` : "https://image.freepik.com/vector-gratis/sigueme-diseno-tematica-social-empresarial_24877-50426.jpg");
       }else{
 	history.push('/coordinador/usuarios');
       }
@@ -240,9 +239,10 @@ const EditarUserPage = () => {
                 contratos={contracts}
                 setContracts={setContracts}
                 actividades={otherActivity}
+								setOtherActivity = {setOtherActivity}	
                 setLostFocusMainTab={setLostFocusMainTab}
                 handleAlert={handleAlert}
-    		setZones={setZones}
+    						setZones={setZones}
               />
             </div>
           </div>

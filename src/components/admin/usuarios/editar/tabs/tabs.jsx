@@ -29,7 +29,7 @@ const Tabs = ({
   contratos, actividades,
   setLostFocusMainTab,
   handleAlert, setContracts,
-  setZones
+  setZones, setOtherActivity
 }) => {
   return (
     <div>
@@ -197,7 +197,7 @@ const Tabs = ({
           role="tabpanel"
           aria-labelledby="nav-actividades-tab"
         >
-          <FormuarioOtrasActividades actividades={actividades} />
+          <FormuarioOtrasActividades actividades={actividades} alerta={handleAlert} setOtrasActividades={setOtherActivity} />
         </div>
       </div>
     </div>

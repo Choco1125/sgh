@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import {ModalCrear} from './otrasActividades/CrearActividadModal';
+import consumidor from './../../../../../helpers/consumidor';
+
 
 const manejarFecha = (fecha) => {
   let arregloFechas = fecha.split("T");
@@ -14,12 +17,36 @@ const CardActividad = ({ actividad }) => (
   </div>
 );
 
-function FormuarioOtrasActividades({ actividades }) {
+function FormuarioOtrasActividades({ actividades,alerta,setOtrasActividades }) {
+
+	const [typeActivities, setTypeActivities] = useState([{label:'Selecciona un tipo de actividad', value:''}]);
+	
+	useEffect(() => {
+		const getActivies = async () => {
+			let response = await consumidor.get('typeActivities');
+			if(response){
+				let datos = [];
+				response.map(actividad => datos.push({label: actividad.name, value: actividad.id}));
+				setTypeActivities(datos);
+			}
+		}
+		getActivies();
+	},[actividades])
+
   return (
-    <div className="col-12">
-      {actividades.map(actividad => <CardActividad key={actividad.id} actividad={actividad} />)}
+    <div className="card-body">
+      <div className="row justify-content-end">
+        <button className="btn btn-outline-success btn-sm mr-3" data-toggle="modal" data-target="#crearActividad">Agregar</button>
+      </div>
+      <div className="col-12">
+        {actividades.map(actividad => <CardActividad key={actividad.id} actividad={actividad} />)}
+      </div>
+			<ModalCrear
+				activitiesTypes={typeActivities}	
+				alerta ={alerta}
+				setOtrasActividades = {setOtrasActividades} 
+			/>
     </div>
   );
-}
-
+} 
 export default FormuarioOtrasActividades;
