@@ -65,9 +65,9 @@ function FormuarioOtrasActividades({ actividades, alerta, setOtrasActividades })
   return (
     <div className="card-body">
       <div className="row justify-content-end">
-        <button className="btn btn-outline-success btn-sm mr-3" data-toggle="modal" data-target="#crearActividad">Agregar</button>
+        <button className="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#crearActividad">Agregar</button>
       </div>
-      <div className="col-12">
+      <div className="row">
         {actividades.map(actividad => <CardActividad key={actividad.id} actividad={actividad} setActivityId={setActivityId} setActivity={setActivity} />)}
       </div>
       <ModalCrear

@@ -76,10 +76,9 @@ export const ModalEditar = ({ activitiesTypes, activity, setOtrasActividades, al
     DisableButton.setId('update-zone');
     DisableButton.disable();
     setSpinner(true);
-    validateInForm.setId('formNewOtherActivity');
+    validateInForm.setId('formEditOtherActivity');
     validateInForm.validLength(datos.name, 'name', 4, 255);
     validateInForm.validate(datos);
-
     if (validateInForm.isValid) {
       let response = await consumidor.put('otherActivities', datos.id, datos);
       if (response) {
@@ -105,6 +104,7 @@ export const ModalEditar = ({ activitiesTypes, activity, setOtrasActividades, al
         $('#editarActividad').modal('hide');
       }
     }
+		validateInForm.isValid = true;
     DisableButton.enable();
     setSpinner(false);
   }
@@ -127,7 +127,7 @@ export const ModalEditar = ({ activitiesTypes, activity, setOtrasActividades, al
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div className="modal-body" id="formNewOtherActivity">
+          <div className="modal-body" id="formEditOtherActivity">
             <div className="form-group" data-name="name">
               <label htmlFor="name">Nombre <TagObligatorio /></label>
               <input type="text" name="name" className="form-control" placeholder="Nombre" onChange={e => handleChange(e)} value={datos.name} />

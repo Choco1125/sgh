@@ -127,7 +127,15 @@ const EditarUserPage = () => {
     }), 2000);
   }
 
-  let  history = useHistory();
+  const changePhoto = (e) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = function () {
+      setPhoto(reader.result)
+    }
+  }
+
+  let history = useHistory();
 
   useEffect(() => {
     async function getInfo() {
@@ -135,7 +143,7 @@ const EditarUserPage = () => {
       await getTiposContrato();
       await getRols();
       let datos = await consumidor.get(`users/${id}`);
-      if(datos !== 'Usuario no encontrado'){
+      if (datos !== 'Usuario no encontrado') {
         setLoader(false);
         setUsername(datos.username);
         setDocument(datos.document);
@@ -159,13 +167,13 @@ const EditarUserPage = () => {
         setState(datos.state);
         setContracts(datos.contract);
         setOtherActivity(datos.otherActivity);
-				setPhoto(datos.photo ? `${API_LINK}${datos.photo}` : "https://image.freepik.com/vector-gratis/sigueme-diseno-tematica-social-empresarial_24877-50426.jpg");
-      }else{
-	history.push('/coordinador/usuarios');
+        setPhoto(datos.photo ? `${API_LINK}${datos.photo}` : "https://image.freepik.com/vector-gratis/sigueme-diseno-tematica-social-empresarial_24877-50426.jpg");
+      } else {
+        history.push('/coordinador/usuarios');
       }
     }
     getInfo();
-  }, [id,history]);
+  }, [id, history]);
   return loader ? (
     <Loader />
   ) : (
@@ -179,13 +187,16 @@ const EditarUserPage = () => {
                 alt="User"
                 style={{
                   height: 250,
-		  width: '100%',
+                  width: '100%',
                   cursor: 'pointer'
                 }}
-                onClick={() => $('#customFile').trigger('click')}
+                onClick={() => {
+                  $('#customFile').trigger('click');
+                }}
+                id="user-photo"
               />
               <div className="custom-file mt-2 d-none">
-                <input type="file" className="custom-file-input" id="customFile" onChange={(e) => console.log(e.target.files[0])} accept="image/*" />
+                <input type="file" className="custom-file-input" id="customFile" onChange={(e) => changePhoto(e)} accept="image/*" />
                 <label className="custom-file-label" htmlFor="customFile">Selecciona una foto</label>
               </div>
               {
@@ -239,10 +250,10 @@ const EditarUserPage = () => {
                 contratos={contracts}
                 setContracts={setContracts}
                 actividades={otherActivity}
-								setOtherActivity = {setOtherActivity}	
+                setOtherActivity={setOtherActivity}
                 setLostFocusMainTab={setLostFocusMainTab}
                 handleAlert={handleAlert}
-    						setZones={setZones}
+                setZones={setZones}
               />
             </div>
           </div>
