@@ -80,6 +80,7 @@ export const ModalCrear = ({ activitiesTypes, alerta, setOtrasActividades }) => 
 		}
 		DisableButtons.enable();
 		setSpinner(false);
+		validateInForm.isValid = true;
 	}
 
 	return (
@@ -106,7 +107,7 @@ export const ModalCrear = ({ activitiesTypes, alerta, setOtrasActividades }) => 
 							<input type="text" name="name" className="form-control" placeholder="Nombre" onChange={e => handleChange(e)} value={datos.name} />
 							<span className="text-danger"></span>
 						</div>
-						<div className="form-group" data-name="typeActiviyId" >
+						<div className="form-group" data-name="typeActivityId" >
 							<label htmlFor="typeActiviyId">Tipo de actividad <TagObligatorio /></label>
 							<Select
 								options={activitiesTypes}
