@@ -6,11 +6,16 @@ import Nabvar from "../../Navbar";
 import Tabs from "./tabs/tabs";
 import $ from 'jquery';
 import Alert from './../../../Alert';
+import Spinner from "../../../spinner";
+import DisableButton from "../../../../helpers/DisableButton";
+import validator from "../../../../helpers/validator";
 
 const API_LINK = 'https://cronode.herokuapp.com/'
 
 
 const EditarUserPage = () => {
+  const [spinner, setSpinner] = useState(false);
+
   const [loader, setLoader] = useState(true);
   const [cargos, setCargos] = useState([{}]);
   const [tiposContratos, setTiposContratos] = useState([{}]);
@@ -18,7 +23,7 @@ const EditarUserPage = () => {
 
   //-----------------  Personal  ----------------//
   const [username, setUsername] = useState("");
-  const [document, setDocument] = useState("");
+  const [documento, setDocument] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [gender, setGender] = useState("");
 
@@ -64,6 +69,8 @@ const EditarUserPage = () => {
   });
 
   const [photo, setPhoto] = useState("");
+
+  const [havePhoto, setHavePhoto] = useState(false);
 
   const manejarFecha = (fecha) => {
     let arregloFechas = fecha.split("T");
@@ -132,10 +139,77 @@ const EditarUserPage = () => {
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = function () {
       setPhoto(reader.result)
+      setHavePhoto(true);
     }
   }
 
   let history = useHistory();
+
+  const save = async () => {
+    DisableButton.setId('user-update-data');
+    DisableButton.disable();
+    setSpinner(true);
+    let preSend = {
+      username: username,
+      document: documento,
+      birthdate: birthdate,
+      misena_email: misena_email,
+      institutional_email: institutionalEmail,
+      phone_ip: phone_ip,
+      phone: phone,
+      positionId: position,
+      contractTypeId: contractType,
+      porfession: profession,
+      rolId: rol,
+      last_academic_level: last_academic_level
+    }
+    if (validator.validarDatos(preSend)) {
+      let datos = {
+        username: username,
+        misena_email: misena_email,
+        institutional_email: institutionalEmail,
+        document: documento,
+        birthdate: birthdate,
+        phone: phone,
+        phone_ip: phone_ip,
+        gender: gender,
+        positionId: position.value,
+        rolId: rol.value,
+        contractTypeId: contractType.value,
+        porfession: profession,
+        grade: grade,
+        isBossArea: isBossArea,
+        last_academic_level: last_academic_level,
+        state: state
+      }
+      let respuesta = await consumidor.put('users', id, datos);
+      if (respuesta) {
+        if (respuesta === 'Usuario actualizado') {
+          if (havePhoto) {
+            let formData = new FormData();
+            let foto = document.getElementById('customFile');
+            formData.append('photo', foto.files[0]);
+            let res = await consumidor.sendFile('users', id, 'PUT', formData);
+            if (!res) {
+              alerta('danger', 'No se pudo subir la foto');
+            }
+          }
+          handleAlert('success', respuesta);
+          setHavePhoto(false);
+        } else {
+          alerta('danger', "Error del servidor");
+          console.log(respuesta)
+        }
+      } else {
+        handleAlert('danger', 'Danger error con el servidor, vuelve a intentarlo más tarde')
+      }
+
+    } else {
+      handleAlert('warning', 'Revisa las categorías y llena los campos necesarios');
+    }
+    setSpinner(false);
+    DisableButton.enable();
+  }
 
   useEffect(() => {
     async function getInfo() {
@@ -174,6 +248,7 @@ const EditarUserPage = () => {
     }
     getInfo();
   }, [id, history]);
+
   return loader ? (
     <Loader />
   ) : (
@@ -204,11 +279,19 @@ const EditarUserPage = () => {
                   <div></div> :
                   <div className="card card-body border-0">
                     <h4 className="card-title">{username}</h4>
-                    <h5 className="card-text mt-0 mb-0">{document}</h5>
+                    <h5 className="card-text mt-0 mb-0">{documento}</h5>
                     <h6 className="card-text mt-0 mb-0">{rol.label}</h6>
                   </div>
 
               }
+              <div className="row justify-content-center mt-2 mb-1">
+                <button className="btn btn-outline-success col-11"
+                  id="user-update-data"
+                  onClick={() => save()}
+                >
+                  Guardar <Spinner show={spinner} />
+                </button>
+              </div>
             </div>
             <div className="col-lg-7">
               <Tabs
@@ -217,7 +300,7 @@ const EditarUserPage = () => {
                 rols={rols}
                 username={username}
                 setUsername={setUsername}
-                document={document}
+                document={documento}
                 setDocument={setDocument}
                 birthdate={birthdate}
                 setBirthdate={setBirthdate}
