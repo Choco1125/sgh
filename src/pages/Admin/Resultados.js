@@ -6,16 +6,34 @@ import Api from './../../components/Api';
 import $ from 'jquery';
 import Tabla from './../../components/admin/resultados/tabla';
 import Crear from '../../components/admin/resultados/crear';
+import { Breadcrumb } from '../../components/Breadcrumb';
 
+const routes = [
+    {
+        name: 'Inicio',
+        link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Programas de formación',
+        link: '/coordinador/resultados',
+        isLink: true
+    },
+    {
+        name: 'Resultados',
+        link: '/coordinador/resultados',
+        isLink: false
+    }
+];
 
-class Resultados extends React.Component{
-    
-    constructor(props){
+class Resultados extends React.Component {
+
+    constructor(props) {
         super(props);
 
         this.state = {
             loader: true,
-            alert:{
+            alert: {
                 show: false,
                 msj: '',
                 type: ''
@@ -25,8 +43,8 @@ class Resultados extends React.Component{
         }
     }
 
-    async getCompetencias(){
-        let datos = await Api('competences','GET',sessionStorage.getItem('token'),'');
+    async getCompetencias() {
+        let datos = await Api('competences', 'GET', sessionStorage.getItem('token'), '');
         const options = [];
 
         datos.map(competencia => options.push({
@@ -40,15 +58,15 @@ class Resultados extends React.Component{
     }
 
     getResultados = async () => {
-        try{
-            let datos = await Api('learningResults','GET',sessionStorage.getItem('token'),'');
+        try {
+            let datos = await Api('learningResults', 'GET', sessionStorage.getItem('token'), '');
             if (datos === "jwt expired") {
                 sessionStorage.removeItem('token');
                 window.location.href = "/";
-            }else if (datos === "jwt malformed") {
+            } else if (datos === "jwt malformed") {
                 sessionStorage.removeItem('token');
                 window.location.href = "/";
-            }        
+            }
             else {
                 $('#tbl').DataTable().destroy();
                 this.setState({
@@ -74,67 +92,74 @@ class Resultados extends React.Component{
                 });
             }
             await this.getCompetencias();
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
     }
 
-    async componentDidMount(){
-        
+    async componentDidMount() {
+
         await this.getResultados();
     }
 
     handleAlert = (msj, tipo) => {
         this.setState({
-            alert:{
+            alert: {
                 show: true,
                 msj: msj,
                 tipo: tipo
             }
-        }); 
+        });
 
-        setTimeout(()=> this.setState({
-            alert:{
+        setTimeout(() => this.setState({
+            alert: {
                 show: false
             }
-        }),2000)
+        }), 2000)
     }
 
-    render(){
-        if(this.state.loader){
-            return <Loader/>
-        }else{
+    render() {
+        if (this.state.loader) {
+            return <Loader />
+        } else {
             return (
                 <div>
-                <Navbar active="programas" />
-                <div className="container">
-                    <div className="row justify-content-end mt-3">
-                        <button className="btn btn-success border mr-3" data-target="#crear" 
-                            data-toggle="modal">
-                                Crear 
-                                <i className="fas fa-plus"></i>
-                        </button>
+                    <Navbar active="programas" />
+                    <div className="container">
+                        <div className="row justify-content-between mt-3">
+                            <div>
+                                <Breadcrumb routes={routes} />
+                            </div>
+                            <div>
+                                <button
+                                    className="btn btn-success border mr-3"
+                                    data-target="#crear"
+                                    data-toggle="modal"
+                                >
+                                    Crear <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div className="mt-2 mb-3">
+                            <Tabla
+                                datos={this.state.resultados}
+                                update={this.getResultados}
+                                alerta={this.handleAlert}
+                                competencias={this.state.competencias}
+                            />
+                        </div>
                     </div>
-                    <div className="mt-2 mb-3">
-                        <Tabla 
-                            datos = {this.state.resultados}
-                            update = {this.getResultados}
-                            alerta = {this.handleAlert}
-                            competencias = {this.state.competencias}    
-                        />
-                    </div>
+                    <Crear
+                        competencias={this.state.competencias}
+                        update={this.getResultados}
+                        alerta={this.handleAlert}
+                    />
+                    <Alert
+                        show={this.state.alert.show}
+                        msj={this.state.alert.msj}
+                        tipo={this.state.alert.tipo}
+                        update={this.getPrograms} />
                 </div>
-                <Crear 
-                    competencias ={this.state.competencias}
-                    update = {this.getResultados}
-                    alerta = {this.handleAlert}
-                />
-                <Alert 
-                    show = {this.state.alert.show} 
-                    msj = {this.state.alert.msj} 
-                    tipo = {this.state.alert.tipo} 
-                    update = {this.getPrograms}/>
-            </div>
             );
         }
     }

@@ -8,17 +8,31 @@ import Crear from "./../../components/admin/ambientes/crear";
 import Alert from '../../components/Alert';
 
 import Loader from './../../components/Loader';
+import { Breadcrumb } from '../../components/Breadcrumb';
 
-class Ambientes extends React.Component{
+const routes = [
+    {
+        name: 'Inicio',
+        link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Ambientes',
+        link: '/coordinador/ambientes',
+        isLink: false
+    }
+];
 
-    constructor(props){
+class Ambientes extends React.Component {
+
+    constructor(props) {
         super(props);
         this.state = {
             ambientes: [],
-            delete:{
-                id:0
+            delete: {
+                id: 0
             },
-            alerta:{
+            alerta: {
                 show: false,
                 tipo: '',
                 msj: ''
@@ -26,37 +40,37 @@ class Ambientes extends React.Component{
             loader: true
         }
     }
-        
+
     pedirDatos = async () => {
         let token = sessionStorage.getItem('token');
         let datos = await Api('ambients', 'GET', token, '');
         if (datos === "jwt expired") {
             sessionStorage.removeItem('token');
             window.location.href = "/";
-        }else if (datos === "jwt malformed") {
+        } else if (datos === "jwt malformed") {
             sessionStorage.removeItem('token');
             window.location.href = "/";
-        }        
+        }
         else {
             $('#tbl').DataTable().destroy();
-            this.setState({ambientes: datos})
-            
-            
+            this.setState({ ambientes: datos })
+
+
         }
     }
 
-    hadleAlert = (msj,tipo)=>{
+    hadleAlert = (msj, tipo) => {
         this.setState({
-            alerta:{
+            alerta: {
                 show: true,
                 tipo: tipo,
                 msj: msj
             }
         });
-        setTimeout(()=>this.setState({alerta:{show:false}}),2000);
+        setTimeout(() => this.setState({ alerta: { show: false } }), 2000);
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         await this.pedirDatos();
         this.setState({
             loader: false
@@ -80,25 +94,35 @@ class Ambientes extends React.Component{
         });
     }
 
-    render(){
-        if(this.state.loader){
-            return <Loader/>
-        }else{
-            return(
+    render() {
+        if (this.state.loader) {
+            return <Loader />
+        } else {
+            return (
                 <div>
-                    <Nabvar active="ambientes"/>
+                    <Nabvar active="ambientes" />
                     <div className="container">
-                        <div className="row justify-content-end mt-3">
-                            <button className="btn btn-success border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
+                        <div className="row justify-content-between mt-3">
+                            <div>
+                                <Breadcrumb routes={routes} />
+                            </div>
+                            <div>
+                                <button
+                                    className="btn btn-success border"
+                                    data-target="#crear" data-toggle="modal"
+                                >
+                                    Crear <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                         <div className="row mt-2">
                             <div className="table-responsive">
-                                <Tabla datos={this.state.ambientes} update={this.pedirDatos} alerta={this.hadleAlert}/>
+                                <Tabla datos={this.state.ambientes} update={this.pedirDatos} alerta={this.hadleAlert} />
                             </div>
                         </div>
                     </div>
-                    <Crear update={this.pedirDatos} alerta={this.hadleAlert}/>
-                    <Alert show={this.state.alerta.show} tipo={this.state.alerta.tipo} msj={this.state.alerta.msj}/>
+                    <Crear update={this.pedirDatos} alerta={this.hadleAlert} />
+                    <Alert show={this.state.alerta.show} tipo={this.state.alerta.tipo} msj={this.state.alerta.msj} />
                 </div>
             );
         }

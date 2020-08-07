@@ -8,24 +8,42 @@ import handleMayus from './../../helpers/handleMayus';
 import Alert from './../../components/Alert'
 import Eliminar from '../../components/admin/roles/eliminar';
 import Crear from '../../components/admin/roles/crear';
+import { Breadcrumb } from '../../components/Breadcrumb';
 
+const routes = [
+    {
+        name: 'Inicio',
+        link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Parametrización',
+        link: '/coordinador/roles',
+        isLink: true
+    },
+    {
+        name: 'Roles',
+        link: '/coordinador/roles',
+        isLink: false
+    }
+];
 
-class Roles extends React.Component{
-    
-    constructor(props){
+class Roles extends React.Component {
+
+    constructor(props) {
         super(props);
 
         this.state = {
             loader: true,
             roles: [],
-            editar:{
+            editar: {
                 id: '',
-                name:''
+                name: ''
             },
-            eliminar:{
+            eliminar: {
                 id: ''
             },
-            alerta:{
+            alerta: {
                 show: false,
                 msj: '',
                 tipo: ''
@@ -33,9 +51,9 @@ class Roles extends React.Component{
         }
     }
 
-    getRoles = async () =>{
+    getRoles = async () => {
         let res = await consumidor.get('rols');
-        if(res){
+        if (res) {
             this.setState({
                 roles: res,
                 loader: false
@@ -43,74 +61,85 @@ class Roles extends React.Component{
         }
     }
 
-    setEdit = (name,id) => this.setState({
-        editar:{
+    setEdit = (name, id) => this.setState({
+        editar: {
             id,
             name
         }
     });
 
     setDelete = id => this.setState({
-        eliminar:{
+        eliminar: {
             id
         }
     });
 
-    handleChange = (e)=>{
+    handleChange = (e) => {
         this.setState({
-            editar:{
+            editar: {
                 ...this.state.editar,
                 [e.target.name]: handleMayus(e.target.value)
             }
         });
     }
 
-    handleAlerta = (msj,tipo)=>{
+    handleAlerta = (msj, tipo) => {
         this.setState({
-            alerta:{
+            alerta: {
                 show: true,
                 msj,
                 tipo
             }
         });
 
-        setTimeout(()=>this.setState({
-            alerta:{
+        setTimeout(() => this.setState({
+            alerta: {
                 show: false
             }
-        }),2000);
+        }), 2000);
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         await this.getRoles();
     }
 
     render() {
-        if(this.state.loader){
-            return <Loader/>
+        if (this.state.loader) {
+            return <Loader />
 
-        }else{
+        } else {
             return (
                 <div>
-                    <Navbar active="parametrizacion"/>
+                    <Navbar active="parametrizacion" />
                     <div className="container">
-                        <div className="row justify-content-end mt-3">
-                            <button className="btn btn-success border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
+                        <div className="row justify-content-between mt-3">
+                            <div>
+                                <Breadcrumb routes={routes} />
+                            </div>
+                            <div>
+                                <button
+                                    className="btn btn-success border mr-3"
+                                    data-target="#crear"
+                                    data-toggle="modal"
+                                >
+                                    Crear <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                         <div className="row mt-2 justify-content-center">
                             {
-                                this.state.roles.map(rol=> 
-                                    <Rol 
-                                        datos={rol} 
+                                this.state.roles.map(rol =>
+                                    <Rol
+                                        datos={rol}
                                         key={rol.id}
                                         delet={this.setDelete}
-                                        edit = {this.setEdit}
+                                        edit={this.setEdit}
                                     />
                                 )
                             }
                         </div>
                     </div>
-                    <Editar 
+                    <Editar
                         datos={this.state.editar}
                         handleChange={this.handleChange}
                         actualizar={this.getRoles}
@@ -121,7 +150,7 @@ class Roles extends React.Component{
                         alerta={this.handleAlerta}
                         update={this.getRoles}
                     />
-                    <Alert 
+                    <Alert
                         show={this.state.alerta.show}
                         msj={this.state.alerta.msj}
                         tipo={this.state.alerta.tipo}
@@ -133,7 +162,7 @@ class Roles extends React.Component{
                 </div>
             );
         }
-       
+
 
     }
 

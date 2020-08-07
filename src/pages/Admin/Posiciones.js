@@ -6,18 +6,37 @@ import handleTabla from '../../helpers/handleTabla';
 import Tabla from '../../components/admin/posiciones/tabla';
 import Alert from '../../components/Alert';
 import Crear from '../../components/admin/posiciones/crear';
+import { Breadcrumb } from '../../components/Breadcrumb';
+
+const routes = [
+    {
+        name: 'Inicio',
+        link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Parametrización',
+        link: '/coordinador/posiciones',
+        isLink: true
+    },
+    {
+        name: 'Posiciones',
+        link: '/coordinador/posiciones',
+        isLink: false
+    }
+];
 
 class Posiciones extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
-            loader:{
+            loader: {
                 show: true
             },
-            posiciones:[],
-            alert:{
+            posiciones: [],
+            alert: {
                 show: false,
                 msj: '',
                 tipo: ''
@@ -25,13 +44,13 @@ class Posiciones extends React.Component {
         }
     }
 
-    getPosiciones = async () =>{
+    getPosiciones = async () => {
         let datos = await consumidor.get('positions');
-        if(datos){  
+        if (datos) {
             handleTabla.destroy('tbl');
             this.setState({
                 posiciones: datos,
-                loader:{
+                loader: {
                     show: false
                 }
             });
@@ -39,48 +58,59 @@ class Posiciones extends React.Component {
         }
     }
 
-    handleAlerta = (msj,tipo)=> {
+    handleAlerta = (msj, tipo) => {
         this.setState({
-            alert:{
+            alert: {
                 show: true,
                 msj,
                 tipo
             }
         });
 
-        setTimeout(()=>this.setState({
-            alert:{
+        setTimeout(() => this.setState({
+            alert: {
                 show: true
             }
-        }),2000);
+        }), 2000);
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         await this.getPosiciones();
     }
 
     render() {
-        if(this.state.loader.show){
-            return <Loader/>
-        }else{
+        if (this.state.loader.show) {
+            return <Loader />
+        } else {
             return (
                 <div>
                     <Navbar active="parametrizacion" />
                     <div className="container">
-                        <div className="row justify-content-end mt-3">
-                            <button className="btn btn-success border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
+                        <div className="row justify-content-between mt-3">
+                            <div>
+                                <Breadcrumb routes={routes} />
+                            </div>
+                            <div>
+                                <button
+                                    className="btn btn-success border mr-3"
+                                    data-target="#crear"
+                                    data-toggle="modal"
+                                >
+                                    Crear <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                         <div className="mt-2 mb-3">
-                            <Tabla 
+                            <Tabla
                                 datos={this.state.posiciones}
-                                alerta ={this.handleAlerta}
-                                update={this.getPosiciones} 
+                                alerta={this.handleAlerta}
+                                update={this.getPosiciones}
                             />
                         </div>
                     </div>
                     <Crear
-                        alerta = {this.handleAlerta}
-                        update = {this.getPosiciones}
+                        alerta={this.handleAlerta}
+                        update={this.getPosiciones}
                     />
                     <Alert
                         {... this.state.alert}

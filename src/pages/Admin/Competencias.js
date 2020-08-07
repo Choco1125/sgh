@@ -12,6 +12,25 @@ import './../css/Competencias.css';
 import Alert from '../../components/Alert';
 
 import Loader from './../../components/Loader';
+import { Breadcrumb } from '../../components/Breadcrumb';
+
+const routes = [
+    {
+        name: 'Inicio',
+        link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Programas de formación',
+        link: '/coordinador/competencias',
+        isLink: true
+    },
+    {
+        name: 'Competencias',
+        link: '/coordinador/competencias',
+        isLink: false
+    }
+];
 
 
 class Competencias extends React.Component {
@@ -21,24 +40,24 @@ class Competencias extends React.Component {
             compencias: [],
             idDelete: 0,
             pos: 0,
-            edit:{
-                id:'',
+            edit: {
+                id: '',
                 code: '',
                 description: '',
                 summary: '',
                 hours: '',
-                formationProgramId:{
+                formationProgramId: {
                     value: '',
                     label: ''
                 }
             },
-            ver:{
+            ver: {
                 code: '',
                 description: '',
                 summary: '',
                 hours: '',
-                formationProgramId:''
-            },   
+                formationProgramId: ''
+            },
             showAlert: false,
             alertMsj: '',
             alertTipo: '',
@@ -57,8 +76,8 @@ class Competencias extends React.Component {
         });
     }
 
-    handleChangeHours = (e)=>{        
-        if(e.target.value.length <= 5){
+    handleChangeHours = (e) => {
+        if (e.target.value.length <= 5) {
             this.setState({
                 edit: {
                     ...this.state.edit,
@@ -72,7 +91,7 @@ class Competencias extends React.Component {
         this.setState({
             edit: {
                 ...this.state.edit,
-                formationProgramId:{
+                formationProgramId: {
                     value: e.value,
                     label: e.label
                 }
@@ -115,18 +134,18 @@ class Competencias extends React.Component {
         if (datos === "jwt expired") {
             sessionStorage.removeItem('token');
             window.location.href = "/";
-        }else if (datos === "jwt malformed") {
+        } else if (datos === "jwt malformed") {
             sessionStorage.removeItem('token');
             window.location.href = "/";
-        }        
+        }
         else {
             this.setState({ compencias: datos });
             await this.getGrupos();
         }
     }
 
-    getGrupos = async () =>{
-        let res = await Api('formationPrograms','GET',sessionStorage.getItem('token'),'');
+    getGrupos = async () => {
+        let res = await Api('formationPrograms', 'GET', sessionStorage.getItem('token'), '');
         let programas = [];
         for (let i = 0; i < res.length; i++) {
             programas.push({
@@ -140,7 +159,7 @@ class Competencias extends React.Component {
     }
 
 
-    setView = pos => this.setState({ 
+    setView = pos => this.setState({
         id: this.state.compencias[pos].id,
         code: this.state.compencias[pos].code,
         description: this.state.compencias[pos].description,
@@ -149,26 +168,37 @@ class Competencias extends React.Component {
     });
 
 
-    handleAlert = (tipo, mensaje)=>{
+    handleAlert = (tipo, mensaje) => {
         this.setState({
             showAlert: true,
             alertTipo: tipo,
             alertMsj: mensaje
         });
-        setTimeout(()=>this.setState({showAlert: false}),2000);
+        setTimeout(() => this.setState({ showAlert: false }), 2000);
     }
 
     render() {
 
-        if(this.state.loader){
-            return <Loader/>
-        }else{
+        if (this.state.loader) {
+            return <Loader />
+        } else {
             return (
                 <div>
                     <Nabvar active="programas" />
                     <div className="container">
-                        <div className="row justify-content-end mt-3">
-                            <button className="btn btn-success border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
+                        <div className="row justify-content-between mt-3">
+                            <div>
+                                <Breadcrumb routes={routes} />
+                            </div>
+                            <div>
+                                <button
+                                    className="btn btn-success border mr-3"
+                                    data-target="#crear"
+                                    data-toggle="modal"
+                                >
+                                    Crear <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                         <div className="row mt-2">
                             <div className="table-responsive">
@@ -185,7 +215,7 @@ class Competencias extends React.Component {
                                     </thead>
                                     <tbody>
                                         {
-                                            this.state.compencias.map(({ id, code, description, summary, hours,formationProgram }, i) => (
+                                            this.state.compencias.map(({ id, code, description, summary, hours, formationProgram }, i) => (
                                                 <tr key={id} id={i}>
                                                     <td className="hiden">{code}</td>
                                                     <td className="reducir">{description}</td>
@@ -193,19 +223,19 @@ class Competencias extends React.Component {
                                                     <td className="reducir">{formationProgram.name}</td>
                                                     <td className="hiden">{hours}</td>
                                                     <td className="align-items-center">
-                                                        <span 
+                                                        <span
                                                             className="d-md-inline btn btn-outline-success btn-sm mt-1 col-6 
-                                                            col-md-6 btn-middle" 
-                                                            data-target="#editar" 
-                                                            data-toggle="modal" 
+                                                            col-md-6 btn-middle"
+                                                            data-target="#editar"
+                                                            data-toggle="modal"
                                                             onClick={() => this.setState({
-                                                                edit:{
-                                                                    id:id,
+                                                                edit: {
+                                                                    id: id,
                                                                     code: code,
                                                                     description: description,
                                                                     summary: summary,
                                                                     hours: hours,
-                                                                    formationProgramId:{
+                                                                    formationProgramId: {
                                                                         value: formationProgram.id,
                                                                         label: formationProgram.name
                                                                     }
@@ -219,18 +249,18 @@ class Competencias extends React.Component {
                                                             <i className="fas fa-trash-alt"></i>
                                                         </span>
                                                         <span> </span>
-                                                        <span 
+                                                        <span
                                                             className="d-md-none d-sm-inline btn btn-outline-primary btn-sm mt-1 col-6 
-                                                                col-md-6 btn-middle" 
-                                                            data-target="#ver" 
-                                                            data-toggle="modal" 
+                                                                col-md-6 btn-middle"
+                                                            data-target="#ver"
+                                                            data-toggle="modal"
                                                             onClick={() => this.setState({
-                                                                ver:{
+                                                                ver: {
                                                                     code: code,
                                                                     description: description,
                                                                     summary: summary,
                                                                     hours: hours,
-                                                                    formationProgramId:formationProgram.name
+                                                                    formationProgramId: formationProgram.name
                                                                 }
                                                             })}
                                                         >
@@ -255,14 +285,14 @@ class Competencias extends React.Component {
                         />
                         <Ver
                             datos={this.state.ver}
-                        /> 
-                        <Crear pedirDatos={this.pedirDatos} 
-                            alert={this.handleAlert} 
-                            programas={this.state.programas} 
+                        />
+                        <Crear pedirDatos={this.pedirDatos}
+                            alert={this.handleAlert}
+                            programas={this.state.programas}
                         />
                         <Eliminar id={this.state.idDelete} pedirDatos={this.pedirDatos} alert={this.handleAlert} />
                     </div>
-                    <Alert show={this.state.showAlert} msj={this.state.alertMsj} tipo={this.state.alertTipo}/>
+                    <Alert show={this.state.showAlert} msj={this.state.alertMsj} tipo={this.state.alertTipo} />
                 </div>
             );
         }

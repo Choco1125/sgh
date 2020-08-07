@@ -6,6 +6,25 @@ import consumidor from "./../../helpers/consumidor";
 import Tabla from "../../components/admin/grupos/tabla";
 import Crear from "../../components/admin/grupos/crear";
 import handleTabla from "../../helpers/handleTabla";
+import { Breadcrumb } from "../../components/Breadcrumb";
+
+const routes = [
+  {
+    name: 'Inicio',
+    link: '/coordinador/',
+    isLink: true
+  },
+  {
+    name: 'Programas de formación',
+    link: '/coordinador/grupos',
+    isLink: true
+  },
+  {
+    name: 'Grupos',
+    link: '/coordinador/grupos',
+    isLink: false
+  }
+];
 
 class Grupos extends React.Component {
   constructor(props) {
@@ -126,14 +145,19 @@ class Grupos extends React.Component {
         <div>
           <Navbar active="programas" />
           <div className="container">
-            <div className="row justify-content-end mt-3">
-              <button
-                className="btn btn-success border mr-3"
-                data-target="#crear"
-                data-toggle="modal"
-              >
-                Crear <i className="fas fa-plus"></i>
-              </button>
+            <div className="row justify-content-between mt-3">
+              <div>
+                <Breadcrumb routes={routes} />
+              </div>
+              <div>
+                <button
+                  className="btn btn-success border mr-3"
+                  data-target="#crear"
+                  data-toggle="modal"
+                >
+                  Crear <i className="fas fa-plus"></i>
+                </button>
+              </div>
             </div>
             <div className="mt-2 mb-3">
               <Tabla

@@ -1,103 +1,132 @@
 import React from 'react';
 import Loader from '../../components/Loader';
 import Navbar from './../../components/admin/Navbar';
-import consumidor  from './../../helpers/consumidor';
+import consumidor from './../../helpers/consumidor';
 import Modalidad from '../../components/admin/modalidades/modalidad';
 import Crear from '../../components/admin/modalidades/crear';
 import Alert from './../../components/Alert';
 import Eliminar from '../../components/admin/modalidades/eliminar';
 import handleMayus from '../../helpers/handleMayus';
 import Editar from '../../components/admin/modalidades/editar';
+import { Breadcrumb } from '../../components/Breadcrumb';
+
+const routes = [
+    {
+        name: 'Inicio',
+        link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Programas de formación',
+        link: '/coordinador/grupos',
+        isLink: true
+    },
+    {
+        name: 'Modalidades',
+        link: '/coordinador/modalidades',
+        isLink: false
+    }
+];
 
 
+class Modalidades extends React.Component {
 
-class Modalidades extends React.Component{
-
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
             loader: true,
             modalidades: [],
-            alerta:{
+            alerta: {
                 show: false,
                 msj: '',
                 tipo: ''
             },
-            edit:{
-                id:'',
-                name:''
+            edit: {
+                id: '',
+                name: ''
             },
-            delete:{
+            delete: {
                 id: ''
             }
         }
     }
 
-    getModalidades = async ()=>{
+    getModalidades = async () => {
         let res = await consumidor.get('modalities');
-        if(res){
+        if (res) {
             this.setState({
                 loader: false,
                 modalidades: res
-            });    
+            });
         }
     }
-    
-    setEdit= (name,id)=> this.setState({
-        edit:{
+
+    setEdit = (name, id) => this.setState({
+        edit: {
             id,
             name
         }
     });
 
     setDelete = id => this.setState({
-        delete:{
+        delete: {
             id
         }
     });
 
-    handleAlerta = (msj,tipo)=>{
+    handleAlerta = (msj, tipo) => {
         this.setState({
-            alerta:{
+            alerta: {
                 show: true,
                 msj,
                 tipo
             }
         });
 
-        setTimeout(()=> this.setState({
-            alerta:{
+        setTimeout(() => this.setState({
+            alerta: {
                 show: true
             }
-        }),2000);
-    } 
+        }), 2000);
+    }
 
-    handleChange= e=>this.setState({
-        edit:{
+    handleChange = e => this.setState({
+        edit: {
             ...this.state.edit,
             [e.target.name]: handleMayus(e.target.value)
         }
     });
 
-    async componentDidMount(){
+    async componentDidMount() {
         await this.getModalidades();
     }
 
-    render(){
-        if(this.state.loader){
-            return <Loader/>
-        }else{
-            return(
+    render() {
+        if (this.state.loader) {
+            return <Loader />
+        } else {
+            return (
                 <div>
-                    <Navbar active="programas"/>
+                    <Navbar active="programas" />
                     <div className="container">
-                        <div className="row justify-content-end mt-3">
-                            <button className="btn btn-success border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
+                        <div className="row justify-content-between mt-3">
+                            <div>
+                                <Breadcrumb routes={routes} />
+                            </div>
+                            <div>
+                                <button
+                                    className="btn btn-success border mr-3"
+                                    data-target="#crear"
+                                    data-toggle="modal"
+                                >
+                                    Crear <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                         <div className="row mt-2 justify-content-center">
                             {
-                                this.state.modalidades.map(modalidad=> 
+                                this.state.modalidades.map(modalidad =>
                                     <Modalidad
                                         datos={modalidad}
                                         edit={this.setEdit}
@@ -123,7 +152,7 @@ class Modalidades extends React.Component{
                         alerta={this.handleAlerta}
                         update={this.getModalidades}
                     />
-                    <Alert 
+                    <Alert
                         {...this.state.alerta}
                     />
                 </div>

@@ -8,35 +8,52 @@ import Alerta from './../../components/Alert';
 import Eliminar from '../../components/admin/razonesDesprogramacion/eliminar';
 import handleTabla from '../../helpers/handleTabla';
 import Editar from '../../components/admin/razonesDesprogramacion/editar';
+import { Breadcrumb } from '../../components/Breadcrumb';
+
+const routes = [
+    {
+        name: 'Inicio',
+        link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Despogramaciones',
+        link: '/coordinador/razonesdesprogramaciones',
+        isLink: true
+    },
+    {
+        name: 'Razones de desprogramación',
+        link: '/coordinador/razonesdesprogramaciones',
+        isLink: false
+    }
+];
 
 
+class RazonesDesprogramacion extends React.Component {
 
-
-class RazonesDesprogramacion extends React.Component{
-
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             datos: [],
             loader: true,
-            alerta:{
+            alerta: {
                 show: false,
                 msj: '',
                 tipo: ''
             },
-            eliminar:{
-                id:''
+            eliminar: {
+                id: ''
             },
-            editar:{
-                id:'',
-                name:''
+            editar: {
+                id: '',
+                name: ''
             }
         }
     }
 
-    getRazones= async ()=>{
+    getRazones = async () => {
         let datos = await consumidor.get('deprogrammingReasons');
-        if(datos){
+        if (datos) {
             handleTabla.destroy('tbl');
             this.setState({
                 datos,
@@ -45,58 +62,64 @@ class RazonesDesprogramacion extends React.Component{
             handleTabla.create('tbl');
         }
     }
-    
-    handleAlerta = (msj,tipo)=>{
+
+    handleAlerta = (msj, tipo) => {
         this.setState({
-            alerta:{
+            alerta: {
                 show: true,
                 msj,
                 tipo
             }
         });
 
-        setTimeout(()=>this.setState({alerta:{show: false}}),2000);
+        setTimeout(() => this.setState({ alerta: { show: false } }), 2000);
     }
 
-    setEliminar = id=> this.setState({
-        eliminar:{
+    setEliminar = id => this.setState({
+        eliminar: {
             id
         }
     });
 
-    setEditar = (name,id) => this.setState({
-        editar:{
+    setEditar = (name, id) => this.setState({
+        editar: {
             id,
             name
         }
     });
 
     setName = name => this.setState({
-        editar:{
+        editar: {
             ...this.state.editar,
             name
         }
     });
 
-    async componentDidMount(){
+    async componentDidMount() {
         await this.getRazones();
     }
 
-    render(){
-        if(this.state.loader){
-            return  <Loader/>
-        }else{
-            return(
+    render() {
+        if (this.state.loader) {
+            return <Loader />
+        } else {
+            return (
                 <div>
-                    <Nabvar active="desprogramacion"/>
+                    <Nabvar active="desprogramacion" />
                     <div className="container">
-                        <div className="row justify-content-end mt-3">
-                            <button className="btn btn-success border mr-3" 
-                                data-target="#crear" 
-                                data-toggle="modal"
-                            >
-                                Crear <i className="fas fa-plus"></i>
-                            </button>
+                        <div className="row justify-content-between mt-3">
+                            <div>
+                                <Breadcrumb routes={routes} />
+                            </div>
+                            <div>
+                                <button
+                                    className="btn btn-success border mr-3"
+                                    data-target="#crear"
+                                    data-toggle="modal"
+                                >
+                                    Crear <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                         <div className="mt-2 mb-3">
                             <Tabla
@@ -106,11 +129,11 @@ class RazonesDesprogramacion extends React.Component{
                             />
                         </div>
                         <Crear
-                            update = {this.getRazones}
-                            alerta = {this.handleAlerta}
+                            update={this.getRazones}
+                            alerta={this.handleAlerta}
                         />
                     </div>
-                    <Eliminar 
+                    <Eliminar
                         id={this.state.eliminar.id}
                         update={this.getRazones}
                         alerta={this.handleAlerta}
@@ -122,7 +145,7 @@ class RazonesDesprogramacion extends React.Component{
                         update={this.getRazones}
                         alerta={this.handleAlerta}
                     />
-                    <Alerta {...this.state.alerta}/>
+                    <Alerta {...this.state.alerta} />
                 </div>
             );
         }

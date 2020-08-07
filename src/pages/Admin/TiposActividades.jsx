@@ -8,16 +8,34 @@ import Crear from '../../components/admin/tiposActividades/crear';
 import Alert from './../../components/Alert';
 import Eliminar from '../../components/admin/tiposActividades/eliminar';
 import Editar from '../../components/admin/tiposActividades/editar';
+import { Breadcrumb } from '../../components/Breadcrumb';
 
+const routes = [
+    {
+        name: 'Inicio',
+        link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Tipo de actividades',
+        link: '/coordinador/tipo-actividades',
+        isLink: true
+    },
+    {
+        name: 'Tipo de actividades',
+        link: '/coordinador/tipo-actividades',
+        isLink: false
+    }
+];
 
 class TiposActividades extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        
-        this.state ={
-            actividades : [],
-            alerta:{
+
+        this.state = {
+            actividades: [],
+            alerta: {
                 show: false,
                 msj: '',
                 tipo: ''
@@ -32,9 +50,9 @@ class TiposActividades extends React.Component {
 
     }
 
-    getActividades = async ()=>{
+    getActividades = async () => {
         let actividades = await consumidor.get('typeActivities');
-        if(actividades){
+        if (actividades) {
             handleTabla.destroy('tbl');
             this.setState({
                 loader: false,
@@ -44,26 +62,28 @@ class TiposActividades extends React.Component {
         }
     }
 
-    handleAlerta = async (msj,tipo) =>{
+    handleAlerta = async (msj, tipo) => {
         this.setState({
-            alerta:{
+            alerta: {
                 show: true,
                 msj,
                 tipo
             }
         });
 
-        setTimeout(()=>this.setState({alerta:{show: false}}),2000);
+        setTimeout(() => this.setState({ alerta: { show: false } }), 2000);
     }
 
-    setEditar = (id,name,color)=>this.setState({datos:{
-        id,
-        name,
-        color
-    }});
+    setEditar = (id, name, color) => this.setState({
+        datos: {
+            id,
+            name,
+            color
+        }
+    });
 
     setEliminar = id => this.setState({
-        datos:{
+        datos: {
             id,
             name: '',
             color: '#000000'
@@ -71,63 +91,69 @@ class TiposActividades extends React.Component {
     });
 
     setNombre = name => this.setState({
-        datos:{
+        datos: {
             ...this.state.datos,
             name
         }
     });
 
     setColor = color => this.setState({
-        datos:{
+        datos: {
             ...this.state.datos,
             color
         }
     });
 
-    async componentDidMount(){
+    async componentDidMount() {
         await this.getActividades();
     }
 
     render() {
-        if(this.state.loader){
-            return <Loader/>
-        }else{
+        if (this.state.loader) {
+            return <Loader />
+        } else {
             return (
                 <div>
                     <Navbar active="tipoActividades" />
                     <div className="container">
-                        <div className="row justify-content-end mt-3">
-                            <button className="btn btn-success border mr-3"
-                                data-target="#crear"
-                                data-toggle="modal"
-                            >
-                                Crear <i className="fas fa-plus"></i>
-                            </button>
+                        <div className="row justify-content-between mt-3">
+                            <div>
+                                <Breadcrumb routes={routes} />
+                            </div>
+                            <div>
+                                <button
+                                    className="btn btn-success border mr-3"
+                                    data-target="#crear"
+                                    data-toggle="modal"
+                                >
+                                    Crear <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                         <div className="mt-2 mb-3">
                             <Tabla
-                                actividades ={this.state.actividades}
-                                setEditar = {this.setEditar}
-                                setEliminar = {this.setEliminar}
+                                actividades={this.state.actividades}
+                                setEditar={this.setEditar}
+                                setEliminar={this.setEliminar}
                             />
                         </div>
                         <Crear
-                            update = {this.getActividades}
-                            alerta = {this.handleAlerta}
+                            update={this.getActividades}
+                            alerta={this.handleAlerta}
                         />
                         <Editar
-                            update = {this.getActividades}
-                            alerta = {this.handleAlerta}
-                            name = {this.state.datos.name}
-                            setName = {this.setNombre}
-                            color = {this.state.datos.color}
-                            setColor = {this.setColor}
-                            id = {this.state.datos.id}
+                            update={this.getActividades}
+                            alerta={this.handleAlerta}
+                            name={this.state.datos.name}
+                            setName={this.setNombre}
+                            color={this.state.datos.color}
+                            setColor={this.setColor}
+                            id={this.state.datos.id}
                         />
                         <Eliminar
-                            update = {this.getActividades}
-                            alerta = {this.handleAlerta}
-                            id = {this.state.datos.id}
+                            update={this.getActividades}
+                            alerta={this.handleAlerta}
+                            id={this.state.datos.id}
                         />
                     </div>
                     <Alert {...this.state.alerta} />

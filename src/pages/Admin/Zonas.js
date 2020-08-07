@@ -9,24 +9,42 @@ import Alerta from './../../components/Alert';
 import Eliminar from '../../components/admin/zonas/elminar';
 import Editar from './../../components/admin/zonas/editar';
 import handleMayus from '../../helpers/handleMayus';
+import { Breadcrumb } from '../../components/Breadcrumb';
 
+const routes = [
+    {
+        name: 'Inicio',
+        link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Ubicaciones',
+        link: '/coordinador/zonas',
+        isLink: true
+    },
+    {
+        name: 'Zonas',
+        link: '/coordinador/zonas',
+        isLink: false
+    }
+];
 
-class Zonas extends React.Component{
+class Zonas extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
             loader: true,
-            zonas:[],
+            zonas: [],
             editar: {
                 name: '',
                 id: ''
             },
-            eliminar:{
-                id:''
+            eliminar: {
+                id: ''
             },
-            alerta:{
+            alerta: {
                 tipo: '',
                 msj: '',
                 shoW: ''
@@ -34,27 +52,27 @@ class Zonas extends React.Component{
         }
     }
 
-    setEdit = (name,id) => {
+    setEdit = (name, id) => {
         this.setState({
-            editar:{
+            editar: {
                 name: name,
-                id:id
+                id: id
             }
         });
     }
 
-    setDelete = id =>{
+    setDelete = id => {
         this.setState({
-            eliminar:{
+            eliminar: {
                 id
             }
         });
     }
 
-    getZonas = async ()=>{
+    getZonas = async () => {
         let res = await consumidor.get('zones');
 
-        if(res){
+        if (res) {
             handleTabla.destroy('tbl')
             this.setState({
                 zonas: res,
@@ -65,52 +83,59 @@ class Zonas extends React.Component{
 
     }
 
-    handleAlerta = (msj,tipo)=>{
+    handleAlerta = (msj, tipo) => {
         this.setState({
-            alerta:{
+            alerta: {
                 msj,
                 tipo,
                 show: true
             }
         });
 
-        setTimeout(()=>this.setState({
-            alerta:{
+        setTimeout(() => this.setState({
+            alerta: {
                 show: true
             }
-        }),2000);
+        }), 2000);
     }
 
-    handleChange = (e)=>{
+    handleChange = (e) => {
         this.setState({
-            editar:{
+            editar: {
                 ...this.state.editar,
                 [e.target.name]: handleMayus(e.target.value)
             }
         });
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         await this.getZonas();
     }
 
-    render(){
-        if(this.state.loader){
-            return <Loader/>
-        }else{
+    render() {
+        if (this.state.loader) {
+            return <Loader />
+        } else {
             return (
                 <div>
-                    <Navbar active="ubicaciones"/>
+                    <Navbar active="ubicaciones" />
                     <div className="container">
-                        <div className="row justify-content-end mt-3">
-                            <button className="btn btn-success border mr-3" 
-                                data-target="#crear" data-toggle="modal">
-                                Crear <i className="fas fa-plus"></i>
-                            </button>
+                        <div className="row justify-content-between mt-3">
+                            <div>
+                                <Breadcrumb routes={routes} />
+                            </div>
+                            <div>
+                                <button
+                                    className="btn btn-success border mr-3"
+                                    data-target="#crear"
+                                    data-toggle="modal">
+                                    Crear <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                         <div className="row mt-2 mb-3 justify-content-center">
                             {
-                                this.state.zonas.map((zona,i)=>
+                                this.state.zonas.map((zona, i) =>
                                     <Zona
                                         key={i}
                                         datos={zona}
@@ -121,25 +146,25 @@ class Zonas extends React.Component{
                             }
                         </div>
                     </div>
-                    <Crear 
-                        update = {this.getZonas}
-                        alerta = {this.handleAlerta}
+                    <Crear
+                        update={this.getZonas}
+                        alerta={this.handleAlerta}
                     />
-                    <Eliminar 
-                        id ={this.state.eliminar.id}
-                        alerta = {this.handleAlerta}
-                        update = {this.getZonas}
+                    <Eliminar
+                        id={this.state.eliminar.id}
+                        alerta={this.handleAlerta}
+                        update={this.getZonas}
                     />
-                    <Alerta 
+                    <Alerta
                         tipo={this.state.alerta.tipo}
                         msj={this.state.alerta.msj}
                         show={this.state.alerta.show}
                     />
                     <Editar
-                        datos = {this.state.editar}
-                        handleChange = {this.handleChange}
-                        alerta = {this.handleAlerta}
-                        update = {this.getZonas}
+                        datos={this.state.editar}
+                        handleChange={this.handleChange}
+                        alerta={this.handleAlerta}
+                        update={this.getZonas}
                     />
                 </div>
             );

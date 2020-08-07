@@ -6,6 +6,25 @@ import Tabla from '../../components/admin/Municipios/tabla';
 import Crear from '../../components/admin/Municipios/crear';
 import Alert from './../../components/Alert';
 import handleTabla from './../../helpers/handleTabla';
+import { Breadcrumb } from '../../components/Breadcrumb';
+
+const routes = [
+    {
+        name: 'Inicio',
+        link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Ubicaciones',
+        link: '/coordinador/municipios',
+        isLink: true
+    },
+    {
+        name: 'Municipios',
+        link: '/coordinador/municipios',
+        isLink: false
+    }
+];
 
 class Municipios extends React.Component {
 
@@ -15,8 +34,8 @@ class Municipios extends React.Component {
         this.state = {
             loader: true,
             municipios: [],
-            zonas:[],
-            alert:{
+            zonas: [],
+            alert: {
                 show: false,
                 tipo: '',
                 msj: ''
@@ -26,8 +45,8 @@ class Municipios extends React.Component {
 
     getMunicipios = async () => {
         let data = await consumidor.get('municipalities');
-        
-        
+
+
         if (data) {
             handleTabla.destroy('tbl');
             this.setState({
@@ -41,7 +60,7 @@ class Municipios extends React.Component {
     }
 
     getZonas = async () => {
-        let data = await consumidor.get('zones');       
+        let data = await consumidor.get('zones');
         if (data) {
 
             let zonas = [];
@@ -50,7 +69,7 @@ class Municipios extends React.Component {
                 zonas.push({
                     value: data[i].id,
                     label: data[i].name
-                });         
+                });
             }
 
             this.setState({
@@ -60,19 +79,19 @@ class Municipios extends React.Component {
 
     }
 
-    handleAlert = (tipo,msj) =>{
+    handleAlert = (tipo, msj) => {
         this.setState({
-            alert:{
+            alert: {
                 show: true,
                 tipo,
                 msj
             }
         });
-        setTimeout(()=>this.setState({
-            alert:{
+        setTimeout(() => this.setState({
+            alert: {
                 show: false
             }
-        }),2000);
+        }), 2000);
     }
 
     async componentDidMount() {
@@ -86,18 +105,23 @@ class Municipios extends React.Component {
             <div>
                 <Navbar active="ubicaciones" />
                 <div className="container">
-                    <div className="row justify-content-end mt-3">
-                        <button 
-                            className="btn btn-success border mr-3" 
-                            data-target="#crear"
-                            data-toggle="modal"
-                        >
-                            Crear 
-                            <i className="ml-1 fas fa-plus"></i>
-                        </button>
+                    <div className="row justify-content-between mt-3">
+                        <div>
+                            <Breadcrumb routes={routes} />
+                        </div>
+                        <div>
+                            <button
+                                className="btn btn-success border mr-3"
+                                data-target="#crear"
+                                data-toggle="modal"
+                            >
+                                Crear
+                                <i className="ml-1 fas fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
                     <div className="mt-1 mb-2">
-                        <Tabla 
+                        <Tabla
                             datos={this.state.municipios}
                             zonas={this.state.zonas}
                             update={this.getMunicipios}
@@ -105,15 +129,15 @@ class Municipios extends React.Component {
                         />
                     </div>
                 </div>
-                <Crear 
-                    zonas = {this.state.zonas}
-                    alerta = {this.handleAlert}
-                    update = {this.getMunicipios}
+                <Crear
+                    zonas={this.state.zonas}
+                    alerta={this.handleAlert}
+                    update={this.getMunicipios}
                 />
-                <Alert 
-                    tipo = {this.state.alert.tipo}
-                    msj = {this.state.alert.msj}
-                    show = {this.state.alert.show}
+                <Alert
+                    tipo={this.state.alert.tipo}
+                    msj={this.state.alert.msj}
+                    show={this.state.alert.show}
                 />
             </div>
         );

@@ -6,17 +6,34 @@ import Crear from '../../components/admin/tipoProgramas/crear';
 import Alerta from './../../components/Alert';
 import Loader from './../../components/Loader';
 import handleTabla from '../../helpers/handleTabla';
+import { Breadcrumb } from '../../components/Breadcrumb';
 
-
+const routes = [
+    {
+        name: 'Inicio',
+        link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Programas de formación',
+        link: '/coordinador/tipo-programas',
+        isLink: true
+    },
+    {
+        name: 'Tipos de programas de formación',
+        link: '/coordinador/tipo-programas',
+        isLink: false
+    }
+];
 
 class TipoProgramas extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
-            tipoProgramas:[],
-            alert:{
+            tipoProgramas: [],
+            alert: {
                 show: false,
                 msj: '',
                 tipo: ''
@@ -25,12 +42,12 @@ class TipoProgramas extends React.Component {
         }
     }
 
-    getDatos= async ()=>{
-        let datos = await Api('formationProgramTypes','GET',sessionStorage.getItem('token'),'');
-        if (datos === "jwt expired" || datos === "jwt malformed" ) {
+    getDatos = async () => {
+        let datos = await Api('formationProgramTypes', 'GET', sessionStorage.getItem('token'), '');
+        if (datos === "jwt expired" || datos === "jwt malformed") {
             sessionStorage.removeItem('token');
             window.location.href = "/";
-        }else{
+        } else {
             handleTabla.destroy('tbl');
             this.setState({
                 loader: false,
@@ -40,48 +57,56 @@ class TipoProgramas extends React.Component {
         }
     }
 
-    handleAlerta = (msj, tipo)=>{
+    handleAlerta = (msj, tipo) => {
         this.setState({
-            alert:{
+            alert: {
                 show: true,
                 msj: msj,
                 tipo: tipo
             }
         });
-        setTimeout(()=> this.setState({
-            alert:{
+        setTimeout(() => this.setState({
+            alert: {
                 show: false
             }
-        }),2000);
+        }), 2000);
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         await this.getDatos();
     }
 
     render() {
-        if(this.state.loader){
-            return <Loader/>
-        }else{
+        if (this.state.loader) {
+            return <Loader />
+        } else {
             return (
                 <div>
                     <Navbar active="programas" />
                     <div className="container">
-                        <div className="row justify-content-end mt-3">
-                            <button className="btn btn-success border mr-3" 
-                                data-target="#crear" data-toggle="modal">
-                                Crear <i className="fas fa-plus"></i>
-                            </button>
+                        <div className="row justify-content-between mt-3">
+                            <div>
+                                <Breadcrumb routes={routes} />
+                            </div>
+                            <div>
+                                <button
+                                    className="btn btn-success border mr-3"
+                                    data-target="#crear"
+                                    data-toggle="modal"
+                                >
+                                    Crear <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                         <div className="mt-2">
-                            <Tabla datos = {this.state.tipoProgramas} 
-                                update = {this.getDatos}
-                                alerta = {this.handleAlerta}
+                            <Tabla datos={this.state.tipoProgramas}
+                                update={this.getDatos}
+                                alerta={this.handleAlerta}
                             />
                         </div>
                     </div>
-                    <Crear alerta = {this.handleAlerta} update = {this.getDatos}/>
-                    <Alerta show={this.state.alert.show} msj={this.state.alert.msj} tipo={this.state.alert.tipo}/>
+                    <Crear alerta={this.handleAlerta} update={this.getDatos} />
+                    <Alerta show={this.state.alert.show} msj={this.state.alert.msj} tipo={this.state.alert.tipo} />
                 </div>
             );
         }

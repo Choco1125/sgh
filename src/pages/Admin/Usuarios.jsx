@@ -11,8 +11,13 @@ import { Breadcrumb } from '../../components/Breadcrumb';
 
 const routes = [
     {
-        name: 'Coordinador',
+        name: 'Inicio',
         link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Usuarios',
+        link: '/coordinador/usuarios',
         isLink: true
     },
     {

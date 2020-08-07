@@ -9,78 +9,96 @@ import Contrato from '../../components/admin/contratos/contrato';
 import Editar from '../../components/admin/contratos/editar';
 import Delete from '../../components/admin/contratos/delete';
 import Loader from './../../components/Loader';
+import { Breadcrumb } from '../../components/Breadcrumb';
 
+const routes = [
+    {
+        name: 'Inicio',
+        link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Parametrización',
+        link: '/coordinador/contratos',
+        isLink: true
+    },
+    {
+        name: 'Tipos de contratos',
+        link: '/coordinador/contratos',
+        isLink: false
+    }
+];
 
 class Contratos extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
             contratos: [],
-            alert:{
+            alert: {
                 show: false,
                 msj: '',
                 tipo: ''
             },
-            edit:{
-                id:0,
+            edit: {
+                id: 0,
                 name: ''
             },
-            spinner:{
+            spinner: {
                 show: false
             },
-            delete:{
-                id:0
+            delete: {
+                id: 0
             },
             loader: true
         }
     }
 
-    getContratos = async ()=>{
+    getContratos = async () => {
         let datos = await Api('contractTypes', 'GET', sessionStorage.getItem('token'), '');
         if (datos === "jwt expired") {
             sessionStorage.removeItem('token');
             window.location.href = "/";
-        }else if (datos === "jwt malformed") {
+        } else if (datos === "jwt malformed") {
             sessionStorage.removeItem('token');
             window.location.href = "/";
-        }        
+        }
         else {
             $('#tbl').DataTable().destroy();
-            this.setState({contratos: datos});
+            this.setState({ contratos: datos });
         }
     }
 
-    setEdit = (name,id)=>{
+    setEdit = (name, id) => {
         this.setState({
-            edit:{
+            edit: {
                 id: id,
                 name: name
             }
         });
     }
 
-    setDelete =  id=>{
+    setDelete = id => {
         this.setState({
-            delete:{
+            delete: {
                 id: id,
             }
         });
     }
 
-    handleAlert = (msj,tipo) => {
+    handleAlert = (msj, tipo) => {
         this.setState({
-            alert:{
+            alert: {
                 show: true,
                 msj: msj,
                 tipo: tipo
             }
         });
-        setTimeout(()=> this.setState({ alert:{show: false} }), 2000 );
+        setTimeout(() => this.setState({ alert: { show: false } }), 2000);
     }
 
-    handleChange= (e)=> {
+    handleChange = (e) => {
         this.setState({
             edit: {
                 ...this.state.edit,
@@ -98,35 +116,35 @@ class Contratos extends React.Component {
             elemento.children[1].classList.remove('is-invalid');
             elemento.children[2].innerHTML = '';
         });
-    }   
+    }
 
 
-    update = async() => {
-        this.setState({spinner:{ show: true}});
+    update = async () => {
+        this.setState({ spinner: { show: true } });
         if (this.state.edit.name !== '') {
             try {
-                let datos = await Api(`contractTypes/${this.state.edit.id}`,'PUT',sessionStorage.getItem('token'),this.state.edit);
-                if(datos === 'Tipo de contrato actualizado'){
+                let datos = await Api(`contractTypes/${this.state.edit.id}`, 'PUT', sessionStorage.getItem('token'), this.state.edit);
+                if (datos === 'Tipo de contrato actualizado') {
                     await this.getContratos();
                     $('#editar').modal('hide');
-                    this.handleAlert(datos,'success');
-                }else if(datos === 'Tipo de contrato ya existente'){
+                    this.handleAlert(datos, 'success');
+                } else if (datos === 'Tipo de contrato ya existente') {
                     this.agregarError(document.getElementById('name_edit'), datos);
-                }else{
+                } else {
                     console.log(datos);
                 }
             } catch (error) {
                 console.error(error);
-                this.handleAlert(error,'danger');
+                this.handleAlert(error, 'danger');
             }
         } else {
             this.agregarError(document.getElementById('name_edit'), 'Debes ingresar un nombre');
         }
-        this.setState({spinner:{ show: false}});
+        this.setState({ spinner: { show: false } });
 
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         await this.getContratos();
         this.setState({
             loader: false
@@ -134,26 +152,37 @@ class Contratos extends React.Component {
     }
 
     render() {
-        if(this.state.loader){
-            return <Loader/>
-        }else{
+        if (this.state.loader) {
+            return <Loader />
+        } else {
             return (
                 <div>
                     <Nabvar active="parametrizacion" />
                     <div className="container">
-                        <div className="row justify-content-end mt-3">
-                            <button className="btn btn-success border mr-3" data-target="#crear" data-toggle="modal">Crear <i className="fas fa-plus"></i></button>
+                        <div className="row justify-content-between mt-3">
+                            <div>
+                                <Breadcrumb routes={routes} />
+                            </div>
+                            <div>
+                                <button
+                                    className="btn btn-success border mr-3"
+                                    data-target="#crear"
+                                    data-toggle="modal"
+                                >
+                                    Crear <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                         <div className="row mt-2 justify-content-center">
                             {
-                                this.state.contratos.map((contrato,i) => <Contrato key={i} nombre={contrato.name} id={contrato.id} edit={this.setEdit} delet={this.setDelete}/> )
+                                this.state.contratos.map((contrato, i) => <Contrato key={i} nombre={contrato.name} id={contrato.id} edit={this.setEdit} delet={this.setDelete} />)
                             }
-                        </div>  
+                        </div>
                     </div>
-                    <Crear alerta={this.handleAlert} update ={this.getContratos}/>
-                    <Editar handleChange= {this.handleChange} save={this.update} datos={this.state.edit} showSpinner={this.state.spinner.show}/>
-                    <Alert show={this.state.alert.show} msj={this.state.alert.msj} tipo={this.state.alert.tipo}/>
-                    <Delete id={this.state.delete.id} update={this.getContratos} alerta={this.handleAlert}/>
+                    <Crear alerta={this.handleAlert} update={this.getContratos} />
+                    <Editar handleChange={this.handleChange} save={this.update} datos={this.state.edit} showSpinner={this.state.spinner.show} />
+                    <Alert show={this.state.alert.show} msj={this.state.alert.msj} tipo={this.state.alert.tipo} />
+                    <Delete id={this.state.delete.id} update={this.getContratos} alerta={this.handleAlert} />
                 </div>
             )
         }
