@@ -7,13 +7,27 @@ import handleTabla from '../../helpers/handleTabla';
 import Crear from '../../components/admin/usuarios/crear';
 import Alert from '../../components/Alert';
 import Eliminar from '../../components/admin/usuarios/eliminar';
+import { Breadcrumb } from '../../components/Breadcrumb';
 
-class Usuarios extends React.Component{
-    constructor(props){
+const routes = [
+    {
+        name: 'Coordinador',
+        link: '/coordinador/',
+        isLink: true
+    },
+    {
+        name: 'Usuarios',
+        link: '/coordinador/usuarios',
+        isLink: false
+    }
+];
+
+class Usuarios extends React.Component {
+    constructor(props) {
         super(props);
 
         this.state = {
-            loader:  true,
+            loader: true,
             users: [],
             cargos: [{
                 label: '',
@@ -27,12 +41,12 @@ class Usuarios extends React.Component{
                 label: '',
                 values: ''
             }],
-            alerta:{
+            alerta: {
                 show: false,
                 tipo: '',
                 msj: ''
             },
-            editar:{
+            editar: {
                 id: ''
             }
         }
@@ -40,23 +54,23 @@ class Usuarios extends React.Component{
 
     handleAlerta = (tipo, msj) => {
         this.setState({
-            alerta:{
+            alerta: {
                 show: true,
                 tipo,
                 msj
             }
         });
 
-        setTimeout(()=>this.setState({
+        setTimeout(() => this.setState({
             alerta: {
                 show: false
             }
-        }),2000);
+        }), 2000);
     }
 
     getRols = async () => {
         let response = await consumidor.get('rols');
-        if(response){
+        if (response) {
             let roles = [];
             response.map(rol => roles.push({
                 label: rol.name,
@@ -70,8 +84,8 @@ class Usuarios extends React.Component{
 
     getCargos = async () => {
         let response = await consumidor.get('positions');
-        
-        if(response){
+
+        if (response) {
             let jsonCargos = [];
 
             response.map(cargo => jsonCargos.push({
@@ -80,7 +94,7 @@ class Usuarios extends React.Component{
             }));
 
             this.setState({
-                cargos : jsonCargos
+                cargos: jsonCargos
             });
         }
     }
@@ -88,23 +102,23 @@ class Usuarios extends React.Component{
     getTipoDeContratos = async () => {
         let response = await consumidor.get('contractTypes');
 
-        if(response){
+        if (response) {
             let JSONTipoDeContrato = [];
 
             response.map(tipoContrato => JSONTipoDeContrato.push({
                 label: tipoContrato.name,
                 value: tipoContrato.id
             }));
-            
+
             this.setState({
                 tipoContrato: JSONTipoDeContrato
             });
         }
     }
 
-    getUsuarios = async ()=>{
+    getUsuarios = async () => {
         handleTabla.destroy('tbl');
-        let res =  await consumidor.get('users');
+        let res = await consumidor.get('users');
         if (res) {
             this.setState({
                 users: res.users,
@@ -115,52 +129,57 @@ class Usuarios extends React.Component{
     }
 
     setId = id => this.setState({
-        editar:{
+        editar: {
             id
         }
     });
 
-    async componentDidMount(){
+    async componentDidMount() {
         await this.getRols();
         await this.getTipoDeContratos();
         await this.getCargos();
         await this.getUsuarios();
     }
 
-    render(){
-        if(this.state.loader){
-            return <Loader/>
-        }else{
-            return(
+    render() {
+        if (this.state.loader) {
+            return <Loader />
+        } else {
+            return (
                 <div>
-                    <Navbar active="usuarios"/>
+                    <Navbar active="usuarios" />
                     <div className="container">
-                        <div className="row justify-content-end mt-3 mb-3">
-                            <button 
-                                className="btn btn-success"
-                                data-target="#crear"
-                                data-toggle="modal"
-                            >
-                                Crear <i className="fas fa-plus"></i>
-                            </button>
+                        <div className="row justify-content-between mt-3 mb-2">
+                            <div>
+                                <Breadcrumb routes={routes} />
+                            </div>
+                            <div>
+                                <button
+                                    className="btn btn-success mr-3"
+                                    data-target="#crear"
+                                    data-toggle="modal"
+                                >
+                                    Crear <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                         <div>
-                            <Tabla usuarios={this.state.users} setId={this.setId}/>
+                            <Tabla usuarios={this.state.users} setId={this.setId} />
                         </div>
                     </div>
                     <Crear
                         cargos={this.state.cargos}
                         tiposContratos={this.state.tipoContrato}
                         rols={this.state.rols}
-                        update = {this.getUsuarios}
-                        alerta = {this.handleAlerta}
+                        update={this.getUsuarios}
+                        alerta={this.handleAlerta}
                     />
-                    <Eliminar 
+                    <Eliminar
                         id={this.state.editar.id}
-                        alerta = {this.handleAlerta}
-                        update = {this.getUsuarios}
+                        alerta={this.handleAlerta}
+                        update={this.getUsuarios}
                     />
-                    <Alert {...this.state.alerta}/>
+                    <Alert {...this.state.alerta} />
                 </div>
             );
         }

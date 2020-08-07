@@ -9,9 +9,27 @@ import Alert from './../../../Alert';
 import Spinner from "../../../spinner";
 import DisableButton from "../../../../helpers/DisableButton";
 import validator from "../../../../helpers/validator";
+import { Breadcrumb } from "../../../Breadcrumb";
 
 const API_LINK = 'https://cronode.herokuapp.com/'
 
+const routes = [
+  {
+    name: 'Coordinador',
+    link: '/coordinador/',
+    isLink: true
+  },
+  {
+    name: 'Usuarios',
+    link: '/coordinador/usuarios',
+    isLink: true
+  },
+  {
+    name: 'Editar usuario',
+    link: '',
+    isLink: false
+  }
+];
 
 const EditarUserPage = () => {
   const [spinner, setSpinner] = useState(false);
@@ -256,6 +274,11 @@ const EditarUserPage = () => {
         <Nabvar active="usuarios" />
         <div className="container">
           <div className="row mt-3">
+            <div>
+              <Breadcrumb routes={routes} />
+            </div>
+          </div>
+          <div className="row mt-1">
             <div className="col-lg-3 col-md-4 mb-2">
               <img
                 src={photo}
