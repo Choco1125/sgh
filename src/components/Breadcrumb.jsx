@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Miga = ({ route }) => {
-  console.log(route);
   return <li className={`breadcrumb-item ${route.isLink ? '' : 'active'}`}>
     {
       route.isLink ?
