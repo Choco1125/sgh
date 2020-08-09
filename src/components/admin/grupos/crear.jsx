@@ -6,6 +6,7 @@ import DisableButton from "../../../helpers/DisableButton";
 import validator from "../../../helpers/validator";
 import consumidor from "../../../helpers/consumidor";
 import $ from "jquery";
+import handleError from "../../../helpers/handleError";
 
 const tiposDeOferta = [
   {
@@ -85,9 +86,11 @@ const Crear = ({
       groupState,
     };
 
-    console.log(validator.validarDatos(datos))
-
-    if (validator.validarDatos(datos)) {
+    if (quantityLearners <= 0 || quantityLearners > 150) {
+      handleError.inputMsj('quantityLearners', 'Debes ingresar valores entre 1 y 150');
+    } else if (activeLearners > 150 || activeLearners < 0) {
+      handleError.inputMsj('activeLearners', 'Debes ingresar valores entre 1 y 150');
+    } else if (validator.validarDatos(datos)) {
       datos = {
         codeTab,
         modalityId: modalidad.value,

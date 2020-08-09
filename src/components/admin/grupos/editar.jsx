@@ -6,6 +6,7 @@ import DisableButton from "../../../helpers/DisableButton";
 import validator from "../../../helpers/validator";
 import consumidor from "../../../helpers/consumidor";
 import $ from "jquery";
+import handleError from "../../../helpers/handleError";
 
 const tiposDeOferta = [
   {
@@ -77,7 +78,11 @@ const Editar = ({
       groupState,
     };
 
-    if (validator.validarDatosEdit(datos)) {
+    if (quantityLearners <= 0 || quantityLearners > 150) {
+      handleError.inputMsj('quantityLearners_edit', 'Debes ingresar valores entre 1 y 150');
+    } else if (activeLearners > 150 || activeLearners < 0) {
+      handleError.inputMsj('activeLearners_edit', 'Debes ingresar valores entre 1 y 150');
+    } else if (validator.validarDatosEdit(datos)) {
       datos = {
         codeTab,
         modalityId: modalidad.value,
@@ -214,7 +219,10 @@ const Editar = ({
                 max="100"
                 name="quantityLearners"
                 value={quantityLearners}
-                onChange={(e) => setQuantityLearners(e.target.value)}
+                onChange={(e) => {
+                  setQuantityLearners(e.target.value);
+                  handleError.inputMsj('quantityLearners_edit', '');
+                }}
               />
               <span className="text-danger"></span>
             </div>
@@ -231,7 +239,10 @@ const Editar = ({
                 max="100"
                 name="activeLearners"
                 value={activeLearners}
-                onChange={(e) => setActiveLearners(e.target.value)}
+                onChange={(e) => {
+                  setActiveLearners(e.target.value);
+                  handleError.inputMsj('activeLearners_edit', '');
+                }}
               />
               <span className="text-danger"></span>
             </div>
