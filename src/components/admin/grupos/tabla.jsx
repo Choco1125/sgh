@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Eliminar from "./eliminar";
 import Editar from "./editar";
+import consumidor from "../../../helpers/consumidor";
 
 const Tabla = ({
   grupos,
@@ -45,7 +46,7 @@ const Tabla = ({
     return arregloFechas[0];
   };
 
-  const setValores = (grupo) => {
+  const setValores = async (grupo) => {
     setId(grupo.id);
     setCodeTab(grupo.codeTab);
     setModalidad({
@@ -72,9 +73,10 @@ const Tabla = ({
     });
     setGroupState(grupo.groupState);
     if (grupo.learnerId !== null) {
+      let response = await consumidor.get(`users/${grupo.learnerId}`);
       setLearnerId({
-        label: grupo.learnerId.name,
-        value: grupo.learnerId.id,
+        label: `(${response.document}) ${response.username}`,
+        value: grupo.learnerId,
       });
     }
   };

@@ -311,14 +311,6 @@ const Editar = ({
                 onChange={(e) => setOffer(e)}
                 options={tiposDeOferta}
               />
-              {/* <input
-                type="text"
-                className="form-control"
-                placeholder="Oferta"
-                name="offer"
-                value={offer}
-                onChange={(e) => setOffer(handleMayus(e.target.value))}
-              /> */}
               <span className="text-danger"></span>
             </div>
             <div className="form-group" id="formationProgramId_edit">
