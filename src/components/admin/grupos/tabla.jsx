@@ -62,7 +62,10 @@ const Tabla = ({
       label: grupo.manager.username,
       value: grupo.manager.id,
     });
-    setOffer(grupo.offer);
+    setOffer({
+      label: grupo.offer,
+      value: grupo.offer
+    });
     setFormationProgramId({
       label: grupo.formationProgram.name,
       value: grupo.formationProgram.id,
@@ -125,7 +128,7 @@ const Tabla = ({
         </tbody>
       </table>
       <Editar
-        grupoId = {id}
+        grupoId={id}
         codeTab={codeTab}
         setCodeTab={setCodeTab}
         modalidad={modalidad}
@@ -156,7 +159,7 @@ const Tabla = ({
         usuarios={usuarios}
         programasFromacion={programasFromacion}
         aprendices={aprendices}
-        alerta ={alerta}
+        alerta={alerta}
         actualizar={update}
       />
       <Eliminar id={id} update={update} alerta={alerta} />

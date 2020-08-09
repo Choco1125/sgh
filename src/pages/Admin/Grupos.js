@@ -10,20 +10,20 @@ import { Breadcrumb } from "../../components/Breadcrumb";
 
 const routes = [
   {
-    name: 'Inicio',
-    link: '/coordinador/',
-    isLink: true
+    name: "Inicio",
+    link: "/coordinador/",
+    isLink: true,
   },
   {
-    name: 'Programas de formación',
-    link: '/coordinador/grupos',
-    isLink: true
+    name: "Programas de formación",
+    link: "/coordinador/grupos",
+    isLink: true,
   },
   {
-    name: 'Grupos',
-    link: '/coordinador/grupos',
-    isLink: false
-  }
+    name: "Grupos",
+    link: "/coordinador/grupos",
+    isLink: false,
+  },
 ];
 
 class Grupos extends React.Component {
@@ -46,7 +46,7 @@ class Grupos extends React.Component {
   }
 
   getGrupos = async () => {
-    handleTabla.destroy('tbl');
+    handleTabla.destroy("tbl");
     let res = await consumidor.get("groups");
     if (res.groups) {
       this.setState({
@@ -54,7 +54,7 @@ class Grupos extends React.Component {
         loader: false,
       });
     }
-    handleTabla.create('tbl');
+    handleTabla.create("tbl");
   };
 
   getModalidades = async () => {
@@ -76,12 +76,18 @@ class Grupos extends React.Component {
     let res = await consumidor.get("users");
     let usuarios = [];
     let aprendices = [];
-    res.users.forEach(({ id, username, document }) => {
+
+    let preUsuarios = res.users.filter(
+      (user) => user.position.type === "Instructor"
+    );
+
+    preUsuarios.map((user) =>
       usuarios.push({
-        value: id,
-        label: `(${document}) ${username}`,
-      });
-    });
+        label: user.username,
+        value: user.id,
+      })
+    );
+
     res.learners.forEach(({ id, username, document }) => {
       aprendices.push({
         value: id,

@@ -7,6 +7,17 @@ import validator from "../../../helpers/validator";
 import consumidor from "../../../helpers/consumidor";
 import $ from "jquery";
 
+const tiposDeOferta = [
+  {
+    label: "Abierta",
+    value: "Abierta",
+  },
+  {
+    label: "Cerrada (especial)",
+    value: "Cerrada (especial)",
+  }
+];
+
 const Editar = ({
   alerta,
   actualizar,
@@ -61,7 +72,7 @@ const Editar = ({
       practiceStartDate,
       practiceEndDate,
       managerId: managerId,
-      offer,
+      offer: offer,
       formationProgramId: formationProgramId,
       groupState,
     };
@@ -77,7 +88,7 @@ const Editar = ({
         practiceStartDate,
         practiceEndDate,
         managerId: managerId.value,
-        offer,
+        offer: offer.value,
         formationProgramId: formationProgramId.value,
         groupState,
       };
@@ -89,7 +100,7 @@ const Editar = ({
         };
       }
 
-      let res = await consumidor.put("groups",grupoId, datos);
+      let res = await consumidor.put("groups", grupoId, datos);
       if (res === "Grupo actualizado") {
         await actualizar();
         $("#editar").modal("hide");
@@ -117,7 +128,10 @@ const Editar = ({
         label: "",
         value: "",
       });
-      setOffer("");
+      setOffer({
+        label: "Selecciona un tipo de oferta",
+        value: ""
+      });
       setFormationProgramId({
         label: "",
         value: "",
@@ -292,14 +306,19 @@ const Editar = ({
               <label htmlFor="offer">
                 Oferta <span className="text-danger">*</span>
               </label>
-              <input
+              <Select
+                value={offer}
+                onChange={(e) => setOffer(e)}
+                options={tiposDeOferta}
+              />
+              {/* <input
                 type="text"
                 className="form-control"
                 placeholder="Oferta"
                 name="offer"
                 value={offer}
                 onChange={(e) => setOffer(handleMayus(e.target.value))}
-              />
+              /> */}
               <span className="text-danger"></span>
             </div>
             <div className="form-group" id="formationProgramId_edit">
