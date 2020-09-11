@@ -304,7 +304,7 @@ const Editar = ({
             </div>
             <div className="form-group" id="managerId_edit">
               <label htmlFor="managerId">
-                Gefe de grupo <span className="text-danger">*</span>
+                Jefe de grupo <span className="text-danger">*</span>
               </label>
               <Select
                 value={managerId}

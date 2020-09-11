@@ -308,7 +308,7 @@ const Crear = ({
             </div>
             <div className="form-group" id="managerId">
               <label htmlFor="managerId">
-                Gefe de grupo <span className="text-danger">*</span>
+                Jefe de grupo <span className="text-danger">*</span>
               </label>
               <Select
                 value={managerId}
