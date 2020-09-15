@@ -5,6 +5,7 @@ import Select from 'react-select';
 import consumidor from './../../../helpers/consumidor';
 import disableButton from './../../../helpers/DisableButton';
 import DisableButton from './../../../helpers/DisableButton';
+import { validateInForm } from './../../../helpers/validateInForm';
 
 export default function crear() {
   const [spinner, setSpinner] = useState(false);
@@ -59,7 +60,21 @@ export default function crear() {
 		DisableButton.setId('btn-save');
 		DisableButton.disable();
 		setSpinner(true);
-		console.log(datos);
+		validateInForm.setId('form-crear');
+		validateInForm.validLength(datos.trimester,'trimester',1,2);
+		validateInForm.validate({
+			startDate: datos.startDate,
+			endDate: datos.endDate,
+			trimester: datos.trimester,
+			groupId: datos.groupId,
+			municipalityId: datos.municipalityId
+		});
+
+		if(validateInForm.isValid){
+			alert('Ok');
+		}else{
+			console.log(datos);
+		}
 		disableButton.enable();
 		setSpinner(false);
 	}
@@ -95,13 +110,13 @@ export default function crear() {
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div className="modal-body">
+          <div className="modal-body" id="form-crear">
             <span className="font-weight-lighter">
               Los campos con
               <i className="text-danger">*</i>
               son obligatorios
             </span>
-            <div className="form-group mt-1" id="fecha_inicio">
+            <div className="form-group mt-1" data-name="startDate">
               <label htmlFor="fecha_inicio">
                 Fecha inicio
                 <span className="text-danger">*</span>
@@ -117,7 +132,7 @@ export default function crear() {
               />
               <span className="text-danger" />
             </div>
-            <div className="form-group mt-1" id="fecha_fin">
+            <div className="form-group mt-1" data-name="endDate">
               <label htmlFor="fecha_fin">
                 Fecha inicio
                 <span className="text-danger">*</span>
@@ -127,12 +142,12 @@ export default function crear() {
                 type="date" className="form-control"
 								onChange = {(e) => setDatos({
 									...datos,
-									endDated: e.target.value
+									endDate: e.target.value
 								})}
               />
               <span className="text-danger" />
             </div>
-            <div className="form-group mt-1" id="trimester">
+            <div className="form-group mt-1" data-name="trimester">
               <label htmlFor="trimester">
                 Trimestre
                 <span className="text-danger">*</span>
@@ -151,7 +166,7 @@ export default function crear() {
               />
               <span className="text-danger" />
             </div>
-            <div className="form-group mt-1" id="groupId">
+            <div className="form-group mt-1" data-name="groupId">
               <label htmlFor="groupId">
                 Grupo
                 <span className="text-danger">*</span>
@@ -170,7 +185,7 @@ export default function crear() {
 							/>
               <span className="text-danger" />
             </div>
-						<div className="form-group mt-1" id="municipalityId">
+						<div className="form-group mt-1" data-name="municipalityId">
               <label htmlFor="municipalityId">
                 Municipio
                 <span className="text-danger">*</span>
