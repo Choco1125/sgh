@@ -3,7 +3,6 @@ import Eliminar from "./eliminar";
 import Editar from "./editar";
 import Ver from "./ver";
 import "./hider.css";
-import consumidor from './../../../helpers/consumidor';
 
 class Tabla extends React.Component {
   constructor(props) {
