@@ -5,9 +5,10 @@ import { Breadcrumb } from './../../components/Breadcrumb';
 import consumidor from './../../helpers/consumidor';
 import Tabla from './../../components/admin/programaciones/tabla';
 import handleTabla from './../../helpers/handleTabla';
+import Crear from "./../../components/admin/programaciones/crear";
 
 export default function Programaciones() {
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
   const [programtions, setProgramtions] = useState([]);
 
   const routes = [
@@ -36,7 +37,6 @@ export default function Programaciones() {
       setLoader(false);
       handleTabla.create('tbl');
     }
-    console.log(res);
   }
 
   useEffect(() => {
@@ -60,6 +60,8 @@ export default function Programaciones() {
             <div>
               <button
                 className="btn btn-success border mr-3"
+                data-target="#crear"
+                data-toggle="modal"
               >
                 Crear <i className="fas fa-plus"></i>
               </button>
@@ -69,6 +71,7 @@ export default function Programaciones() {
             <Tabla programations={programtions} />
           </div>
         </div>
+        <Crear />
       </div>
     );
   }
