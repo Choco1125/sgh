@@ -37,5 +37,11 @@ export const validateInForm = {
 			this.setError(this.getFormGroup(name), `Este campo debe estar entre ${min} y ${max} caracteres`);
 			this.isValid = false;
 		}
+	},
+	isNumber: function (value, name){
+		if(isNaN(parseInt(value))){
+			this.setError(this.getFormGroup(name),"Debes ingresar valores numéricos");
+			this.isValid= false;
+		}
 	}
 }
