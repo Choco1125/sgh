@@ -6,10 +6,16 @@ import consumidor from './../../helpers/consumidor';
 import Tabla from './../../components/admin/programaciones/tabla';
 import handleTabla from './../../helpers/handleTabla';
 import Crear from "./../../components/admin/programaciones/crear";
+import Alerta from './../../components/Alert';
 
 export default function Programaciones() {
   const [loader, setLoader] = useState(true);
   const [programtions, setProgramtions] = useState([]);
+  const [alerta, setAlerta] = useState({
+    show: true,
+    msj: '',
+    tipo: ''
+  });
 
   const routes = [
     {
@@ -37,6 +43,22 @@ export default function Programaciones() {
       setLoader(false);
       handleTabla.create('tbl');
     }
+  }
+
+  const handleAlert = (msj, tipo) => {
+    setAlerta({
+      show: true,
+      msj,
+      tipo
+    });
+
+    setTimeout(() => {
+      setAlerta({
+        show: false,
+        msj: '',
+        tipo: ''
+      });
+    }, 2000);
   }
 
   useEffect(() => {
@@ -71,7 +93,10 @@ export default function Programaciones() {
             <Tabla programations={programtions} />
           </div>
         </div>
-        <Crear />
+        <Crear
+          alerta={handleAlert}
+        />
+        <Alerta {...alerta} />
       </div>
     );
   }

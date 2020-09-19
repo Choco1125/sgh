@@ -12,6 +12,7 @@ export default function Tabla({ programations }) {
             <th>Trimestre</th>
             <th>Fecha inicio</th>
             <th>Fecha fin</th>
+            <th>Estado</th>
             <th>Opciones</th>
           </tr>
         </thead>
@@ -24,6 +25,7 @@ export default function Tabla({ programations }) {
                 <td>{programation.trimester}</td>
                 <td>{manejarFecha(programation.startDate)}</td>
                 <td>{manejarFecha(programation.endDate)}</td>
+                <td>{programation.isActive === true ? 'Activo' : 'Inactivo'}</td>
                 <td className="align-items-center">
                   <span
                     className="d-lg-inline btn btn-outline-success btn-sm mt-1 col-6 col-md-6 btn-middle"
