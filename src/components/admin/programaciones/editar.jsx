@@ -11,6 +11,7 @@ import $ from 'jquery';
 export default function Editar({ alerta, programation }) {
   const [spinner, setSpinner] = useState(false);
   const [datos, setDatos] = useState({
+    id: "",
     startDate: "",
     endDate: "",
     trimester: "",
@@ -58,7 +59,7 @@ export default function Editar({ alerta, programation }) {
   }
 
   const save = async () => {
-    DisableButton.setId('btn-save');
+    DisableButton.setId('btn-update');
     DisableButton.disable();
     setSpinner(true);
     validateInForm.setId('form-editar');
@@ -73,29 +74,13 @@ export default function Editar({ alerta, programation }) {
     });
 
     if (validateInForm.isValid) {
-      let res = await consumidor.post('programations', datos);
-      if (res.message === "Nueva programacion creada") {
-        setDatos({
-          startDate: "",
-          endDate: "",
-          trimester: "",
-          groupId: "",
-          municipalityId: "",
-          isActive: false
-        });
-        setGroup({
-          label: "Selecciona un grupo",
-          value: ""
-        });
-        setMunipalities({
-          label: "Selecciona un municipio",
-          value: ""
-        });
+      let res = await consumidor.put('programations', datos.id, datos);
+      if (res === "Programacion actualizada") {
         $('#editar').modal('hide');
-        alerta(res.message, 'success');
+        alerta(res, 'success');
       } else {
         $('#editar').modal('hide');
-        alerta(res.message, 'danger');
+        alerta(res, 'danger');
       }
     }
     disableButton.enable();
@@ -110,13 +95,18 @@ export default function Editar({ alerta, programation }) {
     }
     init();
     setDatos({
+      id: programation.id || "",
       startDate: programation.startDate || "",
       endDate: programation.endDate || "",
       trimester: programation.trimester || "",
       groupId: programation.groupId || "",
       municipalityId: programation.municipalityId || "",
       isActive: programation.isActive || false
-    })
+    });
+    let grupo = grupos.filter(grupe => grupe.value === programation.groupId);
+    setGroup(grupo);
+    let municipio = municipios.filter(municipie => municipie.value === programation.municipalityId);
+    setMunipalities(municipio);
   }, [programation]);
 
   return (
@@ -241,12 +231,12 @@ export default function Editar({ alerta, programation }) {
               />
               <span className="text-danger" />
             </div>
-            <div className="form-group" id="isActive">
+            <div className="form-group" id="isActiveEdit">
               <div className="custom-control custom-switch">
                 <input
                   type="checkbox"
                   className="custom-control-input"
-                  id="active"
+                  id="activeEdit"
                   checked={datos.isActive}
                   onChange={() => setDatos({
                     ...datos,
@@ -254,7 +244,7 @@ export default function Editar({ alerta, programation }) {
                   })
                   }
                 />
-                <label className="custom-control-label" htmlFor="active">Activo</label>
+                <label className="custom-control-label" htmlFor="activeEdit">Activo</label>
               </div>
             </div>
           </div>
@@ -269,7 +259,7 @@ export default function Editar({ alerta, programation }) {
             <button
               type="button"
               className="btn btn-outline-success"
-              id="btn-save"
+              id="btn-update"
               onClick={() => save()}
             >
               Crear <i className="fas fa-save"></i> <Spinner show={spinner} />

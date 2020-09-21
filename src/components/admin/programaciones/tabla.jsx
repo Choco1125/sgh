@@ -33,6 +33,7 @@ export default function Tabla({ programations, setProgramation }) {
                     data-toggle="modal"
                     onClick={
                       () => setProgramation({
+                        id: programation.id,
                         startDate: manejarFecha(programation.startDate),
                         endDate: manejarFecha(programation.endDate),
                         trimester: programation.trimester,
