@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import consumidor from '../../../helpers/consumidor';
 import DisableButton from '../../../helpers/DisableButton';
-import Spinner from '../../spinner'
+import Spinner from '../../spinner';
+import $ from 'jquery';
 
 export default function Eliminar({ alerta, actualizar, programacion }) {
   const [spinner, setSpinner] = useState(false);
@@ -9,6 +11,18 @@ export default function Eliminar({ alerta, actualizar, programacion }) {
     DisableButton.setId('btn-eliminar');
     DisableButton.disable();
     setSpinner(true);
+    let res = await consumidor.delete('programations', programacion.id);
+    console.log(res);
+    if (res === "Programacion eliminada") {
+      actualizar();
+      $('#eliminar').modal('hide');
+      alerta(res, 'success');
+    } else {
+      $('#eliminar').modal('hide');
+      alerta(res, 'danger');
+    }
+    setSpinner(false);
+    DisableButton.enable();
   }
 
   return (

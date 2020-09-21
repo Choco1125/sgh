@@ -8,6 +8,7 @@ import handleTabla from './../../helpers/handleTabla';
 import Crear from "./../../components/admin/programaciones/crear";
 import Alerta from './../../components/Alert';
 import Editar from '../../components/admin/programaciones/editar';
+import Eliminar from '../../components/admin/programaciones/eliminar';
 
 export default function Programaciones() {
   const [loader, setLoader] = useState(true);
@@ -113,6 +114,11 @@ export default function Programaciones() {
         <Editar
           alerta={handleAlert}
           programation={programation}
+          actualizar={iniciar}
+        />
+        <Eliminar
+          alerta={handleAlert}
+          programacion={programation}
           actualizar={iniciar}
         />
         <Alerta {...alerta} />

@@ -50,6 +50,11 @@ export default function Tabla({ programations, setProgramation }) {
                     className="d-lg-inline btn btn-outline-danger btn-sm mt-1 col-6 col-md-6 btn-middle"
                     data-target="#eliminar"
                     data-toggle="modal"
+                    onClick={
+                      () => setProgramation({
+                        id: programation.id
+                      })
+                    }
                   >
                     <i className="fas fa-trash-alt"></i>
                   </span>
