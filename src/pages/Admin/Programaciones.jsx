@@ -70,10 +70,11 @@ export default function Programaciones() {
     }, 2000);
   }
 
+  const iniciar = async () => {
+    await getProgramations();
+  }
+
   useEffect(() => {
-    const iniciar = async () => {
-      await getProgramations();
-    }
     iniciar();
   }, []);
 
@@ -107,10 +108,12 @@ export default function Programaciones() {
         </div>
         <Crear
           alerta={handleAlert}
+          actualizar={iniciar}
         />
         <Editar
           alerta={handleAlert}
           programation={programation}
+          actualizar={iniciar}
         />
         <Alerta {...alerta} />
       </div>

@@ -8,7 +8,7 @@ import DisableButton from './../../../helpers/DisableButton';
 import { validateInForm } from './../../../helpers/validateInForm';
 import $ from 'jquery';
 
-export default function Editar({ alerta, programation }) {
+export default function Editar({ alerta, programation, actualizar }) {
   const [spinner, setSpinner] = useState(false);
   const [datos, setDatos] = useState({
     id: "",
@@ -76,6 +76,7 @@ export default function Editar({ alerta, programation }) {
     if (validateInForm.isValid) {
       let res = await consumidor.put('programations', datos.id, datos);
       if (res === "Programacion actualizada") {
+        actualizar();
         $('#editar').modal('hide');
         alerta(res, 'success');
       } else {

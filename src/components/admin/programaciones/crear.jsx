@@ -8,7 +8,7 @@ import DisableButton from './../../../helpers/DisableButton';
 import { validateInForm } from './../../../helpers/validateInForm';
 import $ from 'jquery';
 
-export default function crear({ alerta }) {
+export default function crear({ alerta, actualizar }) {
 	const [spinner, setSpinner] = useState(false);
 	const [datos, setDatos] = useState({
 		startDate: "",
@@ -75,6 +75,7 @@ export default function crear({ alerta }) {
 		if (validateInForm.isValid) {
 			let res = await consumidor.post('programations', datos);
 			if (res.message === "Nueva programacion creada") {
+				actualizar();
 				setDatos({
 					startDate: "",
 					endDate: "",
