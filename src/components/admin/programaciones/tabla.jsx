@@ -1,7 +1,7 @@
 import React from 'react';
 import manejarFecha from './../../../helpers/manejarFechas';
 
-export default function Tabla({ programations }) {
+export default function Tabla({ programations, setProgramation }) {
   return (
     <div>
       <table className="table table-sm text-center" id="tbl">
@@ -31,6 +31,16 @@ export default function Tabla({ programations }) {
                     className="d-lg-inline btn btn-outline-success btn-sm mt-1 col-6 col-md-6 btn-middle"
                     data-target="#editar"
                     data-toggle="modal"
+                    onClick={
+                      () => setProgramation({
+                        startDate: manejarFecha(programation.startDate),
+                        endDate: manejarFecha(programation.endDate),
+                        trimester: programation.trimester,
+                        groupId: programation.groupId,
+                        municipalityId: programation.municipalityId,
+                        isActive: programation.isActive
+                      })
+                    }
                   >
                     <i className="fas fa-edit"></i>
                   </span>

@@ -7,6 +7,7 @@ import Tabla from './../../components/admin/programaciones/tabla';
 import handleTabla from './../../helpers/handleTabla';
 import Crear from "./../../components/admin/programaciones/crear";
 import Alerta from './../../components/Alert';
+import Editar from '../../components/admin/programaciones/editar';
 
 export default function Programaciones() {
   const [loader, setLoader] = useState(true);
@@ -15,6 +16,14 @@ export default function Programaciones() {
     show: true,
     msj: '',
     tipo: ''
+  });
+  const [programation, setProgramation] = useState({
+    startDate: "",
+    endDate: "",
+    trimester: "",
+    groupId: "",
+    municipalityId: "",
+    isActive: false
   });
 
   const routes = [
@@ -90,11 +99,18 @@ export default function Programaciones() {
             </div>
           </div>
           <div>
-            <Tabla programations={programtions} />
+            <Tabla
+              programations={programtions}
+              setProgramation={setProgramation}
+            />
           </div>
         </div>
         <Crear
           alerta={handleAlert}
+        />
+        <Editar
+          alerta={handleAlert}
+          programation={programation}
         />
         <Alerta {...alerta} />
       </div>
