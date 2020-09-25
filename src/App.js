@@ -23,6 +23,7 @@ import TipoActividades from './pages/Admin/TiposActividades';
 import Usuarios from './pages/Admin/Usuarios';
 import EditarUserPage from './components/admin/usuarios/editar/page';
 import Programaciones from './pages/Admin/Programaciones';
+import Horarios from './pages/Admin/Horarios';
 
 
 const App = () => (
@@ -48,6 +49,7 @@ const App = () => (
       <Route path="/coordinador/usuarios" exact component={Usuarios} />
       <Route path="/coordinador/usuarios/editar/:id" exact component={EditarUserPage} />
       <Route path="/coordinador/programaciones" exact component={Programaciones} />
+      <Route path="/coordinador/horarios" exact component={Horarios} />
     </Switch>
   </BrowserRouter>
 );
