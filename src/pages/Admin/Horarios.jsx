@@ -1,44 +1,45 @@
 import React, { useState } from 'react';
 import Loader from '../../components/Loader';
+import Tabla from '../../components/admin/horarios/tabla';
 import Navbar from '../../components/admin/Navbar';
-import { Breadcrumb } from '../../components/Breadcrumb';
+import Alerta from '../../components/Alert';
 
 export default function Horarios() {
 
   const [loader, setLoader] = useState(false);
+  const [alert, setAlert] = useState({
+    show: false,
+    tipo: '',
+    msj: ''
+  });
 
-  const routes = [
-    {
-      name: 'Inicio',
-      link: '/coordinador/',
-      isLink: true
-    },
-    {
-      name: 'Horarios',
-      link: '/coordinador/horarios',
-      isLink: true
-    },
-    {
-      name: 'Horarios',
-      link: '',
-      isLink: false
-    },
-  ];
+  const handleAlerta = (tipo, msj) => {
+    setAlert({
+      show: true,
+      tipo,
+      msj
+    });
+    setTimeout(() => setAlert({
+      show: false,
+      tipo: '',
+      msj: ''
+    }), 2000);
+  }
 
   if (loader) {
     return <Loader />
   } else {
     return (
       <div>
+        {/* <ModalProgramacion
+          programacion={programacion}
+          setProgramacion={setProgramacion}
+        /> */}
         <Navbar active="programacion" />
-        <div className="container">
-          <div className="row justify-content-between mt-3">
-            <div>
-              <Breadcrumb routes={routes} />
-            </div>
-            <div></div>
-          </div>
+        <div className="col-12 mb-3 mt-3">
+          <Tabla alerta={handleAlerta} />
         </div>
+        <Alerta {...alert} />
       </div>
     );
   }

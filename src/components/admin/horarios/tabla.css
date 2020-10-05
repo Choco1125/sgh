@@ -1,0 +1,64 @@
+td.Lunes,
+td.Martes,
+td.Miercoles,
+td.Jueves,
+td.Viernes,
+td.Sabado,
+.xd {
+  cursor: pointer;
+}
+
+
+td.Lunes:hover,
+td.Martes:hover,
+td.Miercoles:hover,
+td.Jueves:hover,
+td.Viernes:hover,
+td.Sabado:hover {
+  background-color: #b6b6b6;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.amarillo {
+  background-color: yellow;
+}
+
+.acua {
+  background-color: #0ee0ef;
+}
+
+.colum {
+  width: 12%;
+}
+
+.green {
+  background-color: yellowgreen;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.select {
+  background-color: rgb(231, 231, 231);
+}
+
+.hide {
+  display: none;
+}
+
+p {
+  margin: 0;
+}
+
+.texto {
+  margin: 0;
+  font-weight: normal;
+}
+
+td{
+  cursor: pointer;
+}
