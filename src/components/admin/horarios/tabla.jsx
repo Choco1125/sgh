@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './tabla.css';
+import manejarFecha from '../../../helpers/manejarFechas';
 
 
 function Tr({ horaInicio, horaFin, valor, evento }) {
   return (
     <tr>
-      <td>{horaInicio} {horaFin}</td>
+      <td className="amarillo" style={{ width: '100px' }}>{horaInicio} {horaFin}</td>
       <td data-horai={horaInicio} data-horaf={horaFin} onClick={e => evento(e)} className="Lunes" data-valor={valor}></td>
       <td data-horai={horaInicio} data-horaf={horaFin} onClick={e => evento(e)} className="Martes" data-valor={valor}></td>
       <td data-horai={horaInicio} data-horaf={horaFin} onClick={e => evento(e)} className="Miercoles" data-valor={valor}></td>
@@ -16,27 +17,66 @@ function Tr({ horaInicio, horaFin, valor, evento }) {
   );
 }
 
-export default function Tabla({ alerta }) {
+function Data({ title, text }) {
+  return (
+    <>
+      <p className="bolder" style={{ margin: 0 }}>{title}</p>
+      <span className="texto">{text}</span>
+      <br />
+      <br />
+    </>
+  );
+}
+
+function Barra({ groupInfo }) {
+  if (groupInfo.id) {
+    return (
+      <th rowSpan="31" scope="col" className="text-center green p-2" style={{ maxWidth: "70px" }}
+      >
+        <Data title="ID" text={groupInfo.codeTab} />
+        <Data title="Programa de formación" text={groupInfo.formationProgram.name} />
+        <Data title="Gestor de grupo" text={groupInfo.manager.username} />
+        <Data title="Trimestre" text={groupInfo.programation[0].trimester} />
+        <Data title="Fecha Inicio" text={manejarFecha(groupInfo.electiveEndDate)} />
+        <Data title="Fecha Fin" text={manejarFecha(groupInfo.practiceEndDate)} />
+        <Data title="Nro. Aprendices" text={`${groupInfo.activeLearners}/${groupInfo.quantityLearners}`} />
+        <Data title="Fecha inicio trimestre" text={manejarFecha(groupInfo.programation[0].startDate)} />
+        <Data title="Fecha fin trimestre" text={manejarFecha(groupInfo.programation[0].endDate)} />
+
+      </th>
+    );
+  } else {
+    return (
+      <th rowSpan="31" scope="col" className="text-center green p-1" data-toggle="modal"
+        data-target="#programa" id="ambiente-name" style={{ maxWidth: "70px" }}
+      >
+        Selecciona un programa de formación
+      </th>
+    );
+  }
+
+}
+
+export default function Tabla({ alerta, groupInfo }) {
 
   const [inicio, setInico] = useState(0);
   const [elementoInicio, setElementoInicio] = useState("");
   const [day, setDay] = useState("");
 
-  const calculateRowSpan = (fin) => {
+  const calculateRowSpan = (inicio, fin, elementoInicio) => {
     let rowSpan = (fin - inicio) + 1;
-    console.log(rowSpan)
     elementoInicio.setAttribute('rowspan', rowSpan);
     elementoInicio.classList.add('acua');
-    hideElements(fin);
+    hideElements(inicio, fin);
   }
 
-  const hideElements = fin => {
+  const hideElements = (inicio, fin) => {
     let tds = document.getElementsByClassName(day);
 
     for (let i = 0; i < tds.length; i++) {
       let td = tds.item(i);
       let valor = parseInt(td.dataset.valor);
-      if (valor > inicio && valor <= fin) {
+      if (valor > inicio && valor < (fin + 1)) {
         td.classList.add('hide');
       }
     }
@@ -51,7 +91,13 @@ export default function Tabla({ alerta }) {
       setDay(e.target.classList[0]);
     } else {
       if (e.target.classList[0] === day) {
-        calculateRowSpan(parseInt(e.target.dataset.valor));
+        if (inicio > parseInt(e.target.dataset.valor)) {
+          elementoInicio.classList.add('hide');
+          console.log(elementoInicio);
+          calculateRowSpan(parseInt(e.target.dataset.valor), inicio, e.target);
+        } else {
+          calculateRowSpan(inicio, parseInt(e.target.dataset.valor), elementoInicio);
+        }
         e.target.classList.add('blue');
       } else {
         alerta('warning', 'Debes seleccionar un hora en el mismos día');
@@ -74,10 +120,7 @@ export default function Tabla({ alerta }) {
         </tr>
       </thead>
       <tbody>
-        <th rowSpan="31" scope="col" className="text-center green p-2" data-toggle="modal"
-          data-target="#examplemodal" id="ambiente-name" style={{ maxWidth: "70px" }}>
-          selecciona un programa de información
-        </th>
+        <Barra groupInfo={groupInfo} />
         <Tr horaInicio="7:00" horaFin="7:30" evento={handlerClick} valor="2" />
         <Tr horaInicio="7:30" horaFin="8:00" evento={handlerClick} valor="3" />
         <Tr horaInicio="8:00" horaFin="8:30" evento={handlerClick} valor="4" />

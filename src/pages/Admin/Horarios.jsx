@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Loader from '../../components/Loader';
 import Tabla from '../../components/admin/horarios/tabla';
 import Navbar from '../../components/admin/Navbar';
 import Alerta from '../../components/Alert';
+import ModalGrupo from '../../components/admin/horarios/modalGrupo';
+import consumidor from '../../helpers/consumidor';
+import $ from 'jquery';
 
 export default function Horarios() {
 
@@ -11,6 +14,13 @@ export default function Horarios() {
     show: false,
     tipo: '',
     msj: ''
+  });
+  const [group, setGroup] = useState({});
+  const [groups, setGroups] = useState([]);
+  const [groupsToSelect, setGroupsToSelect] = useState([]);
+  const [groupSelected, setGroupSelected] = useState({
+    label: 'Selecciona un grupo',
+    value: ''
   });
 
   const handleAlerta = (tipo, msj) => {
@@ -26,18 +36,53 @@ export default function Horarios() {
     }), 2000);
   }
 
+  const getGroups = async () => {
+    let res = await consumidor.get('groups');
+    if (res.groups) {
+      let datos = [];
+      res.groups.map(group => datos.push({
+        value: group.id,
+        label: `${group.codeTab} - ${group.formationProgram.name}`
+      }));
+      setGroupsToSelect(datos);
+      setGroups(res.groups);
+      setLoader(false);
+    }
+  }
+
+
+
+  const handleChangeSalect = e => {
+    setGroupSelected(e);
+    let actualroup = groups.filter(group => group.id === e.value);
+    setGroup(actualroup[0]);
+  }
+
+  useEffect(() => {
+    $('#programa').modal('show');
+    const init = async () => {
+      await getGroups();
+    }
+    init();
+  }, []);
+
   if (loader) {
     return <Loader />
   } else {
     return (
       <div>
-        {/* <ModalProgramacion
-          programacion={programacion}
-          setProgramacion={setProgramacion}
-        /> */}
         <Navbar active="programacion" />
         <div className="col-12 mb-3 mt-3">
-          <Tabla alerta={handleAlerta} />
+          <ModalGrupo
+            groups={groupsToSelect}
+            selected={groupSelected}
+            handler={handleChangeSalect}
+          />
+          {group.id ?
+            <Tabla alerta={handleAlerta} groupInfo={group} />
+            :
+            <div></div>
+          }
         </div>
         <Alerta {...alert} />
       </div>

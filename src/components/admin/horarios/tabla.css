@@ -38,6 +38,7 @@ td.Sabado:hover {
   background-color: yellowgreen;
 }
 
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -57,8 +58,4 @@ p {
 .texto {
   margin: 0;
   font-weight: normal;
-}
-
-td{
-  cursor: pointer;
 }

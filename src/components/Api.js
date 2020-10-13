@@ -1,44 +1,45 @@
-const API = 'https://cronode.herokuapp.com/api/';
+// const API = 'https://cronode.herokuapp.com/api/';
+const API = 'http://3.129.88.105:3000/api/';
 
-const peticion = async (route,metodo,token,datos) =>{
+const peticion = async (route, metodo, token, datos) => {
     try {
         let peticion;
         let Myheaders;
-            
-        if(token ===""){
+
+        if (token === "") {
             Myheaders = {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             };
-        }else{
+        } else {
             Myheaders = {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${sessionStorage.getItem('token')}`
             };
         }
-    
-        if(metodo === 'GET' || datos=== ''){
-            peticion = await fetch(API+route,{
+
+        if (metodo === 'GET' || datos === '') {
+            peticion = await fetch(API + route, {
                 method: metodo,
                 headers: Myheaders
             });
-            
-        }else{
-                peticion = await fetch(API+route,{
-                    method: metodo,
-                    headers:Myheaders,
-                    body :JSON.stringify(datos)
-                });
+
+        } else {
+            peticion = await fetch(API + route, {
+                method: metodo,
+                headers: Myheaders,
+                body: JSON.stringify(datos)
+            });
         }
-    
+
         return await peticion.json();
-        
+
     } catch (erro) {
         console.log(erro);
-        return {error: erro}
+        return { error: erro }
     }
-    
+
 }
 
 export default peticion;
