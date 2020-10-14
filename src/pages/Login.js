@@ -2,6 +2,7 @@ import React from 'react';
 import Logo from './../assets/logoSGH1.png';
 import Spinner from '../components/spinner';
 import consumidor from '../helpers/consumidor';
+import './css/login.css';
 
 class Login extends React.Component {
 
