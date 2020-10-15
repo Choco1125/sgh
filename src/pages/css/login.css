@@ -8,12 +8,12 @@
   }
 }
 
-body{
+/* body{
   background: url('https://as1.ftcdn.net/jpg/01/98/01/14/500_F_198011433_G5MiOh1rmKetVK8jHzjdhI94aBA5dFEk.jpg') center;
   animation: 100s bgAnim linear infinite;
-}
+} */
 
-body div.card{
+body div.card-login{
   border-radius: 10px;
-  box-shadow: 1px 1px 25px #333;
+  box-shadow: 1px 1px 15px #c9c9c9;
 }
