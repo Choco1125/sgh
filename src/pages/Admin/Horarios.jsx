@@ -6,6 +6,7 @@ import Alerta from '../../components/Alert';
 import ModalGrupo from '../../components/admin/horarios/modalGrupo';
 import consumidor from '../../helpers/consumidor';
 import $ from 'jquery';
+import ModalProgramar from '../../components/admin/horarios/modalProgramar';
 
 export default function Horarios() {
 
@@ -22,6 +23,13 @@ export default function Horarios() {
     label: 'Selecciona un grupo',
     value: ''
   });
+  const [learningResults, setLearningResults] = useState([]);
+  const [learningResultsofActiveTrimester, setLearningResultsofActiveTrimester] = useState([]);
+  const [ambients, setAmbients] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [temporraryUsers, setTemporraryUsers] = useState([]);
+  const [day, setDay] = useState("");
+
 
   const handleAlerta = (tipo, msj) => {
     setAlert({
@@ -50,11 +58,64 @@ export default function Horarios() {
     }
   }
 
+  const getLearningResults = async () => {
+    let res = await consumidor.get('learningResults');
+    if (res) {
+      setLearningResults(res.learningResults);
+    }
+  }
 
+  const getAmbients = async () => {
+    let res = await consumidor.get('ambients');
+    if (res) {
+      let datos = res.map(ambient => {
+        return {
+          label: ambient.name,
+          value: ambient.id
+        }
+      });
+      setAmbients(datos);
+    }
+  }
+
+  const getUsers = async () => {
+    let res = await consumidor.get('users');
+    if (res) {
+      let datos = res.users.map(user => {
+        return {
+          value: user.id,
+          label: `(${user.document}) ${user.username}`
+        }
+      });
+      setUsers(datos);
+    }
+  }
+
+  const getTemporalyUsers = async () => {
+    let res = await consumidor.get('temporaryUserActivities');
+    if (res) {
+      let datos = res.map(user => {
+        return {
+          label: user.name,
+          value: user.id
+        }
+      });
+      setTemporraryUsers(datos);
+    }
+  }
 
   const handleChangeSalect = e => {
     setGroupSelected(e);
     let actualroup = groups.filter(group => group.id === e.value);
+    let resultsOfGroups = learningResults.filter(learResult => learResult.competence.formationProgramId === actualroup[0].formationProgramId);
+    let trimesterActiveResults = resultsOfGroups.filter(result => result.associatedTrimesters.includes(actualroup[0].programation[0].trimester) || result.trimesterEvaluate === actualroup[0].programation[0].trimester);
+    let datos = trimesterActiveResults.map(result => {
+      return {
+        value: result.id,
+        label: result.description
+      }
+    });
+    setLearningResultsofActiveTrimester(datos);
     setGroup(actualroup[0]);
   }
 
@@ -62,6 +123,10 @@ export default function Horarios() {
     $('#programa').modal('show');
     const init = async () => {
       await getGroups();
+      await getLearningResults();
+      await getAmbients();
+      await getUsers();
+      await getTemporalyUsers();
     }
     init();
   }, []);
@@ -78,8 +143,20 @@ export default function Horarios() {
             selected={groupSelected}
             handler={handleChangeSalect}
           />
+          <ModalProgramar
+            learningResults={learningResultsofActiveTrimester}
+            ambients={ambients}
+            temporalyUsers={temporraryUsers}
+            users={users}
+            day={day}
+          />
           {group.id ?
-            <Tabla alerta={handleAlerta} groupInfo={group} />
+            <Tabla
+              alerta={handleAlerta}
+              groupInfo={group}
+              day={day}
+              setDay={setDay}
+            />
             :
             <div></div>
           }

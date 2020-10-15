@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './tabla.css';
 import manejarFecha from '../../../helpers/manejarFechas';
-
+import $ from 'jquery';
 
 function Tr({ horaInicio, horaFin, valor, evento }) {
   return (
@@ -57,11 +57,10 @@ function Barra({ groupInfo }) {
 
 }
 
-export default function Tabla({ alerta, groupInfo }) {
+export default function Tabla({ alerta, groupInfo, day, setDay }) {
 
   const [inicio, setInico] = useState(0);
   const [elementoInicio, setElementoInicio] = useState("");
-  const [day, setDay] = useState("");
 
   const calculateRowSpan = (inicio, fin, elementoInicio) => {
     let rowSpan = (fin - inicio) + 1;
@@ -93,12 +92,12 @@ export default function Tabla({ alerta, groupInfo }) {
       if (e.target.classList[0] === day) {
         if (inicio > parseInt(e.target.dataset.valor)) {
           elementoInicio.classList.add('hide');
-          console.log(elementoInicio);
           calculateRowSpan(parseInt(e.target.dataset.valor), inicio, e.target);
         } else {
           calculateRowSpan(inicio, parseInt(e.target.dataset.valor), elementoInicio);
         }
-        e.target.classList.add('blue');
+        $('#programarClase').modal('show');
+        // e.target.classList.add('blue');
       } else {
         alerta('warning', 'Debes seleccionar un hora en el mismos día');
       }
