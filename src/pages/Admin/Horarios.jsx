@@ -7,6 +7,7 @@ import ModalGrupo from '../../components/admin/horarios/modalGrupo';
 import consumidor from '../../helpers/consumidor';
 import $ from 'jquery';
 import ModalProgramar from '../../components/admin/horarios/modalProgramar';
+import manejarFechas from '../../helpers/manejarFechas';
 
 export default function Horarios() {
 
@@ -29,6 +30,7 @@ export default function Horarios() {
   const [users, setUsers] = useState([]);
   const [temporraryUsers, setTemporraryUsers] = useState([]);
   const [day, setDay] = useState("");
+  const [fechaTrimestre, setFechaTrimestre] = useState("");
 
 
   const handleAlerta = (tipo, msj) => {
@@ -108,8 +110,7 @@ export default function Horarios() {
     setGroupSelected(e);
     let actualroup = groups.filter(group => group.id === e.value);
     let resultsOfGroups = learningResults.filter(learResult => learResult.competence.formationProgramId === actualroup[0].formationProgramId);
-    let trimesterActiveResults = resultsOfGroups.filter(result => result.associatedTrimesters.includes(actualroup[0].programation[0].trimester) || result.trimesterEvaluate === actualroup[0].programation[0].trimester);
-    let datos = trimesterActiveResults.map(result => {
+    let datos = resultsOfGroups.map(result => {
       return {
         value: result.id,
         label: result.description
@@ -117,6 +118,7 @@ export default function Horarios() {
     });
     setLearningResultsofActiveTrimester(datos);
     setGroup(actualroup[0]);
+    setFechaTrimestre(manejarFechas(actualroup[0].programation[0].startDate));
   }
 
   useEffect(() => {
@@ -149,6 +151,8 @@ export default function Horarios() {
             temporalyUsers={temporraryUsers}
             users={users}
             day={day}
+            fechaTrimestre={fechaTrimestre}
+            groupInfo={group}
           />
           {group.id ?
             <Tabla

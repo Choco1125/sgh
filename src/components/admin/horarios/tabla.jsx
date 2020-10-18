@@ -75,6 +75,11 @@ export default function Tabla({ alerta, groupInfo, day, setDay }) {
     for (let i = 0; i < tds.length; i++) {
       let td = tds.item(i);
       let valor = parseInt(td.dataset.valor);
+      if (valor === inicio) {
+        localStorage.setItem('hi',td.dataset.horai);
+      }else if(valor === fin){
+        localStorage.setItem('hf',td.dataset.horaf);
+      }
       if (valor > inicio && valor < (fin + 1)) {
         td.classList.add('hide');
       }

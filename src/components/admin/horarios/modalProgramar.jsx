@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import Spinner from '../../spinner';
 import handleMayus from '../../../helpers/handleMayus';
+import {validateInForm} from '../../../helpers/validateInForm';
+import consumidor from '../../../helpers/consumidor';
 
 
-export default function ModalProgramar({ learningResults, ambients, users, temporalyUsers, day }) {
+export default function ModalProgramar({ learningResults, ambients, users, temporalyUsers, day,fechaTrimestre, groupInfo }) {
 
   const [spinner, setSpinner] = useState(false);
   const [learnerResult, setLearnerResult] = useState({
@@ -26,14 +28,57 @@ export default function ModalProgramar({ learningResults, ambients, users, tempo
   });
   const [summary, setSummary] = useState("");
 
+  const validateForm = () => {
+    validateInForm.isValid = true;
+    validateInForm.setId('form-programar');
+    let valuesToEvaluate = {
+      ambientId: ambient.value,
+      summary
+    }
+    if (isTemporal) {
+      valuesToEvaluate = {
+        ...valuesToEvaluate,
+        temporaryUserId: tempralUser.value
+      }
+    }else{
+      valuesToEvaluate = {
+        ...valuesToEvaluate,
+        constantUserId: constantUser.value
+      }
+    }
+    validateInForm.validate(valuesToEvaluate);
+    return validateInForm.isValid;
+  }
+
   const save = async () => {
     let datosToSend = {
       day,
-
+      startDate: fechaTrimestre + " " + localStorage.getItem('hi') + ":00",
+      endDate: fechaTrimestre + " " + localStorage.getItem('hf') + ":00",
+      ambientId: ambient.value,
+      programationId: groupInfo.programation[0].id,
+      summary,
     }
-    // if (temporalyUsers) {
+    if (isTemporal) {
+      datosToSend = {...datosToSend, temporaryUserId: tempralUser.value }
+    }else{
+      datosToSend = {...datosToSend, constantUserId : constantUser.value }
+    }
 
-    // }
+    if (learnerResult.value !== '') {
+      datosToSend = {
+        ...datosToSend,
+        learningResultId: learnerResult.value
+      }
+    }
+    if (validateForm()) {
+      // console.log(datosToSend);
+      // let res = await consumidor.post('schedules',datosToSend);
+      // console.log(res);
+      // if(res.message === "Nuevo horario programado"){
+         
+      // }
+    }
   }
 
   return (
@@ -51,13 +96,13 @@ export default function ModalProgramar({ learningResults, ambients, users, tempo
             <h5 className="modal-title" id="programarClaseLabel">
               Programar clase
             </h5>
-            <button
+            {/* <button
               type="button"
               className="close" data-dismiss="modal"
               aria-label="Close"
             >
               <span aria-hidden="true">&times;</span>
-            </button>
+            </button> */}
           </div>
           <div className="modal-body" id="form-programar">
             <span className="font-weight-lighter">
@@ -146,13 +191,13 @@ export default function ModalProgramar({ learningResults, ambients, users, tempo
             </div>
           </div>
           <div className="modal-footer">
-            <button
+            {/* <button
               type="button"
               className="btn btn-outline-secondary"
               data-dismiss="modal"
             >
               Cerrar
-            </button>
+            </button> */}
             <button
               type="button"
               className="btn btn-outline-success"
