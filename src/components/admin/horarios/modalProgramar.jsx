@@ -3,10 +3,10 @@ import Select from 'react-select';
 import Spinner from '../../spinner';
 import handleMayus from '../../../helpers/handleMayus';
 import {validateInForm} from '../../../helpers/validateInForm';
+import $ from 'jquery';
 import consumidor from '../../../helpers/consumidor';
 
-
-export default function ModalProgramar({ learningResults, ambients, users, temporalyUsers, day,fechaTrimestre, groupInfo }) {
+export default function ModalProgramar({ learningResults, ambients, users, temporalyUsers, day,fechaTrimestre, groupInfo, elementoInicio }) {
 
   const [spinner, setSpinner] = useState(false);
   const [learnerResult, setLearnerResult] = useState({
@@ -50,7 +50,18 @@ export default function ModalProgramar({ learningResults, ambients, users, tempo
     return validateInForm.isValid;
   }
 
+	const setValuesToProgramation = () => {
+		console.log(elementoInicio);
+		let info = `
+			<p class="bolder">${ambient.label}</p>
+			<p>${isTemporal ? tempralUser.label  : constantUser.label}</p>
+			<p>${learnerResult.label}</p>
+		`;
+		elementoInicio.innerHTML = info;
+	}
+
   const save = async () => {
+		setSpinner(true);
     let datosToSend = {
       day,
       startDate: fechaTrimestre + " " + localStorage.getItem('hi') + ":00",
@@ -72,13 +83,15 @@ export default function ModalProgramar({ learningResults, ambients, users, tempo
       }
     }
     if (validateForm()) {
-      // console.log(datosToSend);
-      // let res = await consumidor.post('schedules',datosToSend);
-      // console.log(res);
-      // if(res.message === "Nuevo horario programado"){
-         
-      // }
+      let res = await consumidor.post('schedules',datosToSend);
+      console.log(res);
+      if(res.message === "Nuevo horario programado"){
+				$('#programarClase').modal('hide');
+				setValuesToProgramation();
+      }
+
     }
+		setSpinner(false);
   }
 
   return (

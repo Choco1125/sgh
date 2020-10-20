@@ -27,7 +27,17 @@ td.Sabado:hover {
 }
 
 .acua {
-  background-color: #0ee0ef;
+  background-color: rgba(59, 93, 136, .25);
+	font-size: 12px;
+}
+
+.acua p{
+	margin: 0;
+	padding: 0;
+}
+
+.acua p.bolder{
+	font-weight: bolder;
 }
 
 .colum {

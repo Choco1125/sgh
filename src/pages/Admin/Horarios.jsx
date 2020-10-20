@@ -31,7 +31,7 @@ export default function Horarios() {
   const [temporraryUsers, setTemporraryUsers] = useState([]);
   const [day, setDay] = useState("");
   const [fechaTrimestre, setFechaTrimestre] = useState("");
-
+  const [elementoInicio, setElementoInicio] = useState("");
 
   const handleAlerta = (tipo, msj) => {
     setAlert({
@@ -86,7 +86,7 @@ export default function Horarios() {
       let datos = res.users.map(user => {
         return {
           value: user.id,
-          label: `(${user.document}) ${user.username}`
+          label: `${user.username}`
         }
       });
       setUsers(datos);
@@ -153,6 +153,7 @@ export default function Horarios() {
             day={day}
             fechaTrimestre={fechaTrimestre}
             groupInfo={group}
+						elementoInicio={elementoInicio}
           />
           {group.id ?
             <Tabla
@@ -160,6 +161,8 @@ export default function Horarios() {
               groupInfo={group}
               day={day}
               setDay={setDay}
+							elementoInicio={elementoInicio}
+							setElementoInicio={setElementoInicio}
             />
             :
             <div></div>

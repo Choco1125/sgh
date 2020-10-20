@@ -57,10 +57,9 @@ function Barra({ groupInfo }) {
 
 }
 
-export default function Tabla({ alerta, groupInfo, day, setDay }) {
+export default function Tabla({ alerta, groupInfo, day, setDay, elementoInicio, setElementoInicio }) {
 
   const [inicio, setInico] = useState(0);
-  const [elementoInicio, setElementoInicio] = useState("");
 
   const calculateRowSpan = (inicio, fin, elementoInicio) => {
     let rowSpan = (fin - inicio) + 1;
