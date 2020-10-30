@@ -49,7 +49,8 @@ const App = () => (
       <Route path="/coordinador/usuarios" exact component={Usuarios} />
       <Route path="/coordinador/usuarios/editar/:id" exact component={EditarUserPage} />
       <Route path="/coordinador/programaciones" exact component={Programaciones} />
-      <Route path="/coordinador/horarios" exact component={Horarios} />
+      <Route path="/coordinador/programar-grupo" exact component={Horarios} />
+			<Route path="/coordinador/programar-ambiente" exact component={Horarios} />
     </Switch>
   </BrowserRouter>
 );
